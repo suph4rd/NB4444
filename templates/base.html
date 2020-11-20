@@ -1,0 +1,44 @@
+{% block page %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>B4</title>
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+        <script src="{% static 'js/jqvery.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+<body style="background: url(/media/fonBG.jpg);margin:5px">
+<a href="{% url 'general' %}"><div style="background-color:cornflowerblue;position:fixed;width:100%;z-index:120;border-radius:5px;width:99%;color:black;">
+    <div style="float:left;">
+        <img style="width:200px;border-radius: 5px;" src="/media/ss.jpg" alt="денюжка">
+    </div>
+    <div style="padding-bottom:27px;padding-top:25px;text-align:center;font-size:3em;"><b>БЧ (Эл. V 5.1)</b></div>
+</div> </a>
+<div>
+    <div style="float:left;width:200px;background-color:cadetblue;padding:10px;position:fixed;margin-top:128px;border-radius:5px;">
+        <p><b><a style="color:chartreuse" href="{% url 'standartnie_vicheti' %}">1.Стандартные вычеты</a></b></p>
+        <b><a style="color:chartreuse" href="{% url 'minfin' %}">2.МинФин:</a></b><br>
+        <a style="color:chartreuse" href="{% url 'minfin_eda' %}">* Еда</a><br>
+        <a style="color:chartreuse" href="{% url 'minfin_transport' %}">* Транспорт</a><br>
+        <a style="color:chartreuse" href="{% url 'minfin_razvlechenia' %}">* Развлечения</a><br>
+        <a style="color:chartreuse" href="{% url 'minfin_ammortizatia' %}">* Аммортизация</a><br>
+        <a style="color:chartreuse" href="{% url 'minfin_prochee' %}">* Прочее</a><br>
+        <a style="color:chartreuse" href="{% url 'minfin_nds' %}">* НДС</a><br><br>
+        <p><b><a style="color:chartreuse" href="{% url 'nlj' %}">3.НЛЖ</a></b></p>
+        <hr>
+        <b><a style="color:black" href="{% url 'logout' %}">Выход</a></b>
+    </div>
+    <div style="margin-left:210px;position:absolute;margin-top:133px;border-radius:5px;width:83%;background-color:white;">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+</body>
+</html>
+{% endblock %}

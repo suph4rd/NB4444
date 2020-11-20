@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+            <h1 style="text-align:center;">Транспорт</h1>
+<b style="margin:10px;">Остаток: <u>{{ last_ostatoc }}</u></b>
+<form method="post">
+    {% csrf_token %}
+    <input name="transport" style="width:98%;margin:10px;" type="text"> <br>
+    <input style="margin:10px;width:200px" type="submit">
+</form>
+<hr>
+<div style="margin:10px;">
+
+        <div style="text-align: center; margin-bottom: 20px;">
+                    <button type="button" class="btn btn-outline-danger"><a href="?page=1">Начало</a></button>
+{% if queryset.has_previous %}
+        <button type="button" class="btn btn-outline-success"><a href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a> </button>
+{% endif %}
+
+{% if queryset.has_next %}
+            <button type="button" class="btn btn-outline-success"><a href="?page={{ queryset.next_page_number }}">Следующая &raquo;</a></button>
+        {% endif %}
+        </div>
+
+
+    {% for transport in queryset %}
+    <p> {{ forloop.counter }} <b>{{transport.date_transport|date:"d.m.Y"}}</b>  <u>{{ transport.ostatoc_transport }}</u>  <b>{{ transport.sum_transport }}</b> {{ transport.describe_transport }} </p>
+        {% endfor %}
+
+
+                <div style="text-align: center">
+                    <button type="button" class="btn btn-outline-danger"><a href="?page=1">Начало</a></button>
+{% if queryset.has_previous %}
+        <button type="button" class="btn btn-outline-success"><a href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a> </button>
+{% endif %}
+
+{% if queryset.has_next %}
+            <button type="button" class="btn btn-outline-success"><a href="?page={{ queryset.next_page_number }}">Следующая &raquo;</a></button>
+        {% endif %}
+                    </div>
+
+</div>
+{% endblock %}

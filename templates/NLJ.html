@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 style="text-align:center;">НЛЖ</h1>
+<form method="post" style="padding:10px" enctype="multipart/form-data">
+    {% csrf_token %}
+    <textarea style="width:100%" name="text_nlg" id="" cols="50" rows="7"></textarea><br>
+    <input style="padding-bottom:10px" name="image_nlg" type="file">
+    <input style="height:50px; width:200px;" type="submit">
+</form>
+<hr>
+
+
+    <div style="text-align: center">
+                    <button type="button" class="btn btn-outline-danger"><a href="?page=1">Начало</a></button>
+{% if queryset.has_previous %}
+        <button type="button" class="btn btn-outline-success"><a href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a> </button>
+{% endif %}
+
+{% if queryset.has_next %}
+            <button type="button" class="btn btn-outline-success"><a href="?page={{ queryset.next_page_number }}">Следующая &raquo;</a></button>
+        {% endif %}
+
+<button type="button" class="btn btn-outline-danger"><a href="?page={{ queryset.paginator.num_pages }}">Последняя </a></button>
+    </div>
+
+
+<div style="padding:10px">
+    {% for nlj in queryset %}
+       <p> {{ forloop.counter }}. <b>{{nlj.date_nlg|date:"d.m.Y"}}</b> {{ nlj.text_nlg }}
+       {% if nlj.image_nlg %}
+           <br>
+           <img style="width:100%" src="{{ MEDIA_URL }}{{nlj.image_nlg }}">
+       {% endif %}
+       </p>
+    {% endfor %}
+</div>
+
+
+    <div style="text-align: center">
+                    <button type="button" class="btn btn-outline-danger"><a href="?page=1">Начало</a></button>
+{% if queryset.has_previous %}
+        <button type="button" class="btn btn-outline-success"><a href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a> </button>
+{% endif %}
+
+{% if queryset.has_next %}
+            <button type="button" class="btn btn-outline-success"><a href="?page={{ queryset.next_page_number }}">Следующая &raquo;</a></button>
+        {% endif %}
+
+<button type="button" class="btn btn-outline-danger"><a href="?page={{ queryset.paginator.num_pages }}">Последняя </a></button>
+    </div>
+
+{% endblock %}

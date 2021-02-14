@@ -7,7 +7,7 @@
         <input style="padding-bottom:10px" name="image_nlg" type="file">
         <input style="height:50px; width:200px; float:right" type="submit">
     </form>
-    <hr>
+    <hr/>
     <div style="text-align: center">
         <a class="btn btn-outline-danger" href="?page=1">Начало</a>
         {% if queryset.has_previous %}
@@ -20,6 +20,7 @@
     </div>
     <div style="padding:10px">
         {% for nlj in queryset %}
+            <hr/>
            <p> {{ forloop.counter }}. <b>{{nlj.date_nlg|date:"d.m.Y"}}</b> {{ nlj.text_nlg }}
            {% if nlj.image_nlg %}
                <br>

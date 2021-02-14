@@ -94,6 +94,7 @@ class NlgView(View):
 
 class MinfinView(View):
     """МинФин"""
+    minfin_type = None
     queryset = models.Minfin.objects.all()
     template_name = 'Minfin/minfin.html'
     nds = 1
@@ -123,6 +124,8 @@ class MinfinView(View):
                 sum = re.match(r'\d+', text_input)   # достаём сумму
             queryset.price = float(sum.group()) * self.nds      # мб Float или лучше Decimal
             queryset.describe = text_input[sum.end()+1:].strip()
+            if self.minfin_type:
+                queryset.type_table = self.minfin_type
             queryset.save()
         except Exception as e:
             print(e)
@@ -131,38 +134,45 @@ class MinfinView(View):
 
 
 class MinfinEdaView(MinfinView):
-    queryset = models.Minfin.objects.filter(type_table=0)
+    minfin_type = 0
+    queryset = models.Minfin.objects.filter(type_table=minfin_type)
     template_name = 'Minfin/minfin_item.html'
     nds = 1.1
 
 
 class MinfinAtractiveView(MinfinView):
-    queryset = models.Minfin.objects.filter(type_table=1)
+    minfin_type = 1
+    queryset = models.Minfin.objects.filter(type_table=minfin_type)
     template_name = 'Minfin/minfin_item.html'
     nds = 1.1
 
 
 class MinfinRoadView(MinfinView):
-    queryset = models.Minfin.objects.filter(type_table=2)
+    minfin_type = 2
+    queryset = models.Minfin.objects.filter(type_table=minfin_type)
     template_name = 'Minfin/minfin_item.html'
     nds = 1.1
 
 
 class MinfinPhoneView(MinfinView):
-    queryset = models.Minfin.objects.filter(type_table=3)
+    minfin_type = 3
+    queryset = models.Minfin.objects.filter(type_table=minfin_type)
     template_name = 'Minfin/minfin_item.html'
 
 
 class MinfinDepreciationView(MinfinView):
-    queryset = models.Minfin.objects.filter(type_table=4)
+    minfin_type = 4
+    queryset = models.Minfin.objects.filter(type_table=minfin_type)
     template_name = 'Minfin/minfin_item.html'
 
 
 class MinfinOtherView(MinfinView):
-    queryset = models.Minfin.objects.filter(type_table=5)
+    minfin_type = 5
+    queryset = models.Minfin.objects.filter(type_table=minfin_type)
     template_name = 'Minfin/minfin_item.html'
 
 
 class MinfinNDSView(MinfinView):
-    queryset = models.Minfin.objects.filter(type_table=6)
+    minfin_type = 6
+    queryset = models.Minfin.objects.filter(type_table=minfin_type)
     template_name = 'Minfin/minfin_item.html'

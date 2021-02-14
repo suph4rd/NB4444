@@ -83,12 +83,12 @@ config.read('./nb4444/connection.cfg')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config['client']['NAME'],
-        'USER': config['client']['USER'],
-        'PASSWORD': config['client']['PASSWORD'],
-        'HOST': config['client']['HOST'],
-        'PORT': config['client']['PORT'],
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'nb4444',
+        'USER': 'nb4444',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -137,3 +137,9 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+try:
+    import local_settings
+except ImportError:
+    pass

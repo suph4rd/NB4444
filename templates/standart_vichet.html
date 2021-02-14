@@ -3,11 +3,12 @@
 <h1 style="text-align:center;">Стандартные вычеты</h1>
 <form method="post" style="margin:15px;">
     {% csrf_token %}
-    <p><b>1. Хата</b> <input name="hata" style="position:relative;margin-left:40px" type="text" value="{{last_vicheti.hata}}"><br></p>
-    <p><b>2. Проезд</b> <input name="proezd" style="position:relative;margin-left:17px" type="text" value="{{last_vicheti.proezd}}"><br></p>
+    <p><b>1. Хата</b> <input name="hata" style="position:relative;margin-left:35px" type="text" value="{{last_vicheti.hata}}"><br></p>
+    <p><b>2. Проезд</b> <input name="proezd" style="position:relative;margin-left:15px" type="text" value="{{last_vicheti.proezd}}"><br></p>
     <p><b>3. Мобила</b> <input name="mobila" style="position:relative;margin-left:12px" type="text" value="{{last_vicheti.mobila}}"><br></p>
-    <p><b>4. Еда</b> <input name="eda" style="position:relative;margin-left:48px" type="text" value="{{last_vicheti.eda}}"><br></p>
-    <b>5. Итого</b> <input style="position:relative;margin-left:30px" type="text" value="{{last_vicheti.itogo}}">
+    <p><b>4. Еда</b> <input name="eda" style="position:relative;margin-left:44px" type="text" value="{{last_vicheti.eda}}"><br></p>
+<!--    <b>5. Итого</b> <input style="position:relative;margin-left:30px" type="text" value="{{last_vicheti.itogo}}">-->
+    <p style="position:relative"> <b>5. Итого</b>  <span style="margin-left:30px">{{last_vicheti.itogo}} </span></p>
 <hr>
     <input style="margin:15px;width:200px" type="submit" value="Обновить">
 </form>

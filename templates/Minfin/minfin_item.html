@@ -9,26 +9,30 @@
     </form>
     <hr/>
     <div style="margin:10px;">
-        <div style="text-align: center; margin-bottom: 20px;">
-            <a class="btn btn-outline-danger" href="?page=1">Начало</a>
-            {% if queryset.has_previous %}
-                <a class="btn btn-outline-success" href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a>
-            {% endif %}
-            {% if queryset.has_next %}
-                <a class="btn btn-outline-success" href="?page={{ queryset.next_page_number }}">Следующая &raquo;</a>
-            {% endif %}
-        </div>
+        {% if queryset %}
+            <div style="text-align: center; margin-bottom: 20px;">
+                <a class="btn btn-outline-danger" href="?page=1">Начало</a>
+                {% if queryset.has_previous %}
+                    <a class="btn btn-outline-success" href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a>
+                {% endif %}
+                {% if queryset.has_next %}
+                    <a class="btn btn-outline-success" href="?page={{ queryset.next_page_number }}">Следующая &raquo;</a>
+                {% endif %}
+            </div>
+        {% endif %}
         {% for item in queryset %}
             <p> {{ forloop.counter }} <b>{{item.date_create|date:"d.m.Y"}}</b>  <u>{{ last_ostatoc }}</u>  <b>{{ item.price }}</b> {{ item.describe }} </p>
         {% endfor %}
-        <div style="text-align: center">
-            <a class="btn btn-outline-danger" href="?page=1">Начало</a>
-            {% if queryset.has_previous %}
-                <a class="btn btn-outline-success" href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a>
-            {% endif %}
-            {% if queryset.has_next %}
-                <a class="btn btn-outline-success" href="?page={{ queryset.next_page_number }}">Следующая &raquo;</a>
-            {% endif %}
-        </div>
+        {% if queryset %}
+            <div style="text-align: center">
+                <a class="btn btn-outline-danger" href="?page=1">Начало</a>
+                {% if queryset.has_previous %}
+                    <a class="btn btn-outline-success" href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a>
+                {% endif %}
+                {% if queryset.has_next %}
+                    <a class="btn btn-outline-success" href="?page={{ queryset.next_page_number }}">Следующая &raquo;</a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

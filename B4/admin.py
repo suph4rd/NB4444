@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from B4 import models
 
-from B4.models import standart_vichet, nlg, minfin, eda, transport, razvlechenia, amortizatia, prochee, nds
 
 class NljAdmin(admin.ModelAdmin):
     list_display = ('id', 'date_nlg', 'text_nlg', 'image_nlg_def')
@@ -14,15 +14,13 @@ class NljAdmin(admin.ModelAdmin):
         else:
             return 'Фото отсутствует'
 
-    image_nlg_def.short_description = 'Фотоотчёт'
+
+class MinfinAdmin(admin.ModelAdmin):
+    list_display = ('id','get_type_table_display', 'date_create', 'balance', 'price', 'describe')
+    list_display_links = ('id', 'get_type_table_display', 'date_create')
+    search_fields = ('date_create', 'describe', 'get_type_table_display')
 
 
-admin.site.register(standart_vichet)
-admin.site.register(nlg, NljAdmin)
-admin.site.register(minfin)
-admin.site.register(eda)
-admin.site.register(transport)
-admin.site.register(razvlechenia)
-admin.site.register(amortizatia)
-admin.site.register(prochee)
-admin.site.register(nds)
+admin.site.register(models.StandartVichet)
+admin.site.register(models.Nlg, NljAdmin)
+admin.site.register(models.Minfin, MinfinAdmin)

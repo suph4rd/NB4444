@@ -70,7 +70,8 @@ class Standartnie_vicheti(View):
 
 
 class Nlg(View):
-    '''Направление личной жизни'''
+    """Направление личной жизни"""
+
     def get(self, request):
         queryset = nlg.objects.all()
         paginator = Paginator(queryset, 25)
@@ -82,12 +83,9 @@ class Nlg(View):
     def post(self, request):
         text_nlg = request.POST.get('text_nlg')
         image_nlg = request.FILES.get('image_nlg')
-
         if not text_nlg and not image_nlg:
             return Nlg.get(self, request)
         queryset = nlg(text_nlg=text_nlg, image_nlg=image_nlg)
-
-
         if text_nlg and re.match(r'\d{2}.\d{2}.\d{4}', request.POST.get('text_nlg')):
             queryset.date_nlg = datetime.strptime(re.match(r'\d{2}.\d{2}.\d{4}', request.POST.get('text_nlg')).group(0), '%d.%m.%Y')
             queryset.text_nlg = text_nlg[11:].strip()
@@ -114,7 +112,6 @@ class Minfin(View):
         page_obj = paginator.get_page(page_number)
         return render(request, 'Minfin\minfin.html', {'queryset': page_obj,
                                                       'last_ostatoc': last_ostatoc})
-
 
 
 class Minfin_eda(View):

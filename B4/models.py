@@ -1,13 +1,16 @@
 from datetime import datetime
-
 from django.db import models
 
+
 class standart_vichet(models.Model):
-    hata = models.FloatField(max_length=255)
-    proezd = models.FloatField(max_length=255)
-    mobila = models.FloatField(max_length=255)
-    eda = models.FloatField(max_length=255)
-    itogo = models.FloatField(max_length=255, blank=True, null=True)
+    hata = models.DecimalField(max_digits=10, decimal_places=2)
+    proezd = models.DecimalField(max_digits=10, decimal_places=2)
+    mobila = models.DecimalField(max_digits=10, decimal_places=2)
+    eda = models.DecimalField(max_digits=10, decimal_places=2)
+
+    @property
+    def itogo(self):
+        return f"{self.hata + self.proezd + self.mobila + self.eda}"
 
     class Meta:
         verbose_name = 'Стандартные вычеты'
@@ -16,8 +19,8 @@ class standart_vichet(models.Model):
 
 class nlg(models.Model):
     date_nlg = models.DateTimeField(verbose_name='Дата', default=datetime.now())
-    text_nlg = models.TextField(verbose_name='Текст', blank=True)
-    image_nlg = models.ImageField(blank=True, upload_to="foto\%Y\%m\%d", verbose_name='Фотоверсия')
+    text_nlg = models.TextField(verbose_name='Текст', blank=True, null=True)
+    image_nlg = models.ImageField(verbose_name='Фотоверсия', blank=True, null=True, upload_to="foto/%Y/%m/%d")
 
     def __str__(self):
         return str(self.date_nlg)

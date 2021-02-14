@@ -2,3 +2,4 @@ venv/
 media/foto/*
 NB4444/*.cfg
 NB4444/local_settings.py
+__pycache__

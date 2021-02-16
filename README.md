@@ -5,6 +5,7 @@ This is system for write some facts about my life.
 
 # In develop now:
 1) Finance control system
+  - fix middle count price for each row
 2) going to Single Page Application (DRF + Vue.js)
 
 # Information for clone:

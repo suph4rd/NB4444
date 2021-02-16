@@ -1,12 +1,13 @@
 from datetime import datetime
 from django.db import models
+from django.db.models import Sum
 
 
-class standart_vichet(models.Model):
-    hata = models.DecimalField(max_digits=10, decimal_places=2)
-    proezd = models.DecimalField(max_digits=10, decimal_places=2)
-    mobila = models.DecimalField(max_digits=10, decimal_places=2)
-    eda = models.DecimalField(max_digits=10, decimal_places=2)
+class StandartVichet(models.Model):
+    hata = models.DecimalField('Жильё', max_digits=10, decimal_places=2)
+    proezd = models.DecimalField('Проезд', max_digits=10, decimal_places=2)
+    mobila = models.DecimalField('Телефон', max_digits=10, decimal_places=2)
+    eda = models.DecimalField('Еда', max_digits=10, decimal_places=2)
 
     @property
     def itogo(self):
@@ -17,10 +18,10 @@ class standart_vichet(models.Model):
         verbose_name_plural = 'Стандартные вычеты'
 
 
-class nlg(models.Model):
-    date_nlg = models.DateTimeField(verbose_name='Дата', default=datetime.now())
-    text_nlg = models.TextField(verbose_name='Текст', blank=True, null=True)
-    image_nlg = models.ImageField(verbose_name='Фотоверсия', blank=True, null=True, upload_to="foto/%Y/%m/%d")
+class Nlg(models.Model):
+    date_nlg = models.DateTimeField('Дата', default=datetime.now())
+    text_nlg = models.TextField('Текст', blank=True, null=True)
+    image_nlg = models.ImageField('Фотоверсия', blank=True, null=True, upload_to="foto/%Y/%m/%d")
 
     def __str__(self):
         return str(self.date_nlg)
@@ -31,110 +32,31 @@ class nlg(models.Model):
         ordering = ['-date_nlg', '-id']
 
 
-class minfin(models.Model):
-    date_minfin = models.DateTimeField(verbose_name='Дата', default=datetime.now())
-    ostatoc_minfin = models.FloatField()
-    sum_minfin = models.FloatField()
-    describe_minfin = models.CharField(max_length=255)
-    type_table = models.CharField(max_length=255, blank=True, null=True)
-    id_insert = models.IntegerField(blank=True, null=True)
+MINFIN_CHOICES = (
+    (0, 'Еда'),
+    (1, 'Развлечения'),
+    (2, 'Проезд'),
+    (3, 'Телефон'),
+    (4, 'Амортизация'),
+    (5, 'Прочее'),
+    (6, 'НДС'),
+)
+
+
+class Minfin(models.Model):
+    date_create = models.DateTimeField('Дата', default=datetime.now())
+    price = models.DecimalField('Цена', max_digits=10, decimal_places=2)
+    describe = models.CharField('Описание', max_length=255)
+    type_table = models.IntegerField('Тип операции', max_length=255, choices=MINFIN_CHOICES, blank=True, null=True)
+
+    @property
+    def balance(self):
+        return Minfin.objects.aggregate(balance=Sum('price')).get('balance') * -1
 
     def __str__(self):
-        return self.ostatoc_minfin
+        return f"{self.date_create}  {self.price} {self.describe}"
 
     class Meta:
         verbose_name = 'Минфин'
         verbose_name_plural = 'Минфин'
-        ordering = ['-date_minfin', '-id']
-
-
-class eda(models.Model):
-    date_eda = models.DateTimeField(verbose_name='Дата', default=datetime.now())
-    ostatoc_eda = models.CharField(max_length=255, blank=True)
-    sum_eda = models.CharField(max_length=255)
-    describe_eda = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.ostatoc_eda
-
-    class Meta:
-        verbose_name = 'Еда'
-        verbose_name_plural = 'Еда'
-        ordering = ['-date_eda', '-id']
-
-
-class transport(models.Model):
-    date_transport = models.DateTimeField(verbose_name='Дата', default=datetime.now())
-    ostatoc_transport = models.CharField(max_length=255, blank=True)
-    sum_transport = models.CharField(max_length=255)
-    describe_transport = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.ostatoc_transport
-
-    class Meta:
-        verbose_name = 'Транспорт'
-        verbose_name_plural = 'Транспорт'
-        ordering = ['-date_transport', '-id']
-
-
-class razvlechenia(models.Model):
-    date_razvlechenia = models.DateTimeField(verbose_name='Дата', default=datetime.now())
-    ostatoc_razvlechenia = models.CharField(max_length=255, blank=True)
-    sum_razvlechenia = models.CharField(max_length=255)
-    describe_razvlechenia = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.ostatoc_razvlechenia
-
-    class Meta:
-        verbose_name = 'Развлечения'
-        verbose_name_plural = 'Развлечения'
-        ordering = ['-date_razvlechenia', '-id']
-
-
-class amortizatia(models.Model):
-    date_amortizatia = models.DateTimeField(verbose_name='Дата', default=datetime.now())
-    ostatoc_amortizatia = models.CharField(max_length=255, blank=True)
-    sum_amortizatia = models.CharField(max_length=255)
-    describe_amortizatia = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.ostatoc_amortizatia
-
-    class Meta:
-        verbose_name = 'Амортизация'
-        verbose_name_plural = 'Амортизация'
-        ordering = ['-date_amortizatia', '-id']
-
-
-class prochee(models.Model):
-    date_prochee = models.DateTimeField(verbose_name='Дата', default=datetime.now())
-    ostatoc_prochee = models.CharField(max_length=255, blank=True)
-    sum_prochee = models.CharField(max_length=255)
-    describe_prochee = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.ostatoc_prochee
-
-    class Meta:
-        verbose_name = 'Прочее'
-        verbose_name_plural = 'Прочее'
-        ordering = ['-date_prochee', '-id']
-
-
-class nds(models.Model):
-    date_nds = models.DateTimeField(verbose_name='Дата', default=datetime.now())
-    ostatoc_nds = models.FloatField()
-    sum_nds = models.FloatField()
-    describe_nds = models.CharField(max_length=255)
-    type_table = models.CharField(max_length=255, blank=True, null=True, default='НДС')
-    id_insert = models.IntegerField(blank=True, null=True)
-
-    def __str__(self):
-        return self.ostatoc_nds
-
-    class Meta:
-        verbose_name = 'Ндс'
-        verbose_name_plural = 'Ндс'
-        ordering = ['-date_nds', '-id']
+        ordering = ['-date_create', '-id']

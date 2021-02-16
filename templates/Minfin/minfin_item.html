@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 style="text-align:center;">МинФин: все операции</h1>
+    <h1 style="text-align:center;">Еда</h1>
     <b style="margin:10px;">Остаток: <u>{{ last_ostatoc }}</u></b>
+    <form method="post">
+        {% csrf_token %}
+        <input name="data" style="width:98%;margin:10px;" type="text"> <br>
+        <input style="margin:10px;width:200px;" value="Отправить" type="submit">
+    </form>
     <hr/>
     <div style="margin:10px;">
         {% if queryset %}
@@ -16,10 +21,10 @@
             </div>
         {% endif %}
         {% for item in queryset %}
-            <p> {{ forloop.counter }}. <b>{{item.date_create|date:"d.m.Y"}}</b>  <u>{{ item.balance }}</u>  <b>{{ item.price }}</b> {{ item.describe }} ({{ item.get_type_table_display }}) </p>
+            <p> {{ forloop.counter }} <b>{{item.date_create|date:"d.m.Y"}}</b>  <u>{{ last_ostatoc }}</u>  <b>{{ item.price }}</b> {{ item.describe }} </p>
         {% endfor %}
         {% if queryset %}
-            <div style="text-align: center; margin-bottom: 20px;">
+            <div style="text-align: center">
                 <a class="btn btn-outline-danger" href="?page=1">Начало</a>
                 {% if queryset.has_previous %}
                     <a class="btn btn-outline-success" href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a>

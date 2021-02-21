@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 style="text-align:center;">Еда</h1>
+    <h1 style="text-align:center;">{{ minfin_name }}</h1>
     <b style="margin:10px;">Остаток: <u>{{ last_ostatoc }}</u></b>
     <form method="post">
         {% csrf_token %}
-        <input name="data" style="width:98%;margin:10px;" type="text"> <br>
+        <input name="data" style="width:98%;margin:10px;" placeholder="сумма.сумма описание" type="text"> <br>
         <input style="margin:10px;width:200px;" value="Отправить" type="submit">
     </form>
     <hr/>

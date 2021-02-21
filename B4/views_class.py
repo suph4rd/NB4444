@@ -128,10 +128,11 @@ class MinfinView(View):
                 sum = re.match(r'-\d+', text_input)  # достаём сумму, если она отрицательная
             else:
                 sum = re.match(r'\d+', text_input)   # достаём сумму
-            queryset.price = float(sum.group()) * self.nds      # мб Float или лучше Decimal
+            price = float(sum.group())
+            queryset.price = price * self.nds if price > 0 else price      # мб Float или лучше Decimal
             queryset.describe = text_input[sum.end()+1:].strip()
             queryset.save()
-            self.add_nds(queryset, float(sum.group()))
+            self.add_nds(queryset, price)
         except Exception as e:
             print("--------------------Ошибка------------------------------")
             print(e)

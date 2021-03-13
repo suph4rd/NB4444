@@ -29,7 +29,7 @@ SECRET_KEY = 'mri5kxr7g(*9=wb@crnhuh_xw8#%rsx$hh8!7m89mg-=(s8kox'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

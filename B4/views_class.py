@@ -69,7 +69,7 @@ class NlgView(View):
     """Направление личной жизни"""
     def get(self, request):
         queryset = models.Nlg.objects.all()
-        paginator = Paginator(queryset, 25)
+        paginator = Paginator(queryset, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         return render(request, 'NLJ.html', {'queryset': page_obj,
@@ -128,10 +128,11 @@ class MinfinView(View):
                 sum = re.match(r'-\d+', text_input)  # достаём сумму, если она отрицательная
             else:
                 sum = re.match(r'\d+', text_input)   # достаём сумму
-            queryset.price = float(sum.group()) * self.nds      # мб Float или лучше Decimal
+            price = float(sum.group())
+            queryset.price = price * self.nds if price > 0 else price      # мб Float или лучше Decimal
             queryset.describe = text_input[sum.end()+1:].strip()
             queryset.save()
-            self.add_nds(queryset, float(sum.group()))
+            self.add_nds(queryset, price)
         except Exception as e:
             print("--------------------Ошибка------------------------------")
             print(e)

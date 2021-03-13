@@ -69,7 +69,7 @@ class NlgView(View):
     """Направление личной жизни"""
     def get(self, request):
         queryset = models.Nlg.objects.all()
-        paginator = Paginator(queryset, 25)
+        paginator = Paginator(queryset, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         return render(request, 'NLJ.html', {'queryset': page_obj,

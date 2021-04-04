@@ -13,14 +13,17 @@ from NB4444.settings import MEDIA_URL
 
 class Autorization(View):
     """Авторизация"""
-    def get(self, request, warning=None):
+
+    @staticmethod
+    def get(request, warning=None):
         content = {}
         userform = UserForm()
         content['warning'] = warning
         content['userform'] = userform
         return render(request, 'login.html', content)
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
@@ -29,28 +32,36 @@ class Autorization(View):
             return redirect('general')
         else:
             warning = 'Неверный логин или пароль!!!'
-            return Autorization.get(self, request=request, warning=warning)
+            return Autorization.get(request=request, warning=warning)
+
 
 class Logout(View):
     """Выход из профиля"""
-    def get(self, request):
+
+    @staticmethod
+    def get(request):
         logout(request)
         return redirect('login')
 
 
 class GeneralPage(LoginRequiredMixin, View):
     """Главная страница"""
-    def get(self, request):
+
+    @staticmethod
+    def get(request):
         return render(request, 'general.html', {})
 
 
 class StandartVichetiView(View):
     """Стандартные вычеты"""
-    def get(self, request):
+
+    @staticmethod
+    def get(request):
         queryset = models.StandartVichet.objects.last()
         return render(request, 'standart_vichet.html', {'last_vicheti': queryset})
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         queryset = models.StandartVichet(
             hata=float(request.POST.get('hata').replace(',', '.')),
             proezd=float(request.POST.get('proezd').replace(',', '.')),
@@ -62,18 +73,19 @@ class StandartVichetiView(View):
         except Exception as e:
             print(e)
         finally:
-            return StandartVichetiView.get(self, request)
+            return StandartVichetiView.get(request)
 
 
 class NlgView(View):
     """Направление личной жизни"""
-    def get(self, request):
+
+    @staticmethod
+    def get(request):
         queryset = models.Nlg.objects.all()
         paginator = Paginator(queryset, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        return render(request, 'NLJ.html', {'queryset': page_obj,
-                                            'MEDIA_URL': MEDIA_URL})
+        return render(request, 'NLJ.html', {'queryset': page_obj,                                            'MEDIA_URL': MEDIA_URL})
 
     def post(self, request):
         text_nlg = request.POST.get('text_nlg')
@@ -89,7 +101,7 @@ class NlgView(View):
         except Exception as e:
             print(e)
         finally:
-            return NlgView.get(self, request)
+            return NlgView.get(request)
 
 
 class MinfinView(View):
@@ -207,3 +219,9 @@ class MinfinNDSView(MinfinView):
     minfin_type = 6
     queryset = models.Minfin.objects.filter(type_table=minfin_type)
     template_name = 'Minfin/minfin_item.html'
+
+
+def get_bot_info(request):
+    from botV4 import main
+    main.main()
+    return NlgView.get(request)

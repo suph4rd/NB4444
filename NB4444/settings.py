@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_ckeditor_5',
+    'rest_framework',
+    
+    # apps
     'B4.apps.B4Config'
 ]
 

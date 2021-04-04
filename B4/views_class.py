@@ -67,13 +67,14 @@ class StandartVichetiView(View):
 
 class NlgView(View):
     """Направление личной жизни"""
-    def get(self, request):
+
+    @staticmethod
+    def get(request):
         queryset = models.Nlg.objects.all()
         paginator = Paginator(queryset, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        return render(request, 'NLJ.html', {'queryset': page_obj,
-                                            'MEDIA_URL': MEDIA_URL})
+        return render(request, 'NLJ.html', {'queryset': page_obj,                                            'MEDIA_URL': MEDIA_URL})
 
     def post(self, request):
         text_nlg = request.POST.get('text_nlg')
@@ -89,7 +90,7 @@ class NlgView(View):
         except Exception as e:
             print(e)
         finally:
-            return NlgView.get(self, request)
+            return NlgView.get(request)
 
 
 class MinfinView(View):
@@ -207,3 +208,9 @@ class MinfinNDSView(MinfinView):
     minfin_type = 6
     queryset = models.Minfin.objects.filter(type_table=minfin_type)
     template_name = 'Minfin/minfin_item.html'
+
+
+def get_bot_info(request):
+    from botV4 import main
+    main.main()
+    return NlgView.get(request)

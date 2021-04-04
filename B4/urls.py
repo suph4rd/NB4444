@@ -25,15 +25,19 @@ urlpatterns = [
     path('accounts/login/', views_class.Autorization.as_view(), name='login'),
     path('logout/', views_class.Logout.as_view(), name='logout'),
     path('', views_class.GeneralPage.as_view(), name='general'),
-    path('standartnie_vicheti/', views_class.StandartVichetiView.as_view(), name='standartnie_vicheti'),
+    path('standartnie-vicheti/', views_class.StandartVichetiView.as_view(), name='standartnie_vicheti'),
     path('nlj/', views_class.NlgView.as_view(), name='nlj'),
+
     path('minfin/', views_class.MinfinView.as_view(), name='minfin'),
-    path('minfin_eda/', views_class.MinfinEdaView.as_view(), name='minfin_eda'),
-    path('minfin_transport', views_class.MinfinRoadView.as_view(), name='minfin_transport'),
-    path('minfin_razvlechenia/', views_class.MinfinAtractiveView.as_view(), name='minfin_razvlechenia'),
-    path('minfin_ammortizatia/', views_class.MinfinDepreciationView.as_view(), name='minfin_ammortizatia'),
-    path('minfin_prochee/', views_class.MinfinOtherView.as_view(), name='minfin_prochee'),
-    path('minfin_nds/', views_class.MinfinNDSView.as_view(), name='minfin_nds'),
+    path('minfin-eda/', views_class.MinfinEdaView.as_view(), name='minfin_eda'),
+    path('minfin-transport', views_class.MinfinRoadView.as_view(), name='minfin_transport'),
+    path('minfin-razvlechenia/', views_class.MinfinAtractiveView.as_view(), name='minfin_razvlechenia'),
+    path('minfin-ammortizatia/', views_class.MinfinDepreciationView.as_view(), name='minfin_ammortizatia'),
+    path('minfin-prochee/', views_class.MinfinOtherView.as_view(), name='minfin_prochee'),
+    path('minfin-nds/', views_class.MinfinNDSView.as_view(), name='minfin_nds'),
+
+    # path('bot-response/', views_drf .get_bot_info, name='bot_response'),
+    path('bot-response/', views_class.get_bot_info, name='bot_response'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

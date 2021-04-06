@@ -8,6 +8,9 @@ class Variables:
     method = "getUpdates"
     token = "1232067764:AAH9Y6sts9-rcoLAnAI5CH--jzsUBwRjkGc"
 
+    # message_id log file
+    file_path = './botV4/logs/'
+
     # db settings
     db_name = "nb4444"
     db_host = "localhost"
@@ -62,7 +65,8 @@ def get_response_telegram():
 
     token = Variables.token
     method = Variables.method
-    lig_file_name = f"{datetime.date.today()}_update_id_list.log"
+    file_path = Variables.file_path
+    log_file_name = f"{file_path}{datetime.date.today()}_update_id_list.log"
     while not to_request():
         print("sleep")
 
@@ -70,18 +74,20 @@ def get_response_telegram():
     response_json = response.json()
     if not response_json.get('ok'):
         return None
-    open(lig_file_name, "a")
-    with open(lig_file_name, "r") as file:
+    open(log_file_name, "a")
+    with open(log_file_name, "r") as file:
         update_id_list = [line.strip() for line in file]
-    response_list, log_list = [], []
+    response_list, log_list = dict(), set()
     for message in response_json['result']:
-        if str(message['update_id']) not in update_id_list:
-            response_list.append(message['message']['text'])
-            log_list.append(message['update_id'])
-    with open(lig_file_name, "a") as file:
+        if message.get('update_id') or message.get('edited_message'):
+            message_key = 'message' if message.get('message') else 'edited_message'
+            if str(message[message_key]['message_id']) not in update_id_list:
+                response_list.update({message[message_key]['message_id']: message[message_key]['text']})
+                log_list.add(message[message_key]['message_id'])
+    with open(log_file_name, "a") as file:
         for item in log_list:
             file.write(f"{item}\n")
-    return response_list
+    return response_list.values()
 
 
 def main():

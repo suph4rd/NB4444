@@ -1,23 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
+    <style>
+        .nb4Form {
+            padding:10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .nb4Form .item {
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    </style>
+
     <h1 style="text-align:center;">НЛЖ</h1>
-    <form method="post" style="padding:10px" enctype="multipart/form-data">
+    <form class="nb4Form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <textarea style="width:100%" name="text_nlg" id="" cols="50" rows="7"></textarea><br>
-        <input style="padding-bottom:10px" name="image_nlg" type="file">
-        <input style="height:50px; width:200px; float:right" value="Отправить" type="submit">
+        <textarea class="item" name="text_nlg" rows="3"></textarea><br>
+        <input class="item" name="image_nlg" type="file">
+        <input class="item" value="Отправить" type="submit">
     </form>
     <hr/>
-    <div style="text-align: center">
-        <a class="btn btn-outline-danger" href="?page=1">Начало</a>
-        {% if queryset.has_previous %}
-                <a class="btn btn-outline-success" href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a>
-        {% endif %}
-        {% if queryset.has_next %}
-            <a class="btn btn-outline-success" href="?page={{ queryset.next_page_number }}">Следующая &raquo;</a>
-        {% endif %}
-        <a class="btn btn-outline-danger" href="?page={{ queryset.paginator.num_pages }}">Последняя </a>
-    </div>
+        {% include 'navigate.html' %}
     <div style="padding:10px">
         {% for nlj in queryset %}
             <hr/>
@@ -29,14 +32,5 @@
            </p>
         {% endfor %}
     </div>
-    <div style="text-align: center; margin-bottom:20px">
-        <a class="btn btn-outline-danger" href="?page=1">Начало</a>
-        {% if queryset.has_previous %}
-            <a class="btn btn-outline-success" href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a>
-        {% endif %}
-        {% if queryset.has_next %}
-            <a class="btn btn-outline-success" href="?page={{ queryset.next_page_number }}">Следующая &raquo;</a>
-        {% endif %}
-        <a class="btn btn-outline-danger" href="?page={{ queryset.paginator.num_pages }}">Последняя </a>
-    </div>
+    {% include 'navigate.html' %}
 {% endblock %}

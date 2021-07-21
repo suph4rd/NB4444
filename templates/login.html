@@ -9,25 +9,65 @@
         <script src="{% static 'js/jqvery.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
     </head>
-    <body style="background: url(/media/fonBG.jpg);">
+
+    <style>
+        body {
+            background: url(/media/fonBG.jpg);
+        }
+        .row div:first-child {
+            padding: 30px;
+            background-color: darkcyan;
+            border-radius: 5px;
+            min-width: 280px;
+            max-height: 280px;
+        }
+        .row div:first-child {
+            padding: 30px;
+            background-color: darkcyan;
+            border-radius: 5px;
+            min-width: 280px;
+            max-height: 280px;
+        }
+        @media (max-width: 576px) {
+            .row img {
+                width: 100%;
+                border-radius: 5px;
+                margin-top: 10px;
+            }
+        }
+
+        .row div:last-child {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        h1.table-primary {
+            text-align: center;border-radius: 5px;padding: 15px; background-color:cornflowerblue
+        }
+        h1.warning {
+            text-align: center; color: #a41515
+        }
+    </style>
+
+    <body>
         <div class="container-fluid">
-            <h1 class="table-primary" style="text-align: center;border-radius: 5px;padding: 15px; background-color:cornflowerblue">БЧ (Электронная версия 5.1)</h1>
+            <h1 class="table-primary">БЧ (Электронная версия 5.1)</h1>
             {% if warning != None %}
-                <h1 style="text-align: center; color: #a41515">{{ warning }} </h1>
+                <h1 class="warning">{{ warning }} </h1>
             {% endif %}
             <br>
-            <form  method="POST"  style="width:275px;float:left;"> <!-- margin: 0 auto; padding-top:5%; -->
-                <div  style="padding: 30px;background-color:darkcyan;border-radius: 5px;float:left;">
-                    {% csrf_token %}
-                    <h4>Имя пользователя</h4>
-                    <p>{{ userform.username }}</p>
-                    <h4>Пароль</h4>
-                    <p>{{ userform.password }}</p>
-                    <button type="submit">Выполнить вход</button>
+            <div class="row">
+                <div class="col-3 ml-3">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <h4>Имя пользователя</h4>
+                        <p>{{ userform.username }}</p>
+                        <h4>Пароль</h4>
+                        <p>{{ userform.password }}</p>
+                        <button type="submit">Выполнить вход</button>
+                    </form>
                 </div>
-            </form>
-            <div style="padding-left:300px;">
-                <img style="width:100%;border-radius: 5px;" src="/media/lambaZel.jpg" alt="ламба черная">
+                <img class="col-8" src="/media/lambaZel.jpg" alt="ламба черная">
             </div>
         </div>
     </body>

@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <script src="{% static 'js/jqvery.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
 
     <style>
@@ -30,14 +31,16 @@
         }
         @media (max-width: 576px) {
             .row img {
-                width: 100%;
-                border-radius: 5px;
                 margin-top: 10px;
             }
-        }
+         }
 
         .row div:last-child {
+            border-radius: 5px;
+        }
+        .row div:last-child img {
             width: 100%;
+            min-width: 200px;
             border-radius: 5px;
         }
 
@@ -51,13 +54,13 @@
 
     <body>
         <div class="container-fluid">
-            <h1 class="table-primary">БЧ (Электронная версия 5.1)</h1>
+            <h1 class="table-primary">БЧ (Электронная версия 7.1)</h1>
             {% if warning != None %}
                 <h1 class="warning">{{ warning }} </h1>
             {% endif %}
             <br>
-            <div class="row">
-                <div class="col-3 ml-3">
+            <div class="row ml-1 mr-1">
+                <div class="col col-sm-3">
                     <form method="POST">
                         {% csrf_token %}
                         <h4>Имя пользователя</h4>
@@ -67,7 +70,9 @@
                         <button type="submit">Выполнить вход</button>
                     </form>
                 </div>
-                <img class="col-8" src="/media/lambaZel.jpg" alt="ламба черная">
+                <div class="col">
+                    <img src="/media/lambaZel.jpg" alt="ламба черная">
+                </div>
             </div>
         </div>
     </body>

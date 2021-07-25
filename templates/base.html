@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <script src="{% static 'js/jqvery.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <style>
@@ -41,13 +42,13 @@
         font-size: 33px;
         font-weight: bold;
     }
-    .container-fluid {
-        display: inline-flex;
+    .container {
+        margin-top: 60px;
     }
     #LeftMenu {
         /*display: none;*/
-        width: 19%;
-        max-height: 250px;
+        {#width: 19%;#}
+        height: 30%;
         background-color: cadetblue;
         padding: 10px;
         border-radius: 5px;
@@ -55,6 +56,11 @@
     #LeftMenu p a {
         color: chartreuse;
         font-weight: bold;
+    }
+    @media (max-width: 900px) {
+        #LeftMenu {
+            height: 100%;
+        }
     }
     #Content {
         position: relative;
@@ -71,28 +77,30 @@
             <div>
                 <img id="btnMenu" src="/media/ss.jpg" alt="денюжка">
             </div>
-            <div>БЧ (Эл. V 5.1)</div>
+            <div>БЧ (Эл. V 7.1)</div>
         </div>
     </a>
-    <div class="container-fluid mt-5">
-        <div id="LeftMenu" style="display: none;">
-<!--            <b><a href="{% url 'minfin' %}">2.МинФин:</a></b><br>-->
-<!--            <a href="{% url 'minfin_eda' %}">* Еда</a><br>-->
-<!--            <a href="{% url 'minfin_transport' %}">* Транспорт</a><br>-->
-<!--            <a href="{% url 'minfin_razvlechenia' %}">* Развлечения</a><br>-->
-<!--            <a href="{% url 'minfin_ammortizatia' %}">* Аммортизация</a><br>-->
-<!--            <a href="{% url 'minfin_prochee' %}">* Прочее</a><br>-->
-<!--            <a href="{% url 'minfin_nds' %}">* НДС</a><br><br>-->
-            <p><a href="{% url 'admin:index' %}">1.Панель администратора</a></p>
-            <p><a href="{% url 'standartnie_vicheti' %}">2.Стандартные вычеты</a></p>
-            <p><a href="{% url 'nlj' %}">3.НЛЖ</a></p>
-            <p><a href="{% url 'bot_response' %}">4.Подгрузить записи НЛЖ из бота</a></p>
-            <hr>
-            <p><a style="color:black" href="{% url 'logout' %}">Выход</a></p>
-        </div>
-        <div id="Content">
-            {% block content %}
-            {% endblock %}
+    <div class="container">
+        <div class="row">
+            <div class="col col-lg-3" id="LeftMenu" style="display: none;">
+    <!--            <b><a href="{% url 'minfin' %}">2.МинФин:</a></b><br>-->
+    <!--            <a href="{% url 'minfin_eda' %}">* Еда</a><br>-->
+    <!--            <a href="{% url 'minfin_transport' %}">* Транспорт</a><br>-->
+    <!--            <a href="{% url 'minfin_razvlechenia' %}">* Развлечения</a><br>-->
+    <!--            <a href="{% url 'minfin_ammortizatia' %}">* Аммортизация</a><br>-->
+    <!--            <a href="{% url 'minfin_prochee' %}">* Прочее</a><br>-->
+    <!--            <a href="{% url 'minfin_nds' %}">* НДС</a><br><br>-->
+                <p><a href="{% url 'admin:index' %}">1.Панель администратора</a></p>
+                <p><a href="{% url 'standartnie_vicheti' %}">2.Стандартные вычеты</a></p>
+                <p><a href="{% url 'nlj' %}">3.НЛЖ</a></p>
+                <p><a href="{% url 'bot_response' %}">4.Подгрузить записи НЛЖ из бота</a></p>
+                <hr>
+                <p><a style="color:black" href="{% url 'logout' %}">Выход</a></p>
+            </div>
+            <div id="Content" class="col">
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
     </div>
 

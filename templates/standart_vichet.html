@@ -1,14 +1,51 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 style="text-align:center;">Стандартные вычеты</h1>
+    <style>
+        .head-name {
+            text-align: center;
+        }
+        form p{
+            font-weight: bold;
+        }
+        .row p span {
+            min-width: 100px;
+        }
+        .row p input {
+            min-width: 80px;
+        }
+        form input {
+            width: 100%;
+        }
+    </style>
+
+    <h1 class="head-name">Стандартные вычеты</h1>
     <form method="post" style="margin:15px;">
         {% csrf_token %}
-        <p><b>1. Хата</b> <input name="hata" style="position:relative;margin-left:35px" type="text" value="{{last_vicheti.hata}}"><br></p>
-        <p><b>2. Проезд</b> <input name="proezd" style="position:relative;margin-left:15px" type="text" value="{{last_vicheti.proezd}}"><br></p>
-        <p><b>3. Мобила</b> <input name="mobila" style="position:relative;margin-left:12px" type="text" value="{{last_vicheti.mobila}}"><br></p>
-        <p><b>4. Еда</b> <input name="eda" style="position:relative;margin-left:44px" type="text" value="{{last_vicheti.eda}}"><br></p>
-        <p style="position:relative"> <b>5. Итого</b>  <span style="margin-left:30px">{{last_vicheti.itogo}} </span></p>
+        <p class="row">
+            <span class="col-5">1. Хата</span>
+            <input class="col" name="hata" type="text" value="{{last_vicheti.hata}}">
+            <br>
+        </p>
+        <p class="row">
+            <span class="col-5">2. Проезд</span>
+            <input class="col" name="proezd" type="text" value="{{last_vicheti.proezd}}">
+            <br>
+        </p>
+        <p class="row">
+            <span class="col-5">3. Мобила</span>
+            <input class="col" name="mobila" type="text" value="{{last_vicheti.mobila}}">
+            <br>
+        </p>
+        <p class="row">
+            <span class="col-5">4. Еда</span>
+            <input class="col" name="eda" type="text" value="{{last_vicheti.eda}}">
+            <br>
+        </p>
+        <p class="row">
+            <span class="col-5">5. Итого</span>
+            <span class="col" style="font-weight: lighter">{{last_vicheti.itogo}}</span>
+        </p>
         <hr>
-        <input style="margin:15px;width:200px" type="submit" value="Обновить">
+        <input type="submit" value="Обновить">
     </form>
 {% endblock %}

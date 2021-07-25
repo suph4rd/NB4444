@@ -3,6 +3,10 @@ import psycopg2
 import requests
 
 
+now = datetime.datetime.today()
+today = datetime.date.today()
+
+
 class Variables:
     # telegram api settings
     method = "getUpdates"
@@ -17,6 +21,13 @@ class Variables:
     db_user = "nb4444"
     db_password = "1234"
     db_port = 5432
+
+    @classmethod
+    def record_error_log(cls, error):
+        log_error_directory = cls.file_path + "error/"
+        log_error_file_name = log_error_directory + f"error_{today}.log"
+        with open(log_error_file_name, "a") as file:
+            file.write(f"{now} __ {error}\n")
 
 
 class Connect:
@@ -52,7 +63,7 @@ class Connect:
             with psycopg2_connect.cursor() as cursor:
                 for message in response_list:
                     cursor.execute(f'INSERT INTO public."B4_nlg"(date_nlg, text_nlg, image_nlg) VALUES '
-                                   f'(\'{datetime.datetime.today()}\', \'{message}\', \'\' );')
+                                   f'(\'{now}\', \'{message}\', \'\' );')
                     psycopg2_connect.commit()
 
 
@@ -66,7 +77,7 @@ def get_response_telegram():
     token = Variables.token
     method = Variables.method
     file_path = Variables.file_path
-    log_file_name = f"{file_path}{datetime.date.today()}_update_id_list.log"
+    log_file_name = f"{file_path}{today}_update_id_list.log"
     while not to_request():
         print("sleep")
 
@@ -79,11 +90,15 @@ def get_response_telegram():
         update_id_list = [line.strip() for line in file]
     response_list, log_list = dict(), set()
     for message in response_json['result']:
-        if message.get('update_id') or message.get('edited_message'):
-            message_key = 'message' if message.get('message') else 'edited_message'
-            if str(message[message_key]['message_id']) not in update_id_list:
-                response_list.update({message[message_key]['message_id']: message[message_key]['text']})
-                log_list.add(message[message_key]['message_id'])
+        try:
+            if message.get('update_id') or message.get('edited_message'):
+                message_key = 'message' if message.get('message') else 'edited_message'
+                if str(message[message_key]['message_id']) not in update_id_list:
+                    response_list.update({message[message_key]['message_id']: message[message_key]['text']})
+                    log_list.add(message[message_key]['message_id'])
+        except Exception as e:
+            print(f"Error in loop! {str(e)}")
+            Variables.record_error_log(e)
     with open(log_file_name, "a") as file:
         for item in log_list:
             file.write(f"{item}\n")
@@ -98,6 +113,7 @@ def main():
             print("Success")
     except Exception as e:
         print(f"Error! {str(e)}")
+        Variables.record_error_log(e)
 
 
 if __name__ == "__main__":

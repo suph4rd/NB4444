@@ -91,10 +91,13 @@ def get_response_telegram():
 
 
 def main():
-    response_list = get_response_telegram()
-    if response_list:
-        Connect.insert_to_db(response_list)
-        print("Success")
+    try:
+        response_list = get_response_telegram()
+        if response_list:
+            Connect.insert_to_db(response_list)
+            print("Success")
+    except Exception as e:
+        print(f"Error! {str(e)}")
 
 
 if __name__ == "__main__":

@@ -84,14 +84,21 @@ WSGI_APPLICATION = 'NB4444.wsgi.application'
 config = configparser.ConfigParser()
 config.read('./nb4444/connection.cfg')
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'nb4444',
+#         'USER': 'nb4444',
+#         'PASSWORD': '1234',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'nb4444',
-        'USER': 'nb4444',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'b426072021.sqlite3',
     }
 }
 

@@ -85,7 +85,7 @@ class NlgView(View):
         paginator = Paginator(queryset, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        return render(request, 'NLJ.html', {'queryset': page_obj,                                            'MEDIA_URL': MEDIA_URL})
+        return render(request, 'NLJ.html', {'queryset': page_obj, 'MEDIA_URL': MEDIA_URL})
 
     def post(self, request):
         text_nlg = request.POST.get('text_nlg')

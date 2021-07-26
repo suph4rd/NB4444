@@ -4,9 +4,9 @@ from B4 import models
 
 
 class NljAdmin(admin.ModelAdmin):
-    list_display = ('id', 'date_nlg', 'text_nlg', 'image_nlg_def')
-    list_display_links = ('id', 'date_nlg')
-    search_fields = ('date_nlg', 'text_nlg')
+    list_display = ('id', 'created_at', 'updated_at', 'text_nlg', 'image_nlg_def')
+    list_display_links = ('id', 'created_at')
+    search_fields = ('created_at', 'text_nlg')
 
     def image_nlg_def(self, obj):
         if obj.image_nlg:
@@ -16,9 +16,9 @@ class NljAdmin(admin.ModelAdmin):
 
 
 class MinfinAdmin(admin.ModelAdmin):
-    list_display = ('id','get_type_table_display', 'date_create', 'balance', 'price', 'describe')
-    list_display_links = ('id', 'get_type_table_display', 'date_create')
-    search_fields = ('date_create', 'describe', 'get_type_table_display')
+    list_display = ('id', 'get_type_table_display', 'created_at', 'updated_at', 'balance', 'price', 'describe')
+    list_display_links = ('id', 'get_type_table_display', 'created_at')
+    search_fields = ('created_at', 'describe', 'get_type_table_display')
 
 
 admin.site.register(models.StandartVichet)

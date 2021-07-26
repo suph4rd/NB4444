@@ -9,7 +9,7 @@ NULL_BLANK = {
 
 
 class TimeModel(models.Model):
-    created_at = models.DateTimeField("Дата создания", auto_now_add=True)
+    created_at = models.DateTimeField("Дата создания", auto_now_add=True, **NULL_BLANK)
     updated_at = models.DateTimeField("Дата изменения", auto_now=True, **NULL_BLANK)
 
     class Meta:

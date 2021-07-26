@@ -1,9 +1,22 @@
-from datetime import datetime
 from django.db import models
 from django.db.models import Sum
 
 
-class StandartVichet(models.Model):
+NULL_BLANK = {
+    "null": True,
+    "blank": True
+}
+
+
+class TimeModel(models.Model):
+    created_at = models.DateTimeField("Дата создания", auto_now_add=True)
+    updated_at = models.DateTimeField("Дата изменения", auto_now=True, **NULL_BLANK)
+
+    class Meta:
+        abstract = True
+
+
+class StandartVichet(TimeModel):
     hata = models.DecimalField('Жильё', max_digits=10, decimal_places=2)
     proezd = models.DecimalField('Проезд', max_digits=10, decimal_places=2)
     mobila = models.DecimalField('Телефон', max_digits=10, decimal_places=2)
@@ -18,18 +31,18 @@ class StandartVichet(models.Model):
         verbose_name_plural = 'Стандартные вычеты'
 
 
-class Nlg(models.Model):
-    date_nlg = models.DateTimeField('Дата', default=datetime.now())
-    text_nlg = models.TextField('Текст', blank=True, null=True)
-    image_nlg = models.ImageField('Фотоверсия', blank=True, null=True, upload_to="foto/%Y/%m/%d")
+class Nlg(TimeModel):
+    # created_at = models.DateTimeField('Дата', default=datetime.now())
+    text_nlg = models.TextField('Текст', **NULL_BLANK)
+    image_nlg = models.ImageField('Фотоверсия', **NULL_BLANK, upload_to="foto/%Y/%m/%d")
 
     def __str__(self):
-        return str(self.date_nlg)
+        return str(self.created_at)
 
     class Meta:
         verbose_name = 'Нлж'
         verbose_name_plural = 'Нлж'
-        ordering = ['-date_nlg', '-id']
+        ordering = ['-created_at', '-id']
 
 
 MINFIN_CHOICES = (
@@ -43,8 +56,8 @@ MINFIN_CHOICES = (
 )
 
 
-class Minfin(models.Model):
-    date_create = models.DateTimeField('Дата', default=datetime.now())
+class Minfin(TimeModel):
+    # date_create = models.DateTimeField('Дата', default=datetime.now())
     price = models.DecimalField('Цена', max_digits=10, decimal_places=2)
     describe = models.CharField('Описание', max_length=255)
     type_table = models.IntegerField('Тип операции', max_length=255, choices=MINFIN_CHOICES, blank=True, null=True)
@@ -54,9 +67,9 @@ class Minfin(models.Model):
         return Minfin.objects.aggregate(balance=Sum('price')).get('balance') * -1
 
     def __str__(self):
-        return f"{self.date_create}  {self.price} {self.describe}"
+        return f"{self.created_at}  {self.price} {self.describe}"
 
     class Meta:
         verbose_name = 'Минфин'
         verbose_name_plural = 'Минфин'
-        ordering = ['-date_create', '-id']
+        ordering = ['-created_at', '-id']

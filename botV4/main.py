@@ -2,6 +2,7 @@ import datetime
 import psycopg2
 import requests
 
+from B4 import models
 
 now = datetime.datetime.today()
 today = datetime.date.today()
@@ -52,19 +53,26 @@ class Connect:
 
     @staticmethod
     def insert_to_db(response_list, **kwargs):
-        connect = Connect(**kwargs)
-        with psycopg2.connect(
-                host=connect.db_host,
-                port=connect.db_port,
-                dbname=connect.db_name,
-                user=connect.db_user,
-                password=connect.db_password
-        ) as psycopg2_connect:
-            with psycopg2_connect.cursor() as cursor:
-                for message in response_list:
-                    cursor.execute(f'INSERT INTO public."B4_nlg"(date_nlg, text_nlg, image_nlg) VALUES '
-                                   f'(\'{now}\', \'{message}\', \'\' );')
-                    psycopg2_connect.commit()
+        for message in response_list:
+            models.Nlg.objects.create(
+                text_nlg=message
+            )
+        # connect = Connect(**kwargs)
+        # with psycopg2.connect(
+        #         host=connect.db_host,
+        #         port=connect.db_port,
+        #         dbname=connect.db_name,
+        #         user=connect.db_user,
+        #         password=connect.db_password
+        # ) as psycopg2_connect:
+        #     with psycopg2_connect.cursor() as cursor:
+        #         for message in response_list:
+        #             models.Nlg.objects.create(
+        #
+        #             )
+        #             cursor.execute(f'INSERT INTO public."B4_nlg"(created_at, text_nlg, image_nlg) VALUES '
+        #                            f'(\'{now}\', \'{message}\', \'\' );')
+        #             psycopg2_connect.commit()
 
 
 def get_response_telegram():

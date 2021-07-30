@@ -15,12 +15,5 @@ class NljAdmin(admin.ModelAdmin):
             return 'Фото отсутствует'
 
 
-class MinfinAdmin(admin.ModelAdmin):
-    list_display = ('id', 'get_type_table_display', 'created_at', 'updated_at', 'balance', 'price', 'describe')
-    list_display_links = ('id', 'get_type_table_display', 'created_at')
-    search_fields = ('created_at', 'describe', 'get_type_table_display')
-
-
 admin.site.register(models.StandartVichet)
 admin.site.register(models.Nlg, NljAdmin)
-admin.site.register(models.Minfin, MinfinAdmin)

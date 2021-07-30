@@ -1,5 +1,5 @@
 import datetime
-import psycopg2
+import time
 import requests
 
 from B4 import models
@@ -16,13 +16,6 @@ class Variables:
     # message_id log file
     file_path = './botV4/logs/'
 
-    # db settings
-    db_name = "nb4444"
-    db_host = "localhost"
-    db_user = "nb4444"
-    db_password = "1234"
-    db_port = 5432
-
     @classmethod
     def record_error_log(cls, error):
         log_error_directory = cls.file_path + "error/"
@@ -33,23 +26,11 @@ class Variables:
 
 class Connect:
     instance = None
-    db_name = Variables.db_name
-    db_host = Variables.db_host
-    db_user = Variables.db_user
-    db_password = Variables.db_password
-    db_port = Variables.db_port
 
     def __new__(cls, *args, **kwargs):
-        if not Connect.instance:
-            Connect.instance = super().__new__(cls, *args, **kwargs)
-        return Connect.instance
-
-    def __init__(self, **kwargs):
-        self.db_host = kwargs.get('db_host', Connect.db_host)
-        self.db_port = kwargs.get('db_host', Connect.db_port)
-        self.db_name = kwargs.get('db_name', Connect.db_name)
-        self.db_user = kwargs.get('db_user', Connect.db_user)
-        self.db_password = kwargs.get('db_passresponse_listword', Connect.db_password)
+        if not cls.instance:
+            cls.instance = super().__new__(cls, *args, **kwargs)
+        return cls.instance
 
     @staticmethod
     def insert_to_db(response_list, **kwargs):
@@ -57,29 +38,15 @@ class Connect:
             models.Nlg.objects.create(
                 text_nlg=message
             )
-        # connect = Connect(**kwargs)
-        # with psycopg2.connect(
-        #         host=connect.db_host,
-        #         port=connect.db_port,
-        #         dbname=connect.db_name,
-        #         user=connect.db_user,
-        #         password=connect.db_password
-        # ) as psycopg2_connect:
-        #     with psycopg2_connect.cursor() as cursor:
-        #         for message in response_list:
-        #             models.Nlg.objects.create(
-        #
-        #             )
-        #             cursor.execute(f'INSERT INTO public."B4_nlg"(created_at, text_nlg, image_nlg) VALUES '
-        #                            f'(\'{now}\', \'{message}\', \'\' );')
-        #             psycopg2_connect.commit()
 
 
 def get_response_telegram():
     def to_request():
         try:
             return requests.request("get", f"https://api.telegram.org/bot{token}/{method}")
-        except:
+        except Exception as e:
+            print(e)
+            Variables.record_error_log(e)
             return None
 
     token = Variables.token
@@ -88,6 +55,7 @@ def get_response_telegram():
     log_file_name = f"{file_path}{today}_update_id_list.log"
     while not to_request():
         print("sleep")
+        time.sleep(30)
 
     response = to_request()
     response_json = response.json()
@@ -115,6 +83,7 @@ def get_response_telegram():
 
 def main():
     try:
+        print("Start")
         response_list = get_response_telegram()
         if response_list:
             Connect.insert_to_db(response_list)
@@ -122,6 +91,8 @@ def main():
     except Exception as e:
         print(f"Error! {str(e)}")
         Variables.record_error_log(e)
+    finally:
+        print("End")
 
 
 if __name__ == "__main__":

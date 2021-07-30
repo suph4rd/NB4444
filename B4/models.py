@@ -43,33 +43,3 @@ class Nlg(TimeModel):
         verbose_name = 'Нлж'
         verbose_name_plural = 'Нлж'
         ordering = ['-created_at', '-id']
-
-
-MINFIN_CHOICES = (
-    (0, 'Еда'),
-    (1, 'Развлечения'),
-    (2, 'Проезд'),
-    (3, 'Телефон'),
-    (4, 'Амортизация'),
-    (5, 'Прочее'),
-    (6, 'НДС'),
-)
-
-
-class Minfin(TimeModel):
-    # date_create = models.DateTimeField('Дата', default=datetime.now())
-    price = models.DecimalField('Цена', max_digits=10, decimal_places=2)
-    describe = models.CharField('Описание', max_length=255)
-    type_table = models.IntegerField('Тип операции', max_length=255, choices=MINFIN_CHOICES, blank=True, null=True)
-
-    @property
-    def balance(self):
-        return Minfin.objects.aggregate(balance=Sum('price')).get('balance') * -1
-
-    def __str__(self):
-        return f"{self.created_at}  {self.price} {self.describe}"
-
-    class Meta:
-        verbose_name = 'Минфин'
-        verbose_name_plural = 'Минфин'
-        ordering = ['-created_at', '-id']

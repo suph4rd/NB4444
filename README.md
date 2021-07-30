@@ -16,5 +16,5 @@ This is system for write some facts about my life.
 3) path for windows and linux
 
 # Reserve copy
-! directory foto in media
-! db file
+1) directory foto in media
+2) db file

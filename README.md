@@ -14,3 +14,7 @@ This is system for write some facts about my life.
 1) folder media/foto !!!!!!!!!!!
 2) copy DB
 3) path for windows and linux
+
+# Reserve copy
+! directory foto in media
+! db file

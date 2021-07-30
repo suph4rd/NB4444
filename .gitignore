@@ -4,3 +4,8 @@ media/foto/*
 NB4444/*.cfg
 NB4444/local_settings.py
 __pycache__
+*.sqlite3
+
+# logs
+botV4/logs/*.log
+botV4/logs/error/*.log

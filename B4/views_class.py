@@ -19,7 +19,7 @@ class Autorization(View):
     def get(request, warning=None):
         userform = UserForm()
         warning = warning
-        return render(request, 'login.html', locals())
+        return render(request, 'pages/login.html', locals())
 
     @staticmethod
     def post(request):
@@ -44,7 +44,7 @@ class GeneralPage(LoginRequiredMixin, View):
 
     @staticmethod
     def get(request):
-        return render(request, 'general.html', {})
+        return render(request, 'pages/general.html', {})
 
 
 class StandartVichetiView(View):
@@ -53,7 +53,7 @@ class StandartVichetiView(View):
     @staticmethod
     def get(request):
         queryset = models.StandartVichet.objects.last()
-        return render(request, 'standart_vichet.html', {'last_vicheti': queryset})
+        return render(request, 'pages/standart_vichet.html', {'last_vicheti': queryset})
 
     @staticmethod
     def post(request):
@@ -79,7 +79,7 @@ class NlgView(View):
         paginator = Paginator(self.queryset, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        return render(request, 'NLJ.html', {'queryset': page_obj, 'MEDIA_URL': MEDIA_URL})
+        return render(request, 'pages/NLJ.html', {'queryset': page_obj, 'MEDIA_URL': MEDIA_URL})
 
     def post(self, request):
         text_nlg = request.POST.get('text_nlg')

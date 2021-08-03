@@ -51,7 +51,7 @@ class StandartVichetiView(View):
     @staticmethod
     def get(request):
         queryset = models.StandartVichet.objects.last()
-        return render(request, 'pages/standart_vichet.html', {'last_vicheti': queryset})
+        return render(request, 'pages/default_deductions/standart_vichet.html', {'last_vicheti': queryset})
 
     @staticmethod
     def post(request):
@@ -77,7 +77,7 @@ class NlgView(View):
         paginator = Paginator(self.queryset, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        return render(request, 'pages/NLJ.html', {'queryset': page_obj, 'MEDIA_URL': MEDIA_URL})
+        return render(request, 'pages/nlg/NLJ.html', {'queryset': page_obj, 'MEDIA_URL': MEDIA_URL})
 
     def post(self, request):
         text_nlg = request.POST.get('text_nlg')

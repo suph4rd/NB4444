@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path, include
+from django.urls import path, reverse_lazy
 from django.conf.urls.static import static
 from django.views import generic
 
@@ -30,26 +30,58 @@ urlpatterns = [
 
     path('standartnie-vicheti/', views.StandartVichetiView.as_view(), name='standartnie_vicheti'),
     path('nlj/', views.NlgView.as_view(), name='nlj'),
-    path('plan/list/', generic.ListView.as_view(
-        model=models.Plan,
-        queryset=models.Plan.objects.select_related(),
-        template_name="pages/plan/list.html"
-    ), name='plan_list'),
-    path('plan/<int:pk>/', generic.DetailView.as_view(
-        model=models.Plan,
-        template_name="pages/plan/detail.html"
-    ), name='plan_detail'),
-    path('plan/create/', generic.CreateView.as_view(
-        model=models.Plan,
-        form_class=forms.get_custom_model_form(models.Plan),
-        template_name="pages/plan/create.html"
-    ), name='plan_create'),
-    path('plan/task/create/', generic.CreateView.as_view(
-        model=models.Task,
-        form_class=forms.get_custom_model_form(models.Task),
-        template_name="pages/task/create.html"
-    ), name='task_create'),
-
-    # path('bot-response/', views_drf .get_bot_info, name='bot_response'),
+    path(
+        'plan/list/',
+        generic.ListView.as_view(
+            model=models.Plan,
+            queryset=models.Plan.objects.select_related(),
+            template_name="pages/plan/list.html"
+        ),
+        name='plan_list'
+    ),
+    path(
+        'plan/<int:pk>/',
+        generic.DetailView.as_view(
+            model=models.Plan,
+            template_name="pages/plan/detail.html"
+        ),
+        name='plan_detail'
+    ),
+    path(
+        'plan/create/',
+        generic.CreateView.as_view(
+            model=models.Plan,
+            form_class=forms.get_custom_model_form(models.Plan),
+            template_name="pages/plan/create.html"
+        ),
+        name='plan_create'
+    ),
+    path(
+        'plan/task/create/',
+        generic.CreateView.as_view(
+            model=models.Task,
+            form_class=forms.get_custom_model_form(models.Task),
+            template_name="pages/task/create.html"
+        ),
+        name='task_create'
+    ),
+    path(
+        'plan/task/update/<int:pk>/',
+        generic.UpdateView.as_view(
+            model=models.Task,
+            form_class=forms.get_custom_model_form(models.Task),
+            template_name="pages/task/update.html"
+        ),
+        name='task_update'
+    ),
+    path(
+        'plan/task/delete/<int:pk>/',
+        generic.DeleteView.as_view(
+            model=models.Task,
+            template_name='pages/task/delete.html',
+            success_url=reverse_lazy('plan_list')
+        ),
+        name='task_delete'
+    ),
     path('bot-response/', views.get_bot_info, name='bot_response'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

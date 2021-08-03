@@ -18,4 +18,12 @@
         </div>
         <input style="width: 100%" type="submit">
     </form>
+        <div class="row btn-active">
+        <a class="col btn btn-outline-info" href="{% url 'plan_list' %}">
+            Назад
+        </a>
+        <a class="col btn btn-outline-secondary" href="{% url 'plan_create' %}">
+            Сброс
+        </a>
+    </div>
 {% endblock %}

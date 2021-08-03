@@ -1,5 +1,5 @@
 {% block page %}
-{% load static %}
+{% load static bootstrap5 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +30,8 @@
                 <p><a href="{% url 'admin:index' %}">1.Панель администратора</a></p>
                 <p><a href="{% url 'standartnie_vicheti' %}">2.Стандартные вычеты</a></p>
                 <p><a href="{% url 'nlj' %}">3.НЛЖ</a></p>
-                <p><a href="{% url 'bot_response' %}">4.Подгрузить записи НЛЖ из бота</a></p>
+                <p><a href="{% url 'plan_list' %}">4.Планы</a></p>
+                <p><a href="{% url 'bot_response' %}">5.Подгрузить записи НЛЖ из бота</a></p>
                 <hr>
                 <p><a style="color:black" href="{% url 'logout' %}">Выход</a></p>
             </div>

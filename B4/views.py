@@ -1,14 +1,12 @@
 import re
 import threading
 from datetime import datetime
-
-from django.contrib.auth import authenticate, login, logout as djagno_logout
+from django.contrib.auth import authenticate, login, logout as django_logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
-from B4.forms import UserForm
-from B4 import models
+from B4 import models, forms
 from NB4444.settings import MEDIA_URL
 
 
@@ -17,7 +15,7 @@ class Autorization(View):
 
     @staticmethod
     def get(request, warning=None):
-        userform = UserForm()
+        userform = forms.UserForm()
         warning = warning
         return render(request, 'pages/login.html', locals())
 
@@ -35,7 +33,7 @@ class Autorization(View):
 
 
 def logout(request):
-    djagno_logout(request)
+    django_logout(request)
     return redirect('login')
 
 

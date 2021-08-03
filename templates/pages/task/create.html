@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static bootstrap5 %}
+{% block content %}
+    <h1 style="text-align:center;">Создать задачу</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="detail">
+            <div class="row">
+                <div class="col">
+                     {% bootstrap_field form.plan %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% bootstrap_field form.section %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% bootstrap_field form.description %}
+                </div>
+            </div>
+        </div>
+        <input style="width: 100%" type="submit">
+    </form>
+{% endblock %}

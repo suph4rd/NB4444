@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_ckeditor_5',
     'rest_framework',
+    'bootstrap5',
     
     # apps
     'B4.apps.B4Config'

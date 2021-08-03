@@ -15,42 +15,41 @@ Including another URLconf
 """
 from django.urls import path, include
 from django.conf.urls.static import static
+from django.views import generic
 
-from B4 import views_class
+from . import views, models, forms
 from NB4444 import settings
 from django.contrib import admin
 
 
 urlpatterns = [
-    path('', views_class.GeneralPage.as_view(), name='general'),
+    path('', views.GeneralPage.as_view(), name='general'),
     path('admin/', admin.site.urls),
-    path('accounts/login/', views_class.Autorization.as_view(), name='login'),
-    path('logout/', views_class.logout, name='logout'),
+    path('accounts/login/', views.Autorization.as_view(), name='login'),
+    path('logout/', views.logout, name='logout'),
 
-    path('standartnie-vicheti/', views_class.StandartVichetiView.as_view(), name='standartnie_vicheti'),
-    path('nlj/', views_class.NlgView.as_view(), name='nlj'),
+    path('standartnie-vicheti/', views.StandartVichetiView.as_view(), name='standartnie_vicheti'),
+    path('nlj/', views.NlgView.as_view(), name='nlj'),
+    path('plan/list/', generic.ListView.as_view(
+        model=models.Plan,
+        queryset=models.Plan.objects.select_related(),
+        template_name="pages/plan/list.html"
+    ), name='plan_list'),
+    path('plan/<int:pk>/', generic.DetailView.as_view(
+        model=models.Plan,
+        template_name="pages/plan/detail.html"
+    ), name='plan_detail'),
+    path('plan/create/', generic.CreateView.as_view(
+        model=models.Plan,
+        form_class=forms.get_custom_model_form(models.Plan),
+        template_name="pages/plan/create.html"
+    ), name='plan_create'),
+    path('plan/task/create/', generic.CreateView.as_view(
+        model=models.Task,
+        form_class=forms.get_custom_model_form(models.Task),
+        template_name="pages/task/create.html"
+    ), name='task_create'),
 
     # path('bot-response/', views_drf .get_bot_info, name='bot_response'),
-    path('bot-response/', views_class.get_bot_info, name='bot_response'),
+    path('bot-response/', views.get_bot_info, name='bot_response'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-
-
-
-
-# urlpatterns = [
-#     path('admin/', admin.site.urls),
-#     path('accounts/login/', views.General.loginPage, name='login'),
-#     path('logout/', views.General.logoutPage, name='logout'),
-#     path('', views.General.general, name='general'),
-#     path('standartnie_vicheti/', views.standartnie_vicheti, name='standartnie_vicheti'),
-#     path('nlj/', views.nlj, name='nlj'),
-#     path('minfin/', views.Minfin.minfin, name='minfin'),
-#     path('minfin_eda/', views.Minfin.minfin_eda, name='minfin_eda'),
-#     path('minfin_transport', views.Minfin.minfin_transport, name='minfin_transport'),
-#     path('minfin_razvlechenia/', views.Minfin.minfin_razvlechenia, name='minfin_razvlechenia'),
-#     path('minfin_ammortizatia/', views.Minfin.minfin_ammortizatia, name='minfin_ammortizatia'),
-#     path('minfin_prochee/', views.Minfin.minfin_prochee, name='minfin_prochee'),
-#     path('minfin_nds/', views.Minfin.minfin_nds, name='minfin_nds'),
-# ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

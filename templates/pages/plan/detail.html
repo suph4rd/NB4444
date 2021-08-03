@@ -31,8 +31,7 @@
                     <td>{{ obj.section }}</td>
                     <td>{{ obj.description }}</td>
                     <td>
-{#                        <a href="{% url 'plan_detail' obj.pk %}">Просмотр</a>#}
-                        <a href="{% url 'task_update' obj.pk %}">Изменить</a>
+                        <a class="btn btn-outline-info" href="{% url 'task_update' obj.pk %}">Изменить</a>
                     </td>
                 </tr>
             {% endfor %}

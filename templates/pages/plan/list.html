@@ -26,7 +26,8 @@
                     <td>{{ obj.user }}</td>
                     <td>{{ obj.name }}</td>
                     <td>
-                        <a href="{% url 'plan_detail' obj.pk %}">Просмотр</a>
+                        <a class="btn btn-outline-info" href="{% url 'plan_detail' obj.pk %}">Просмотр</a>
+                        <a class="btn btn-outline-info" href="{% url 'plan_update' obj.pk %}">Изменить</a>
                     </td>
                 </tr>
             {% endfor %}

@@ -4,17 +4,10 @@
     <head>
         <meta charset="UTF-8">
         <title>B4</title>
-        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
-        <script src="{% static 'js/jqvery.js' %}"></script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% include 'head.html' %}
     </head>
 
     <style>
-        body {
-            background: url(/media/fonBG.jpg);
-        }
         .row div:first-child {
             padding: 30px;
             background-color: darkcyan;
@@ -55,7 +48,7 @@
     <body>
         <div class="container-fluid">
             <h1 class="table-primary">БЧ (Электронная версия 7.1)</h1>
-            {% if warning != None %}
+            {% if warning %}
                 <h1 class="warning">{{ warning }} </h1>
             {% endif %}
             <br>

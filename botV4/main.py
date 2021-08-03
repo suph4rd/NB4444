@@ -4,7 +4,7 @@ import requests
 
 from B4 import models
 
-now = datetime.datetime.today()
+now = datetime.datetime.now()
 today = datetime.date.today()
 
 

@@ -1,14 +1,12 @@
 import re
 import threading
 from datetime import datetime
-
-from django.contrib.auth import authenticate, login, logout as djagno_logout
+from django.contrib.auth import authenticate, login, logout as django_logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
-from B4.forms import UserForm
-from B4 import models
+from B4 import models, forms
 from NB4444.settings import MEDIA_URL
 
 
@@ -17,9 +15,9 @@ class Autorization(View):
 
     @staticmethod
     def get(request, warning=None):
-        userform = UserForm()
+        userform = forms.UserForm()
         warning = warning
-        return render(request, 'login.html', locals())
+        return render(request, 'pages/login.html', locals())
 
     @staticmethod
     def post(request):
@@ -35,7 +33,7 @@ class Autorization(View):
 
 
 def logout(request):
-    djagno_logout(request)
+    django_logout(request)
     return redirect('login')
 
 
@@ -44,7 +42,7 @@ class GeneralPage(LoginRequiredMixin, View):
 
     @staticmethod
     def get(request):
-        return render(request, 'general.html', {})
+        return render(request, 'pages/general.html', {})
 
 
 class StandartVichetiView(View):
@@ -53,7 +51,7 @@ class StandartVichetiView(View):
     @staticmethod
     def get(request):
         queryset = models.StandartVichet.objects.last()
-        return render(request, 'standart_vichet.html', {'last_vicheti': queryset})
+        return render(request, 'pages/default_deductions/standart_vichet.html', {'last_vicheti': queryset})
 
     @staticmethod
     def post(request):
@@ -79,7 +77,7 @@ class NlgView(View):
         paginator = Paginator(self.queryset, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        return render(request, 'NLJ.html', {'queryset': page_obj, 'MEDIA_URL': MEDIA_URL})
+        return render(request, 'pages/nlg/NLJ.html', {'queryset': page_obj, 'MEDIA_URL': MEDIA_URL})
 
     def post(self, request):
         text_nlg = request.POST.get('text_nlg')

@@ -76,7 +76,7 @@ urlpatterns = [
     ),
     path(
         'plan/task/create/',
-        generic.CreateView.as_view(
+        views.TaskCreateView.as_view(
             model=models.Task,
             form_class=forms.get_custom_model_form(models.Task),
             template_name="pages/task/create.html"
@@ -94,10 +94,9 @@ urlpatterns = [
     ),
     path(
         'plan/task/delete/<int:pk>/',
-        generic.DeleteView.as_view(
+        views.TaskDeleteView.as_view(
             model=models.Task,
             template_name='pages/task/delete.html',
-            success_url=reverse_lazy('plan_list')
         ),
         name='task_delete'
     ),

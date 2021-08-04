@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login, logout as django_logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView
 from django.views.generic.base import View
 from B4 import models, forms
 from NB4444.settings import MEDIA_URL
@@ -105,3 +107,15 @@ def get_bot_info(request):
     t1 = threading.Thread(target=main.main)
     t1.start()
     return redirect('nlj')
+
+
+class TaskCreateView(CreateView):
+    def get_success_url(self):
+        plan_id = self.object.plan_id
+        return reverse_lazy('plan_detail', kwargs={'pk': plan_id}) if plan_id else super().get_success_url()
+
+
+class TaskDeleteView(DeleteView):
+    def get_success_url(self):
+        plan_id = self.object.plan_id
+        return reverse_lazy('plan_detail', kwargs={'pk': plan_id}) if plan_id else super().get_success_url()

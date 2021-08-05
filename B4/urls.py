@@ -74,6 +74,7 @@ urlpatterns = [
         ),
         name='plan_delete'
     ),
+    path('plan/create-today-plan/', views.create_today_plan_task_view, name='plan_today_create'),
     path(
         'plan/task/create/',
         views.TaskCreateView.as_view(
@@ -100,5 +101,5 @@ urlpatterns = [
         ),
         name='task_delete'
     ),
-    path('bot-response/', views.get_bot_info, name='bot_response'),
+    path('bot-response/', views.get_bot_info_view, name='bot_response'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

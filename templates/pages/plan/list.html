@@ -3,6 +3,7 @@
     <h1 style="text-align:center;">Планы</h1>
     <div class="mb-4">
         <a class="btn btn-primary" href="{% url 'plan_create' %}">Создать план</a>
+        <a class="btn btn-primary" href="{% url 'plan_today_create' %}">Создать план на сегодня</a>
     </div>
     {% if object_list %}
         <div class="overflow-auto">

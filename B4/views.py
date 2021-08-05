@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView
 from django.views.generic.base import View
-from B4 import models, forms
+from B4 import models, forms, utils
 from NB4444.settings import MEDIA_URL
 
 
@@ -102,7 +102,7 @@ class NlgView(View):
             return redirect('nlj')
 
 
-def get_bot_info(request):
+def get_bot_info_view(request):
     from botV4 import main
     t1 = threading.Thread(target=main.main)
     t1.start()
@@ -119,3 +119,8 @@ class TaskDeleteView(DeleteView):
     def get_success_url(self):
         plan_id = self.object.plan_id
         return reverse_lazy('plan_detail', kwargs={'pk': plan_id}) if plan_id else super().get_success_url()
+
+
+def create_today_plan_task_view(request):
+    utils.PlanTask.create_today_plan(request.user.id)
+    return redirect('plan_list')

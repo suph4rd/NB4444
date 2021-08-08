@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load bootstrap5 %}
 {% block content %}
     <style>
         .nb4Form {
@@ -12,7 +13,7 @@
         }
     </style>
 
-    <h1 style="text-align:center;">НЛЖ</h1>
+    <h1 class="text-center">Заметки</h1>
     <form class="nb4Form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <textarea class="item" name="text" rows="3"></textarea><br>

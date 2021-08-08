@@ -1,12 +1,12 @@
-import datetime
 from django.contrib.auth.models import User
-
+from django.utils import datetime_safe
 from B4 import models
 import locale
 
 locale.setlocale(locale.LC_ALL, '')
 locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
-today = datetime.date.today()
+
+today = datetime_safe.real_date.today()
 
 
 class PlanTask(object):

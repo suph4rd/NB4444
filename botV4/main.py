@@ -1,17 +1,18 @@
-import datetime
 import time
 import requests
+from django.utils import datetime_safe
 
 from B4 import models
+from NB4444 import settings
 
-now = datetime.datetime.now()
-today = datetime.date.today()
+now = datetime_safe.real_datetime.now()
+today = datetime_safe.real_date.today()
 
 
 class Variables:
     # telegram api settings
     method = "getUpdates"
-    token = "1232067764:AAH9Y6sts9-rcoLAnAI5CH--jzsUBwRjkGc"
+    token = settings.TELEGRAM_BOT_TOKEN
 
     # message_id log file
     file_path = './botV4/logs/'

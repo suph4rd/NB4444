@@ -57,9 +57,9 @@
                     <form method="POST">
                         {% csrf_token %}
                         <h4>Имя пользователя</h4>
-                        <p>{{ userform.username }}</p>
+                        <p>{{ user_form.username }}</p>
                         <h4>Пароль</h4>
-                        <p>{{ userform.password }}</p>
+                        <p>{{ user_form.password }}</p>
                         <button type="submit">Выполнить вход</button>
                     </form>
                 </div>

@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import configparser
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATICFILE_DIR = os.path.join(BASE_DIR, 'static')
@@ -82,24 +81,12 @@ WSGI_APPLICATION = 'NB4444.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-config = configparser.ConfigParser()
-config.read('./nb4444/connection.cfg')
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'nb4444',
-#         'USER': 'nb4444',
-#         'PASSWORD': '1234',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'b426072021.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 
@@ -148,6 +135,8 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+TELEGRAM_BOT_TOKEN = ""
 
 
 try:

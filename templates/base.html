@@ -28,10 +28,10 @@
         <div class="row">
             <div class="col col-lg-3" id="LeftMenu" style="display: none;">
                 <p><a href="{% url 'admin:index' %}">1.Панель администратора</a></p>
-                <p><a href="{% url 'standartnie_vicheti' %}">2.Стандартные вычеты</a></p>
-                <p><a href="{% url 'nlj' %}">3.НЛЖ</a></p>
+                <p><a href="{% url 'default_deductions' %}">2.Стандартные вычеты</a></p>
+                <p><a href="{% url 'note' %}">3.Заметки</a></p>
                 <p><a href="{% url 'plan_list' %}">4.Планы</a></p>
-                <p><a href="{% url 'bot_response' %}">5.Подгрузить записи НЛЖ из бота</a></p>
+                <p><a href="{% url 'bot_response' %}">5.Подгрузить заметки из телеграмм бота</a></p>
                 <hr>
                 <p><a style="color:black" href="{% url 'logout' %}">Выход</a></p>
             </div>

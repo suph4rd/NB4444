@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='nlg',
+            name='note',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('date_nlg', models.DateTimeField(default=datetime.datetime(2020, 10, 31, 19, 41, 15, 741994), verbose_name='Дата')),

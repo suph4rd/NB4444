@@ -34,4 +34,4 @@ class TaskAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'created_at')
 
 
-admin.site.register(models.StandartVichet)
+admin.site.register(models.DefaultDeductions)

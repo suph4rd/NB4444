@@ -47,28 +47,21 @@ class GeneralPage(LoginRequiredMixin, View):
         return render(request, 'pages/general.html', {})
 
 
-class StandartVichetiView(View):
-    """Стандартные вычеты"""
+class DefaultDeductionsView(View):
+    form = forms.get_custom_model_form(models.DefaultDeductions)
+    queryset = models.DefaultDeductions.objects.last
 
-    @staticmethod
-    def get(request):
-        queryset = models.StandartVichet.objects.last()
-        return render(request, 'pages/default_deductions/standart_vichet.html', {'last_vicheti': queryset})
+    def get(self, request):
+        form = self.form()
+        obj = self.queryset()
+        form.initial = obj.__dict__
+        return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
-    @staticmethod
-    def post(request):
-        queryset = models.StandartVichet(
-            hata=float(request.POST.get('hata').replace(',', '.')),
-            proezd=float(request.POST.get('proezd').replace(',', '.')),
-            mobila=float(request.POST.get('mobila').replace(',', '.')),
-            eda=float(request.POST.get('eda').replace(',', '.'))
-        )
-        try:
-            queryset.save()
-        except Exception as e:
-            print(e)
-        finally:
-            return redirect("standartnie_vicheti")
+    def post(self, request):
+        form = self.form(request.POST)
+        if form.is_valid():
+            form.save()
+        return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
 
 class NlgView(View):

@@ -16,11 +16,11 @@ class TimeModel(models.Model):
         abstract = True
 
 
-class StandartVichet(TimeModel):
-    hata = models.DecimalField('Жильё', max_digits=10, decimal_places=2)
-    proezd = models.DecimalField('Проезд', max_digits=10, decimal_places=2)
-    mobila = models.DecimalField('Телефон', max_digits=10, decimal_places=2)
-    eda = models.DecimalField('Еда', max_digits=10, decimal_places=2)
+class DefaultDeductions(TimeModel):
+    house = models.DecimalField('Жильё', max_digits=10, decimal_places=2)
+    travel = models.DecimalField('Проезд', max_digits=10, decimal_places=2)
+    phone = models.DecimalField('Телефон', max_digits=10, decimal_places=2)
+    food = models.DecimalField('Еда', max_digits=10, decimal_places=2)
 
     class Meta:
         verbose_name = 'Стандартные вычеты'
@@ -30,8 +30,8 @@ class StandartVichet(TimeModel):
         return f"{self.id} {self.created_at}"
 
     @property
-    def itogo(self):
-        return f"{self.hata + self.proezd + self.mobila + self.eda}"
+    def total(self):
+        return f"{self.house + self.travel + self.phone + self.food}"
 
 
 class Nlg(TimeModel):

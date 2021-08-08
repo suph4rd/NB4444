@@ -97,7 +97,7 @@ class NlgView(View):
 
 def get_bot_info_view(request):
     from botV4 import main
-    t1 = threading.Thread(target=main.main)
+    t1 = threading.Thread(target=main.receive_records_from_telegramm_bot)
     t1.start()
     return redirect('nlj')
 

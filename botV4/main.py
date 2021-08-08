@@ -82,7 +82,7 @@ def get_response_telegram():
     return response_list.values()
 
 
-def main():
+def receive_records_from_telegramm_bot():
     try:
         print("Start")
         response_list = get_response_telegram()
@@ -97,4 +97,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    receive_records_from_telegramm_bot()

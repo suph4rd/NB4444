@@ -17,14 +17,14 @@ class Autorization(View):
 
     @staticmethod
     def get(request, warning=None):
-        userform = forms.UserForm()
+        user_form = forms.UserForm()
         warning = warning
         return render(request, 'pages/login.html', locals())
 
     @staticmethod
     def post(request):
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
@@ -64,35 +64,34 @@ class DefaultDeductionsView(View):
         return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
 
-class NlgView(View):
-    """Направление личной жизни"""
-    queryset = models.Nlg.objects.all()
+class NoteView(View):
+    queryset = models.Note.objects.all()
 
     def get(self, request):
         paginator = Paginator(self.queryset, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        return render(request, 'pages/nlg/NLJ.html', {'queryset': page_obj, 'MEDIA_URL': MEDIA_URL})
+        return render(request, 'pages/note/note.html', {'queryset': page_obj, 'MEDIA_URL': MEDIA_URL})
 
     def post(self, request):
-        text_nlg = request.POST.get('text_nlg')
-        image_nlg = request.FILES.get('image_nlg')
-        if not text_nlg and not image_nlg:
-            return redirect('nlj')
-        queryset = models.Nlg(text_nlg=text_nlg, image_nlg=image_nlg)
+        text = request.POST.get('text')
+        image = request.FILES.get('image')
+        if not text and not image:
+            return redirect('note')
+        queryset = models.Note(text=text, image=image)
         search_template = r'\d{2}.\d{2}.\d{4}'
-        if text_nlg and re.match(search_template, request.POST.get('text_nlg')):
-            queryset.date_nlg = datetime.strptime(
-                re.match(search_template, request.POST.get('text_nlg')).group(0),
+        if text and re.match(search_template, request.POST.get('text')):
+            queryset.date = datetime.strptime(
+                re.match(search_template, request.POST.get('text')).group(0),
                 '%d.%m.%Y'
             )
-            queryset.text_nlg = text_nlg[11:].strip()
+            queryset.text = text[11:].strip()
         try:
             queryset.save()
         except Exception as e:
             print(e)
         finally:
-            return redirect('nlj')
+            return redirect('note')
 
 
 def get_bot_info_view(request):

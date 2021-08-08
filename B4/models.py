@@ -34,13 +34,13 @@ class DefaultDeductions(TimeModel):
         return f"{self.house + self.travel + self.phone + self.food}"
 
 
-class Nlg(TimeModel):
-    text_nlg = models.TextField('Текст', **NULL_BLANK)
-    image_nlg = models.ImageField('Фотоверсия', **NULL_BLANK, upload_to="foto/%Y/%m/%d")
+class Note(TimeModel):
+    text = models.TextField('Текст', **NULL_BLANK)
+    image = models.ImageField('Фотоверсия', **NULL_BLANK, upload_to="foto/%Y/%m/%d")
 
     class Meta:
-        verbose_name = 'Нлж'
-        verbose_name_plural = 'Нлж'
+        verbose_name = 'Заметки'
+        verbose_name_plural = 'Заметки'
         ordering = ['-created_at', '-id']
 
     def __str__(self):

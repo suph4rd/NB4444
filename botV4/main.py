@@ -36,8 +36,8 @@ class Connect:
     @staticmethod
     def insert_to_db(response_list, **kwargs):
         for message in response_list:
-            models.Nlg.objects.create(
-                text_nlg=message
+            models.Note.objects.create(
+                text=message
             )
 
 

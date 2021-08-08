@@ -29,7 +29,7 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
 
     path('default-deductions/', views.DefaultDeductionsView.as_view(), name='default_deductions'),
-    path('nlj/', views.NlgView.as_view(), name='nlj'),
+    path('note/', views.NoteView.as_view(), name='note'),
     path(
         'plan/list/',
         generic.ListView.as_view(

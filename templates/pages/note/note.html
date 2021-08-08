@@ -15,19 +15,19 @@
     <h1 style="text-align:center;">НЛЖ</h1>
     <form class="nb4Form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <textarea class="item" name="text_nlg" rows="3"></textarea><br>
-        <input class="item" name="image_nlg" type="file">
+        <textarea class="item" name="text" rows="3"></textarea><br>
+        <input class="item" name="image" type="file">
         <input class="item" value="Отправить" type="submit">
     </form>
     <hr/>
         {% include 'navigate.html' %}
     <div style="padding:10px">
-        {% for nlj in queryset %}
+        {% for obj in queryset %}
             <hr/>
-           <p> {{ forloop.counter }}. <b>{{nlj.created_at|date:"d.m.Y"}}</b> {{ nlj.text_nlg }}
-           {% if nlj.image_nlg %}
+           <p> {{ forloop.counter }}. <b>{{obj.created_at|date:"d.m.Y"}}</b> {{ obj.text }}
+           {% if obj.image %}
                <br>
-               <img style="width:100%" src="{{ MEDIA_URL }}{{nlj.image_nlg }}">
+               <img style="width:100%" src="{{ MEDIA_URL }}{{obj.image }}">
            {% endif %}
            </p>
         {% endfor %}

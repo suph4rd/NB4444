@@ -1,20 +1,16 @@
 # NB4444
 My own daily!
 
-This is system for write some facts about my life.
+This is system for write some facts about life.
 
 # In develop now:
-1) Finance control system (hide, because not nesessary)  
+1) Finance control system 
 2) going to Single Page Application (DRF + Vue.js)
-  - vue client for NlJ
+  - vue client for Note
   - api for vue
   - docker-compose for run SPA
 
-# Information for clone:
+# Information for reserve copy:
 1) folder media/foto !!!!!!!!!!!
 2) copy DB
-3) path for windows and linux
 
-# Reserve copy
-1) directory foto in media
-2) db file

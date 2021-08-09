@@ -13,4 +13,3 @@ This is system for write some facts about life.
 # Information for reserve copy:
 1) folder media/foto !!!!!!!!!!!
 2) copy DB
-

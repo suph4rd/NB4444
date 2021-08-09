@@ -44,7 +44,7 @@ class Note(TimeModel):
         ordering = ['-created_at', '-id']
 
     def __str__(self):
-        return f"{self.id} {self.created_at}"
+        return f"{self.pk} {self.created_at}"
 
 
 class Plan(TimeModel):

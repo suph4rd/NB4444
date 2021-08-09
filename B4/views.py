@@ -13,7 +13,6 @@ from NB4444.settings import MEDIA_URL
 
 
 class Autorization(View):
-    """Авторизация"""
 
     @staticmethod
     def get(request, warning=None):
@@ -40,7 +39,6 @@ def logout(request):
 
 
 class GeneralPage(LoginRequiredMixin, View):
-    """Главная страница"""
 
     @staticmethod
     def get(request):
@@ -49,11 +47,11 @@ class GeneralPage(LoginRequiredMixin, View):
 
 class DefaultDeductionsView(View):
     form = forms.get_custom_model_form(models.DefaultDeductions)
-    queryset = models.DefaultDeductions.objects.last
 
     def get(self, request):
         form = self.form()
-        obj = self.queryset()
+        obj = models.DefaultDeductions.objects.last() if models.DefaultDeductions.objects.exists() \
+            else models.DefaultDeductions.objects.none()
         form.initial = obj.__dict__
         return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
@@ -98,7 +96,7 @@ def get_bot_info_view(request):
     from botV4 import main
     t1 = threading.Thread(target=main.receive_records_from_telegramm_bot)
     t1.start()
-    return redirect('nlj')
+    return redirect('note')
 
 
 class TaskCreateView(CreateView):

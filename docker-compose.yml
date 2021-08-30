@@ -1,0 +1,11 @@
+version: "3.3"
+
+services:
+  app:
+    build: .
+    command: sh -c "python manage.py runserver 0.0.0.0:9999"
+    volumes:
+      - ./db:/NB4444/db
+    ports:
+      - "9999:9999"
+    restart: always

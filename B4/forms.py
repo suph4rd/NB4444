@@ -24,7 +24,7 @@ def get_custom_model_form(model_name, fields_list="__all__"):
 class TaskModelForm(forms.ModelForm):
     plan = forms.ModelChoiceField(
         label="План",
-        queryset=models.Task.objects.order_by("-id"),
+        queryset=models.Plan.objects.all(),
         widget=autocomplete.ModelSelect2(url="plan_autocomplete")
     )
 

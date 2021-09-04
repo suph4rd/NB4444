@@ -1,5 +1,8 @@
+from dal import autocomplete
 from django.contrib.auth.models import User
 from django import forms
+
+from B4 import models
 
 
 class UserForm(forms.ModelForm):
@@ -17,4 +20,15 @@ def get_custom_model_form(model_name, fields_list="__all__"):
             fields = fields_list
     return CustomModelForm
 
+
+class TaskModelForm(forms.ModelForm):
+    plan = forms.ModelChoiceField(
+        label="План",
+        queryset=models.Task.objects.order_by("-id"),
+        widget=autocomplete.ModelSelect2(url="plan_autocomplete")
+    )
+
+    class Meta:
+        model = models.Task
+        exclude = ("created_at", "updated_at")
 

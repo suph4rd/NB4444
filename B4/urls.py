@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from dal import autocomplete
 from django.urls import path, reverse_lazy
 from django.conf.urls.static import static
 from django.views import generic
@@ -76,10 +77,18 @@ urlpatterns = [
     ),
     path('plan/create-today-plan/', views.create_today_plan_task_view, name='plan_today_create'),
     path(
+        r'^plan-autocomplete/$',
+        autocomplete.Select2QuerySetView.as_view(
+            queryset=models.Plan.objects.order_by('-id')
+        ),
+        name='plan_autocomplete',
+    ),
+    path(
         'plan/task/create/',
         views.TaskCreateView.as_view(
             model=models.Task,
-            form_class=forms.get_custom_model_form(models.Task),
+            # form_class=forms.get_custom_model_form(models.Task),
+            form_class=forms.TaskModelForm,
             template_name="pages/task/create.html"
         ),
         name='task_create'

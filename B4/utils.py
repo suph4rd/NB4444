@@ -1,16 +1,16 @@
 from django.contrib.auth.models import User
-from django.utils import datetime_safe
+from django.utils import timezone
 from B4 import models
 import locale
 
 locale.setlocale(locale.LC_ALL, '')
 locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
 
-today = datetime_safe.real_date.today()
+now = timezone.now()
 
 
 class PlanTask(object):
-    plan_name = f"План на {today.strftime('%A, %d %B %Y')}"
+    plan_name = f"План на {now.strftime('%A, %d %B %Y')}"
     model = models.Plan
 
     @classmethod

@@ -1,12 +1,12 @@
 import time
 import requests
-from django.utils import datetime_safe
+from django.utils import timezone
 
 from B4 import models
 from NB4444 import settings
 
-now = datetime_safe.real_datetime.now()
-today = datetime_safe.real_date.today()
+now = timezone.now()
+today = now.date()
 
 
 class Variables:

@@ -6,6 +6,7 @@ services:
     command: sh -c "python manage.py runserver 0.0.0.0:9999"
     volumes:
       - ./db:/NB4444/db
+      - ./media/foto:/NB4444/media/foto
     ports:
       - "9999:9999"
     restart: always

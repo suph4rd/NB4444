@@ -18,7 +18,7 @@ from django.urls import path, reverse_lazy
 from django.conf.urls.static import static
 from django.views import generic
 
-from . import views, models, forms
+from . import views, models, forms, views_drf
 from NB4444 import settings
 from django.contrib import admin
 
@@ -111,4 +111,6 @@ urlpatterns = [
         name='task_delete'
     ),
     path('bot-response/', views.get_bot_info_view, name='bot_response'),
+    # api
+    path('api/v1/bot-response/', views_drf.get_bot_info_view, name='api_bot_response'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

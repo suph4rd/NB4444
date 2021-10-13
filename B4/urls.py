@@ -113,4 +113,5 @@ urlpatterns = [
     path('bot-response/', views.get_bot_info_view, name='bot_response'),
     # api
     path('api/v1/bot-response/', views_drf.get_bot_info_view, name='api_bot_response'),
+    path('api/v1/get-default-deduction/', views_drf.get_default_deduction_view, name='api_default_deduction_view'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

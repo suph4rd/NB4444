@@ -7,7 +7,7 @@
       class="text-center"
       cols="12"
     >
-      <h1>БЧ (Эл. V8.1)</h1>
+      <h1>БЧ (Эл. V8.2)</h1>
     </v-col>
     </v-app-bar>
 
@@ -15,7 +15,7 @@
       <img src="../../media/ss.jpg" width="100%" height="65px" alt="">
 
       <v-list>
-        <v-list-item href="http://0.0.0.0:8000/admin/">
+        <v-list-item :href="this.$apiHost + 'admin/'">
           <v-list-item-content>1.Панель администратора
           </v-list-item-content>
         </v-list-item>
@@ -80,10 +80,7 @@ export default {
 
   data: function () {
     return {
-      leftMenu: false,
-      host: "0.0.0.0",
-      port: "8000",
-      adminMenuLink: `http://${this.host}:${this.port}/admin/`
+      leftMenu: false
     }
   },
   methods: {
@@ -92,7 +89,7 @@ export default {
       this.leftMenu = !this.leftMenu
     },
     updateBotMessages(){
-      this.axios.get(`http://${this.host}:${this.port}/api/v1/bot-response/`).then((result) =>{
+      this.axios.get(`${this.$apiHost}api/v1/bot-response/`).then((result) =>{
         if (result.status === 200) {
           alert("Запрос на подгрузку записей успешно получен!")
         } else {

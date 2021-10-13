@@ -7,6 +7,7 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
+Vue.prototype.$apiHost = 'http://0.0.0.0:8000/'
 
 new Vue({
   router,

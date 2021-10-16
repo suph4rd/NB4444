@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'corsheaders',
     
     # apps
-    'B4.apps.B4Config'
+    'B4.apps.B4Config',
+    'api',
 ]
 
 MIDDLEWARE = [

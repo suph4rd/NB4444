@@ -14,13 +14,13 @@
         <input style="width: 100%" type="submit" value="Отправить">
     </form>
     <div class="row btn-active">
-        <a class="col btn btn-outline-info" href="{% url 'plan_detail' object.plan.id %}">
+        <a class="col btn btn-outline-info" href="{% url 'b4:plan_detail' object.plan.id %}">
             Назад
         </a>
-        <a class="col btn btn-outline-secondary" href="{% url 'task_update' object.id %}">
+        <a class="col btn btn-outline-secondary" href="{% url 'b4:task_update' object.id %}">
             Отмена
         </a>
-        <a class="col btn btn-outline-danger" href="{% url 'task_delete' object.id %}">
+        <a class="col btn btn-outline-danger" href="{% url 'b4:task_delete' object.id %}">
             Удалить
         </a>
     </div>

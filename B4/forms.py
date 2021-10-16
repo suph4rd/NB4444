@@ -25,7 +25,7 @@ class TaskModelForm(forms.ModelForm):
     plan = forms.ModelChoiceField(
         label="План",
         queryset=models.Plan.objects.all(),
-        widget=autocomplete.ModelSelect2(url="plan_autocomplete")
+        widget=autocomplete.ModelSelect2(url="b4:plan_autocomplete")
     )
 
     class Meta:

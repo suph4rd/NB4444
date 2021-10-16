@@ -16,7 +16,7 @@
 </style>
 
 <body>
-    <a href="{% url 'b4:general' %}">
+    <a href="{% url 'general' %}">
         <div class="header">
             <div>
                 <img id="btnMenu" src="/media/ss.jpg" alt="денюжка">
@@ -28,12 +28,12 @@
         <div class="row">
             <div class="col col-lg-3" id="LeftMenu" style="display: none;">
                 <p><a href="{% url 'admin:index' %}">1.Панель администратора</a></p>
-                <p><a href="{% url 'b4:default_deductions' %}">2.Стандартные вычеты</a></p>
-                <p><a href="{% url 'b4:note' %}">3.Заметки</a></p>
-                <p><a href="{% url 'b4:plan_list' %}">4.Планы</a></p>
-                <p><a href="{% url 'b4:bot_response' %}">5.Подгрузить заметки из телеграмм бота</a></p>
+                <p><a href="{% url 'default_deductions' %}">2.Стандартные вычеты</a></p>
+                <p><a href="{% url 'note' %}">3.Заметки</a></p>
+                <p><a href="{% url 'plan_list' %}">4.Планы</a></p>
+                <p><a href="{% url 'bot_response' %}">5.Подгрузить заметки из телеграмм бота</a></p>
                 <hr>
-                <p><a style="color:black" href="{% url 'b4:logout' %}">Выход</a></p>
+                <p><a style="color:black" href="{% url 'logout' %}">Выход</a></p>
             </div>
             <div id="Content" class="col">
                 {% block content %}

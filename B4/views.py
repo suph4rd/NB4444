@@ -27,7 +27,7 @@ class Autorization(View):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('b4:general')
+            return redirect('general')
         else:
             warning = 'Неверный логин или пароль!!!'
             return Autorization.get(request=request, warning=warning)
@@ -35,7 +35,7 @@ class Autorization(View):
 
 def logout(request):
     django_logout(request)
-    return redirect('b4:login')
+    return redirect('login')
 
 
 class GeneralPage(LoginRequiredMixin, View):
@@ -75,7 +75,7 @@ class NoteView(View):
         text = request.POST.get('text')
         image = request.FILES.get('image')
         if not text and not image:
-            return redirect('b4:note')
+            return redirect('note')
         queryset = models.Note(text=text, image=image)
         search_template = r'\d{2}.\d{2}.\d{4}'
         if text and re.match(search_template, request.POST.get('text')):
@@ -89,28 +89,28 @@ class NoteView(View):
         except Exception as e:
             print(e)
         finally:
-            return redirect('b4:note')
+            return redirect('note')
 
 
 def get_bot_info_view(request):
     from botV4 import main
     t1 = threading.Thread(target=main.receive_records_from_telegramm_bot)
     t1.start()
-    return redirect('b4:note')
+    return redirect('note')
 
 
 class TaskCreateView(CreateView):
     def get_success_url(self):
         plan_id = self.object.plan_id
-        return reverse_lazy('b4:plan_detail', kwargs={'pk': plan_id}) if plan_id else super().get_success_url()
+        return reverse_lazy('plan_detail', kwargs={'pk': plan_id}) if plan_id else super().get_success_url()
 
 
 class TaskDeleteView(DeleteView):
     def get_success_url(self):
         plan_id = self.object.plan_id
-        return reverse_lazy('b4:plan_detail', kwargs={'pk': plan_id}) if plan_id else super().get_success_url()
+        return reverse_lazy('plan_detail', kwargs={'pk': plan_id}) if plan_id else super().get_success_url()
 
 
 def create_today_plan_task_view(request):
     utils.PlanTask.create_today_plan(request.user.id)
-    return redirect('b4:plan_list')
+    return redirect('plan_list')

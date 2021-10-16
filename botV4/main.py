@@ -44,9 +44,7 @@ class Connect:
 def get_response_telegram():
     def to_request():
         try:
-            request_url = f"https://api.telegram.org/bot{token}/{method}"
-            print(request_url)
-            return requests.request("get", request_url)
+            return requests.request("get", f"https://api.telegram.org/bot{token}/{method}")
         except Exception as e:
             print(e)
             Variables.record_error_log(e)

@@ -45,17 +45,14 @@ INSTALLED_APPS = [
     'django_ckeditor_5',
     'rest_framework',
     'bootstrap5',
-    'corsheaders',
     
     # apps
-    'B4.apps.B4Config',
-    'api',
+    'B4.apps.B4Config'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -120,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'Europe/Minsk'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -142,8 +139,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 TELEGRAM_BOT_TOKEN = ""
-
-CORS_ALLOW_ALL_ORIGINS = True
 
 
 try:

@@ -45,9 +45,16 @@ class ListFilterModelViewSet(ModelViewSet):
         return super().list(request, *args, **kwargs)
 
 
+def made_list_filter_model_viewset_class(local_models, local_serializer):
+    class CustomListFilterModelViewSet(ListFilterModelViewSet):
+        queryset = local_models.objects.all()
+        serializer_class = local_serializer
+    return CustomListFilterModelViewSet
+
+
 class DefaultDeductionListFilterModelViewSet(ListFilterModelViewSet):
     queryset = b4_models.DefaultDeductions.objects.all()
-    serializer_class = serializers.get_model_serializer(
+    serializer_class = serializers.get_model_serializer_class(
         b4_models.DefaultDeductions,
         local_exclude=['created_at', 'updated_at']
     )
@@ -59,9 +66,32 @@ class DefaultDeductionListFilterModelViewSet(ListFilterModelViewSet):
         return Response(serializer.data)
 
 
-class NoteModelListFilterModelViewSet(ListFilterModelViewSet):
-    queryset = b4_models.Note.objects.all()
-    serializer_class = serializers.get_model_serializer(
-        b4_models.Note,
-        local_exclude=['created_at', 'updated_at']
-    )
+class CurrentSerializerMixin:
+    model = None
+    depth = 1
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.serializer_class = self.get_current_serializer_class()
+
+    def get_current_serializer_class(self, local_depth=None):
+        return serializers.get_model_serializer_class(
+            self.model,
+            local_exclude=['created_at', 'updated_at'],
+            local_depth=local_depth or self.depth
+        )
+
+    def create(self, request, *args, **kwargs):
+        self.serializer_class = self.get_current_serializer_class(local_depth=0)
+        return super().create(request, *args, **kwargs)
+
+
+class PlanModelListFilterModelViewSet(CurrentSerializerMixin, ListFilterModelViewSet):
+    model = b4_models.Plan
+    queryset = model.objects.all()
+
+
+class TaskModelListFilterModelViewSet(CurrentSerializerMixin, ListFilterModelViewSet):
+    model = b4_models.Task
+    queryset = model.objects.all()
+    depth = 2

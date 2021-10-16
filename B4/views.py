@@ -2,6 +2,7 @@ import re
 import threading
 from datetime import datetime
 from django.contrib.auth import authenticate, login, logout as django_logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
@@ -45,7 +46,7 @@ class GeneralPage(LoginRequiredMixin, View):
         return render(request, 'pages/general.html', {})
 
 
-class DefaultDeductionsView(View):
+class DefaultDeductionsView(LoginRequiredMixin, View):
     form = forms.get_custom_model_form(models.DefaultDeductions)
 
     def get(self, request):
@@ -62,7 +63,7 @@ class DefaultDeductionsView(View):
         return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
 
-class NoteView(View):
+class NoteView(LoginRequiredMixin, View):
     queryset = models.Note.objects.all()
 
     def get(self, request):
@@ -92,6 +93,7 @@ class NoteView(View):
             return redirect('b4:note')
 
 
+@login_required
 def get_bot_info_view(request):
     from botV4 import main
     t1 = threading.Thread(target=main.receive_records_from_telegramm_bot)
@@ -99,18 +101,19 @@ def get_bot_info_view(request):
     return redirect('b4:note')
 
 
-class TaskCreateView(CreateView):
+class TaskCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         plan_id = self.object.plan_id
         return reverse_lazy('b4:plan_detail', kwargs={'pk': plan_id}) if plan_id else super().get_success_url()
 
 
-class TaskDeleteView(DeleteView):
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         plan_id = self.object.plan_id
         return reverse_lazy('b4:plan_detail', kwargs={'pk': plan_id}) if plan_id else super().get_success_url()
 
 
+@login_required
 def create_today_plan_task_view(request):
     utils.PlanTask.create_today_plan(request.user.id)
     return redirect('b4:plan_list')

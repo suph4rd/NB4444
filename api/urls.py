@@ -13,14 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls.static import static
-from django.contrib import admin
-from django.urls import path, include
-from NB4444 import settings
+from django.urls import path, reverse_lazy
+from . import views, models, router
 
 
+app_name = 'api'
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('B4.urls', namespace='b4')),
-    path('api/', include('api.urls', namespace='api')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('v1/bot-response/', views.get_bot_info_view, name='bot_response'),
+]
+
+urlpatterns += router.router.urls

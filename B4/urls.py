@@ -19,13 +19,11 @@ from django.conf.urls.static import static
 from django.views import generic
 
 from . import views, models, forms
-from NB4444 import settings
-from django.contrib import admin
 
 
+app_name = 'b4'
 urlpatterns = [
     path('', views.GeneralPage.as_view(), name='general'),
-    path('admin/', admin.site.urls),
     path('accounts/login/', views.Autorization.as_view(), name='login'),
     path('logout/', views.logout, name='logout'),
 
@@ -71,7 +69,7 @@ urlpatterns = [
         generic.DeleteView.as_view(
             model=models.Plan,
             template_name='pages/plan/delete.html',
-            success_url=reverse_lazy('plan_list')
+            success_url=reverse_lazy('b4:plan_list')
         ),
         name='plan_delete'
     ),
@@ -111,4 +109,4 @@ urlpatterns = [
         name='task_delete'
     ),
     path('bot-response/', views.get_bot_info_view, name='bot_response'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

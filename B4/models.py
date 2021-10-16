@@ -60,7 +60,7 @@ class Plan(TimeModel):
         return f"{self.id} {self.name}"
 
     def get_absolute_url(self):
-        return reverse('plan_detail', args=(self.id,))
+        return reverse('b4:plan_detail', args=(self.id,))
 
 
 class Section(TimeModel):
@@ -96,7 +96,7 @@ class Task(AbstractTask):
         ordering = ['-created_at', '-id']
 
     def get_absolute_url(self):
-        return reverse('plan_detail', args=(self.plan_id,))
+        return reverse('b4:plan_detail', args=(self.plan_id,))
 
 
 class DefaultTasks(AbstractTask):

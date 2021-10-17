@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.utils import timezone
 from B4 import models
@@ -30,3 +31,15 @@ class PlanTask(object):
             if not cls.model.objects.filter(**filters).exists():
                 user_list.append(cls.model(**filters))
         return user_list
+
+
+def made_login_required_generic_class(generic_class):
+    """
+    Make generic class with LoginRequiredMixin
+    :param generic_class:
+    :return: some of classes in django.views.generic
+    """
+    class LoginRequiredClass(LoginRequiredMixin, generic_class):
+        pass
+    return LoginRequiredClass
+

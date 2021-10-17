@@ -18,7 +18,7 @@ from django.urls import path, reverse_lazy
 from django.conf.urls.static import static
 from django.views import generic
 
-from . import views, models, forms
+from . import views, models, forms, utils
 
 
 app_name = 'b4'
@@ -31,7 +31,7 @@ urlpatterns = [
     path('note/', views.NoteView.as_view(), name='note'),
     path(
         'plan/list/',
-        generic.ListView.as_view(
+        utils.made_login_required_generic_class(generic.ListView).as_view(
             model=models.Plan,
             queryset=models.Plan.objects.select_related(),
             template_name="pages/plan/list.html"
@@ -40,7 +40,7 @@ urlpatterns = [
     ),
     path(
         'plan/<int:pk>/',
-        generic.DetailView.as_view(
+        utils.made_login_required_generic_class(generic.DetailView).as_view(
             model=models.Plan,
             template_name="pages/plan/detail.html"
         ),
@@ -48,7 +48,7 @@ urlpatterns = [
     ),
     path(
         'plan/create/',
-        generic.CreateView.as_view(
+        utils.made_login_required_generic_class(generic.CreateView).as_view(
             model=models.Plan,
             form_class=forms.get_custom_model_form(models.Plan),
             template_name="pages/plan/create.html"
@@ -57,7 +57,7 @@ urlpatterns = [
     ),
     path(
         'plan/update/<int:pk>/',
-        generic.UpdateView.as_view(
+        utils.made_login_required_generic_class(generic.UpdateView).as_view(
             model=models.Plan,
             form_class=forms.get_custom_model_form(models.Plan),
             template_name="pages/plan/update.html"
@@ -66,7 +66,7 @@ urlpatterns = [
     ),
     path(
         'plan/delete/<int:pk>/',
-        generic.DeleteView.as_view(
+        utils.made_login_required_generic_class(generic.DeleteView).as_view(
             model=models.Plan,
             template_name='pages/plan/delete.html',
             success_url=reverse_lazy('b4:plan_list')
@@ -93,7 +93,7 @@ urlpatterns = [
     ),
     path(
         'plan/task/update/<int:pk>/',
-        generic.UpdateView.as_view(
+        utils.made_login_required_generic_class(generic.UpdateView).as_view(
             model=models.Task,
             form_class=forms.get_custom_model_form(models.Task),
             template_name="pages/task/update.html"

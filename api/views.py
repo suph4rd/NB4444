@@ -1,6 +1,6 @@
 import threading
 
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -18,6 +18,7 @@ def get_bot_info_view(request):
 
 
 class ListFilterModelViewSet(ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated, ]
 
     def get_int_value(self, value) -> int:
         match value:
@@ -45,10 +46,12 @@ class ListFilterModelViewSet(ModelViewSet):
         return super().list(request, *args, **kwargs)
 
 
-def made_list_filter_model_viewset_class(local_models, local_serializer):
+def made_list_filter_model_viewset_class(local_models, local_serializer, local_permission_classes: list = None):
     class CustomListFilterModelViewSet(ListFilterModelViewSet):
         queryset = local_models.objects.all()
         serializer_class = local_serializer
+        if local_permission_classes:
+            permission_classes = local_permission_classes
     return CustomListFilterModelViewSet
 
 

@@ -1,4 +1,4 @@
-from rest_framework import routers
+from rest_framework import routers, permissions
 
 from B4 import models as b4_models
 from api import views, serializers
@@ -12,7 +12,8 @@ router.register(
         serializers.get_model_serializer_class(
             b4_models.Note,
             local_exclude=['created_at', 'updated_at']
-        )
+        ),
+        local_permission_classes=[permissions.IsAuthenticated, ]
     )
 )
 router.register(

@@ -20,7 +20,7 @@ class Variables:
     token = settings.TELEGRAM_BOT_TOKEN
 
     # message_id log file
-    file_path = './botV4/logs/'
+    file_path = './tele_bot/logs/'
 
     @classmethod
     def record_error_log(cls, error):

@@ -37,6 +37,7 @@ class DefaultDeductions(TimeModel):
 class Note(TimeModel):
     text = models.TextField('Текст', **NULL_BLANK)
     image = models.ImageField('Фотоверсия', **NULL_BLANK, upload_to="foto/%Y/%m/%d")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
 
     class Meta:
         verbose_name = 'Заметки'

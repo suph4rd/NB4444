@@ -11,7 +11,7 @@ from api import serializers
 
 @api_view(['GET'])
 def get_bot_info_view(request):
-    from botV4 import main
+    from tele_bot import main
     t1 = threading.Thread(target=main.receive_records_from_telegramm_bot)
     t1.start()
     return Response(status=status.HTTP_200_OK)

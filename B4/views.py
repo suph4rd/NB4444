@@ -95,7 +95,7 @@ class NoteView(LoginRequiredMixin, View):
 
 @login_required
 def get_bot_info_view(request):
-    from botV4 import main
+    from tele_bot import main
     t1 = threading.Thread(target=main.receive_records_from_telegramm_bot)
     t1.start()
     return redirect('b4:note')

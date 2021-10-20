@@ -88,6 +88,14 @@ class CurrentSerializerMixin:
         self.serializer_class = self.get_current_serializer_class(local_depth=0)
         return super().create(request, *args, **kwargs)
 
+    def update(self, request, *args, **kwargs):
+        self.serializer_class = self.get_current_serializer_class(local_depth=0)
+        return super().update(request, *args, **kwargs)
+
+    def partial_update(self, request, *args, **kwargs):
+        self.serializer_class = self.get_current_serializer_class(local_depth=0)
+        return super().partial_update(request, *args, **kwargs)
+
 
 class PlanModelListFilterModelViewSet(CurrentSerializerMixin, ListFilterModelViewSet):
     model = b4_models.Plan

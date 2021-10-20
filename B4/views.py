@@ -77,16 +77,16 @@ class NoteView(LoginRequiredMixin, View):
         image = request.FILES.get('image')
         if not text and not image:
             return redirect('b4:note')
-        queryset = models.Note(text=text, image=image)
+        obj = models.Note(text=text, image=image, user=request.user)
         search_template = r'\d{2}.\d{2}.\d{4}'
         if text and re.match(search_template, request.POST.get('text')):
-            queryset.date = datetime.strptime(
+            obj.date = datetime.strptime(
                 re.match(search_template, request.POST.get('text')).group(0),
                 '%d.%m.%Y'
             )
-            queryset.text = text[11:].strip()
+            obj.text = text[11:].strip()
         try:
-            queryset.save()
+            obj.save()
         except Exception as e:
             print(e)
         finally:

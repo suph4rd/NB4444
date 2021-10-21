@@ -34,10 +34,11 @@ class Connect:
         return cls.instance
 
     @staticmethod
-    def insert_to_db(response_list, **kwargs):
+    def insert_to_db(response_list, request, **kwargs):
         for message in response_list:
             models.Note.objects.create(
-                text=message
+                text=message,
+                user=request.user
             )
 
 
@@ -84,12 +85,14 @@ def get_response_telegram():
     return response_list.values()
 
 
-def receive_records_from_telegramm_bot():
+def receive_records_from_telegramm_bot(request):
     try:
         print("Start")
+        if not request.user.is_superuser:
+            raise PermissionError(f"Пользователь {request.user} не является суперпользователем!")
         response_list = get_response_telegram()
         if response_list:
-            Connect.insert_to_db(response_list)
+            Connect.insert_to_db(response_list, request)
             print("Success")
     except Exception as e:
         print(f"Error! {str(e)}")

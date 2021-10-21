@@ -31,16 +31,15 @@ urlpatterns = [
     path('note/', views.NoteView.as_view(), name='note'),
     path(
         'plan/list/',
-        utils.made_login_required_generic_class(generic.ListView).as_view(
+        views.CustomListView.as_view(
             model=models.Plan,
-            queryset=models.Plan.objects.select_related(),
             template_name="pages/plan/list.html"
         ),
         name='plan_list'
     ),
     path(
         'plan/<int:pk>/',
-        utils.made_login_required_generic_class(generic.DetailView).as_view(
+        views.CustomDetailView.as_view(
             model=models.Plan,
             template_name="pages/plan/detail.html"
         ),
@@ -57,7 +56,7 @@ urlpatterns = [
     ),
     path(
         'plan/update/<int:pk>/',
-        utils.made_login_required_generic_class(generic.UpdateView).as_view(
+        views.CustomUpdateView.as_view(
             model=models.Plan,
             form_class=forms.get_custom_model_form(models.Plan),
             template_name="pages/plan/update.html"

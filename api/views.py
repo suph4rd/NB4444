@@ -7,6 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from B4 import models as b4_models
 from api import serializers
+from api.permissions import IsSuperUserOrOwnerPermission
 
 
 @api_view(['GET'])
@@ -18,7 +19,7 @@ def get_bot_info_view(request):
 
 
 class ListFilterModelViewSet(ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated, ]
+    permission_classes = [IsSuperUserOrOwnerPermission, ]
 
     def get_int_value(self, value) -> int:
         match value:
@@ -81,8 +82,13 @@ class CurrentSerializerMixin:
         return serializers.get_model_serializer_class(
             self.model,
             local_exclude=['created_at', 'updated_at'],
-            local_depth=local_depth or self.depth
+            local_depth=local_depth if isinstance(local_depth, int) else self.depth
         )
+
+    def list(self, request, *args, **kwargs):
+        if hasattr(self.model, 'user') and request.user.is_authenticated and not request.user.is_superuser:
+            self.queryset = self.queryset.filter(user=request.user)
+        return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
         self.serializer_class = self.get_current_serializer_class(local_depth=0)
@@ -106,3 +112,13 @@ class TaskModelListFilterModelViewSet(CurrentSerializerMixin, ListFilterModelVie
     model = b4_models.Task
     queryset = model.objects.all()
     depth = 2
+
+    def list(self, request, *args, **kwargs):
+        if request.user.is_authenticated and not request.user.is_superuser:
+            self.queryset = self.queryset.filter(plan__user=request.user)
+        return super().list(request, *args, **kwargs)
+
+
+class NoteModelListFilterModelViewSet(CurrentSerializerMixin, ListFilterModelViewSet):
+    model = b4_models.Note
+    queryset = model.objects.all()

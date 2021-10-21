@@ -7,14 +7,7 @@ router = routers.SimpleRouter()
 router.register('default-deduction', views.DefaultDeductionListFilterModelViewSet)
 router.register(
     'note',
-    views.made_list_filter_model_viewset_class(
-        b4_models.Note,
-        serializers.get_model_serializer_class(
-            b4_models.Note,
-            local_exclude=['created_at', 'updated_at']
-        ),
-        local_permission_classes=[permissions.IsAuthenticated, ]
-    )
+    views.NoteModelListFilterModelViewSet
 )
 router.register(
     'plan',

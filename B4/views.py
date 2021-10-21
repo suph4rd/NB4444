@@ -7,10 +7,35 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.views import generic
 from django.views.generic import CreateView, DeleteView
 from django.views.generic.base import View
 from B4 import models, forms, utils
 from NB4444.settings import MEDIA_URL
+
+
+class CustomView(View):
+    model = None
+    queryset = None
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.model and not self.queryset:
+            self.queryset = self.model.objects.all()
+        if self.queryset and hasattr(self.model, 'user') and request.user.is_authenticated and not request.user.is_superuser:
+            self.queryset = self.queryset.filter(user=request.user)
+        return super().dispatch(request, *args, **kwargs)
+
+
+class CustomListView(LoginRequiredMixin, generic.ListView, CustomView):
+    pass
+
+
+class CustomDetailView(CustomView, LoginRequiredMixin, generic.DetailView):
+    pass
+
+
+class CustomUpdateView(CustomView, LoginRequiredMixin, generic.UpdateView):
+    pass
 
 
 class Autorization(View):
@@ -46,7 +71,8 @@ class GeneralPage(LoginRequiredMixin, View):
         return render(request, 'pages/general.html', {})
 
 
-class DefaultDeductionsView(LoginRequiredMixin, View):
+class DefaultDeductionsView(LoginRequiredMixin, CustomView):
+    model = models.DefaultDeductions
     form = forms.get_custom_model_form(models.DefaultDeductions)
 
     def get(self, request):
@@ -63,8 +89,8 @@ class DefaultDeductionsView(LoginRequiredMixin, View):
         return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
 
-class NoteView(LoginRequiredMixin, View):
-    queryset = models.Note.objects.all()
+class NoteView(LoginRequiredMixin, CustomView):
+    model = models.Note
 
     def get(self, request):
         paginator = Paginator(self.queryset, 10)
@@ -96,7 +122,7 @@ class NoteView(LoginRequiredMixin, View):
 @login_required
 def get_bot_info_view(request):
     from botV4 import main
-    t1 = threading.Thread(target=main.receive_records_from_telegramm_bot)
+    t1 = threading.Thread(target=main.receive_records_from_telegramm_bot, kwargs={"request": request})
     t1.start()
     return redirect('note')
 

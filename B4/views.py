@@ -1,6 +1,8 @@
 import re
 import threading
 from datetime import datetime
+
+from dal import autocomplete
 from django.contrib.auth import authenticate, login, logout as django_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -143,3 +145,23 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
 def create_today_plan_task_view(request):
     utils.PlanTask.create_today_plan(request.user.id)
     return redirect('plan_list')
+
+
+class PlanAutocomplete(autocomplete.Select2QuerySetView):
+    model = models.Plan
+
+    def get_queryset(self):
+        self.queryset = self.model.objects.order_by('-id')
+        qs = super().get_queryset()
+        if self.model and not qs:
+            qs = self.model.objects.all()
+        if self.check_qs(qs):
+            qs = qs.filter(user=self.request.user)
+        return qs
+
+    def check_qs(self, qs):
+        return bool(
+            qs and (hasattr(self.model, 'user') or hasattr(self.model, 'plan') and hasattr(self.model, 'user'))
+            and self.request.user.is_authenticated \
+            and not self.request.user.is_superuser
+        )

@@ -74,11 +74,7 @@ urlpatterns = [
     ),
     path('plan/create-today-plan/', views.create_today_plan_task_view, name='plan_today_create'),
     path(
-        r'^plan-autocomplete/$',
-        autocomplete.Select2QuerySetView.as_view(
-            queryset=models.Plan.objects.order_by('-id')
-        ),
-        name='plan_autocomplete',
+        r'^plan-autocomplete/$', views.PlanAutocomplete.as_view(), name='plan_autocomplete',
     ),
     path(
         'plan/task/create/',
@@ -94,7 +90,7 @@ urlpatterns = [
         'plan/task/update/<int:pk>/',
         utils.made_login_required_generic_class(generic.UpdateView).as_view(
             model=models.Task,
-            form_class=forms.get_custom_model_form(models.Task),
+            form_class=forms.TaskModelForm,
             template_name="pages/task/update.html"
         ),
         name='task_update'

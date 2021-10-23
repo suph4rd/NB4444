@@ -130,6 +130,15 @@ def get_bot_info_view(request):
 
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
+    model = models.Task
+
+    def render_to_response(self, context, **response_kwargs):
+        plan_id = self.request.GET.get('plan_id')
+        if plan_id:
+            plan = models.Plan.objects.get(pk=plan_id)
+            context['form'] = self.form_class(initial={"plan": plan})
+        return super(TaskCreateView, self).render_to_response(context, **response_kwargs)
+
     def get_success_url(self):
         plan_id = self.object.plan_id
         return reverse_lazy('b4:plan_detail', kwargs={'pk': plan_id}) if plan_id else super().get_success_url()

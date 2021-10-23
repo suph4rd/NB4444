@@ -13,9 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from dal import autocomplete
 from django.urls import path, reverse_lazy
-from django.conf.urls.static import static
 from django.views import generic
 
 from . import views, models, forms, utils
@@ -30,7 +28,7 @@ urlpatterns = [
     path('default-deductions/', views.DefaultDeductionsView.as_view(), name='default_deductions'),
     path('note/', views.NoteView.as_view(), name='note'),
     path(
-        'plan/list/',
+        'plan/',
         views.CustomListView.as_view(
             model=models.Plan,
             template_name="pages/plan/list.html"

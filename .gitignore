@@ -9,3 +9,6 @@ __pycache__
 # logs
 botV4/logs/*.log
 botV4/logs/error/*.log
+
+tele_bot/logs/*.log
+tele_bot/logs/error/*.log

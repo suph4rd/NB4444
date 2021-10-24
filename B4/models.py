@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
+
 NULL_BLANK = {
     "null": True,
     "blank": True
@@ -17,10 +18,11 @@ class TimeModel(models.Model):
 
 
 class DefaultDeductions(TimeModel):
-    house = models.DecimalField('Жильё', max_digits=10, decimal_places=2)
-    travel = models.DecimalField('Проезд', max_digits=10, decimal_places=2)
-    phone = models.DecimalField('Телефон', max_digits=10, decimal_places=2)
-    food = models.DecimalField('Еда', max_digits=10, decimal_places=2)
+    house = models.DecimalField('Жильё', default=0, max_digits=10, decimal_places=2)
+    travel = models.DecimalField('Проезд', default=0, max_digits=10, decimal_places=2)
+    phone = models.DecimalField('Телефон', default=0, max_digits=10, decimal_places=2)
+    food = models.DecimalField('Еда', default=0, max_digits=10, decimal_places=2)
+    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Стандартные вычеты'

@@ -88,7 +88,6 @@ class DefaultDeductionsView(LoginRequiredMixin, CustomView):
         form = self.form(request.POST)
         if form.is_valid():
             obj = form.save()
-        print(form.errors)
         return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
 

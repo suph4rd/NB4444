@@ -75,19 +75,19 @@ class GeneralPage(LoginRequiredMixin, View):
 
 class DefaultDeductionsView(LoginRequiredMixin, CustomView):
     model = models.DefaultDeductions
-    form = forms.get_custom_model_form(models.DefaultDeductions)
+    form = forms.DefaultDeductionModelForm
 
     def get(self, request):
-        form = self.form()
-        obj = models.DefaultDeductions.objects.last() if models.DefaultDeductions.objects.exists() \
-            else models.DefaultDeductions.objects.none()
-        form.initial = obj.__dict__
+        qs = self.model.objects.filter(user=request.user)
+        obj = qs.last() if qs.exists() \
+            else self.model(user=request.user)
+        form = self.form(instance=obj)
         return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
     def post(self, request):
         form = self.form(request.POST)
         if form.is_valid():
-            form.save()
+            obj = form.save()
         return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
 

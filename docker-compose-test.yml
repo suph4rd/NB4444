@@ -7,5 +7,3 @@ services:
     volumes:
       - ./db:/NB4444/db
       - ./media/foto:/NB4444/media/foto
-    ports:
-      - "9999:9999"

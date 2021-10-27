@@ -1,0 +1,11 @@
+version: "3.3"
+
+services:
+  app_test:
+    build: .
+    command: sh -c "python manage.py test"
+    volumes:
+      - ./db:/NB4444/db
+      - ./media/foto:/NB4444/media/foto
+    ports:
+      - "9999:9999"

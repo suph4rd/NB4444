@@ -61,9 +61,12 @@ def get_response_telegram():
     method = Variables.method
     file_path = Variables.file_path
     log_file_name = f"{file_path}{get_today()}_update_id_list.log"
-    while not to_request():
+
+    request_counter = 0
+    while not to_request() and request_counter < 5:
         print("sleep")
         time.sleep(30)
+        request_counter +=1
 
     response = to_request()
     response_json = response.json()

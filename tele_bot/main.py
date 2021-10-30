@@ -46,8 +46,14 @@ class Connect:
             )
 
 
+class NoneVariablesException(Exception):
+    pass
+
+
 def get_response_telegram():
     def to_request():
+        if not token :
+            raise NoneVariablesException(f"Токен отсутствует!")
         try:
             request_url = f"https://api.telegram.org/bot{token}/{method}"
             print(request_url)

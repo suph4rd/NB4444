@@ -46,8 +46,14 @@ class Connect:
             )
 
 
+class NoneVariablesException(Exception):
+    pass
+
+
 def get_response_telegram():
     def to_request():
+        if not token :
+            raise NoneVariablesException(f"Токен отсутствует!")
         try:
             request_url = f"https://api.telegram.org/bot{token}/{method}"
             print(request_url)
@@ -61,9 +67,12 @@ def get_response_telegram():
     method = Variables.method
     file_path = Variables.file_path
     log_file_name = f"{file_path}{get_today()}_update_id_list.log"
-    while not to_request():
+
+    request_counter = 0
+    while not to_request() and request_counter < 5:
         print("sleep")
         time.sleep(30)
+        request_counter +=1
 
     response = to_request()
     response_json = response.json()

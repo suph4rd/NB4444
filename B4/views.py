@@ -70,7 +70,8 @@ class GeneralPage(LoginRequiredMixin, View):
 
     @staticmethod
     def get(request):
-        return render(request, 'pages/general.html', {})
+        obj = models.Note.objects.order_by("?").first()
+        return render(request, 'pages/general.html', locals())
 
 
 class DefaultDeductionsView(LoginRequiredMixin, CustomView):

@@ -40,10 +40,8 @@ class Connect:
 
     @staticmethod
     def insert_to_db(response_list, **kwargs):
-        for message in response_list:
-            models.Note.objects.create(
-                text=message
-            )
+        message_list = [models.Note(text=message) for message in response_list]
+        models.Note.objects.bulk_create(*message_list)
 
 
 class NoneVariablesException(Exception):

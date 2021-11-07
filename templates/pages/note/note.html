@@ -28,7 +28,7 @@
            <p> {{ forloop.counter }}. <b>{{obj.created_at|date:"d.m.Y"}}</b> {{ obj.text }}
            {% if obj.image %}
                <br>
-               <img style="width:100%" src="{{ MEDIA_URL }}{{obj.image }}">
+               <img style="width:100%" src="{{obj.image.url }}">
            {% endif %}
            </p>
         {% endfor %}

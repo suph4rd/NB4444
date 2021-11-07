@@ -13,7 +13,6 @@ from django.views import generic
 from django.views.generic import CreateView, DeleteView
 from django.views.generic.base import View
 from B4 import models, forms, utils
-from NB4444.settings import MEDIA_URL
 
 
 class CustomView(View):
@@ -70,7 +69,8 @@ class GeneralPage(LoginRequiredMixin, View):
 
     @staticmethod
     def get(request):
-        return render(request, 'pages/general.html', {})
+        obj = models.Note.objects.order_by("?").first()
+        return render(request, 'pages/general.html', locals())
 
 
 class DefaultDeductionsView(LoginRequiredMixin, CustomView):
@@ -98,7 +98,7 @@ class NoteView(LoginRequiredMixin, CustomView):
         paginator = Paginator(self.queryset, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        return render(request, 'pages/note/note.html', {'queryset': page_obj, 'MEDIA_URL': MEDIA_URL})
+        return render(request, 'pages/note/note.html', {'queryset': page_obj})
 
     def post(self, request):
         text = request.POST.get('text')

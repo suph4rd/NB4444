@@ -18,7 +18,7 @@ repos:
     rev: v1.4
     hooks:
       - id: autoflake
-        exclude: 'migrations'
+        exclude: 'migrations|local_settings.py'
         args: [--in-place, --remove-all-unused-imports, --remove-duplicate-keys, --expand-star-imports]
   - repo: https://github.com/PyCQA/isort
     rev: 5.9.3

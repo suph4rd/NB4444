@@ -1,37 +1,37 @@
 {% extends 'base.html' %}
 {% load bootstrap5 %}
 {% block content %}
-    <style>
-        .nb4Form {
-            padding:10px;
-            display: flex;
-            flex-direction: column;
-        }
-        .nb4Form .item {
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
-    </style>
+  <style>
+    .nb4Form {
+      padding:10px;
+      display: flex;
+      flex-direction: column;
+    }
+    .nb4Form .item {
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+  </style>
 
-    <h1 class="text-center">Заметки</h1>
-    <form class="nb4Form" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <textarea class="item" name="text" rows="3"></textarea><br>
-        <input class="item" name="image" type="file">
-        <input class="item" value="Отправить" type="submit">
-    </form>
-    <hr/>
-        {% include 'navigate.html' %}
-    <div style="padding:10px">
-        {% for obj in queryset %}
-            <hr/>
-           <p> {{ forloop.counter }}. <b>{{obj.created_at|date:"d.m.Y"}}</b> {{ obj.text }}
-           {% if obj.image %}
-               <br>
-               <img style="width:100%" src="{{obj.image.url }}">
-           {% endif %}
-           </p>
-        {% endfor %}
-    </div>
-    {% include 'navigate.html' %}
+  <h1 class="text-center">Заметки</h1>
+  <form class="nb4Form" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <textarea class="item" name="text" rows="3"></textarea><br>
+    <input class="item" name="image" type="file">
+    <input class="item" value="Отправить" type="submit">
+  </form>
+  <hr/>
+  {% include 'navigate.html' %}
+  <div style="padding:10px">
+    {% for obj in queryset %}
+      <hr/>
+      <p> {{ forloop.counter }}. <b>{{obj.created_at|date:"d.m.Y"}}</b> {{ obj.text }}
+        {% if obj.image %}
+          <br>
+          <img style="width:100%" src="{{obj.image.url }}">
+        {% endif %}
+      </p>
+    {% endfor %}
+  </div>
+  {% include 'navigate.html' %}
 {% endblock %}

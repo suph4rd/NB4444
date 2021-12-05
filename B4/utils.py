@@ -1,8 +1,10 @@
+import locale
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.utils import timezone
+
 from B4 import models
-import locale
 
 locale.setlocale(locale.LC_ALL, '')
 locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
@@ -10,7 +12,7 @@ locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
 now = timezone.now()
 
 
-class PlanTask(object):
+class PlanTask:
     plan_name = f"План на {now.strftime('%A, %d %B %Y')}"
     model = models.Plan
 
@@ -42,4 +44,3 @@ def made_login_required_generic_class(generic_class):
     class LoginRequiredClass(LoginRequiredMixin, generic_class):
         pass
     return LoginRequiredClass
-

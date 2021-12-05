@@ -1,18 +1,18 @@
-import re
 import threading
-from datetime import datetime
 
 from dal import autocomplete
-from django.contrib.auth import authenticate, login, logout as django_logout
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout as django_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView, DeleteView
 from django.views.generic.base import View
-from B4 import models, forms, utils
+
+from B4 import forms, models, utils
 
 
 class CustomView(View):
@@ -22,7 +22,8 @@ class CustomView(View):
     def dispatch(self, request, *args, **kwargs):
         if self.model and not self.queryset:
             self.queryset = self.model.objects.all()
-        if self.queryset and hasattr(self.model, 'user') and request.user.is_authenticated and not request.user.is_superuser:
+        if self.queryset and hasattr(self.model, 'user') \
+                and request.user.is_authenticated and not request.user.is_superuser:
             self.queryset = self.queryset.filter(user=request.user)
         return super().dispatch(request, *args, **kwargs)
 
@@ -106,19 +107,18 @@ class NoteView(LoginRequiredMixin, CustomView):
         if not text and not image:
             return redirect('b4:note')
         obj = models.Note(text=text, image=image, user=request.user)
-        search_template = r'\d{2}.\d{2}.\d{4}'
-        if text and re.match(search_template, request.POST.get('text')):
-            obj.date = datetime.strptime(
-                re.match(search_template, request.POST.get('text')).group(0),
-                '%d.%m.%Y'
-            )
-            obj.text = text[11:].strip()
+        # search_template = r'\d{2}.\d{2}.\d{4}'
+        # if text and re.match(search_template, request.POST.get('text')):
+        #     obj.date = datetime.strptime(
+        #         re.match(search_template, request.POST.get('text')).group(0),
+        #         '%d.%m.%Y'
+        #     )
+        #     obj.text = text[11:].strip()
         try:
             obj.save()
         except Exception as e:
             print(e)
-        finally:
-            return redirect('b4:note')
+        return redirect('b4:note')
 
 
 @login_required
@@ -171,6 +171,5 @@ class PlanAutocomplete(autocomplete.Select2QuerySetView):
     def check_qs(self, qs):
         return bool(
             qs and (hasattr(self.model, 'user') or hasattr(self.model, 'plan') and hasattr(self.model, 'user'))
-            and self.request.user.is_authenticated \
-            and not self.request.user.is_superuser
+            and self.request.user.is_authenticated and not self.request.user.is_superuser
         )

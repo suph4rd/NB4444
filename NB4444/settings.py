@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'bootstrap5',
     'corsheaders',
-    
+
     # apps
     'B4.apps.B4Config',
     'api',
@@ -189,6 +189,6 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 
 try:
-    from .local_settings import *
+    pass
 except ImportError:
     pass

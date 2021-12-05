@@ -16,8 +16,7 @@ Including another URLconf
 from django.urls import path, reverse_lazy
 from django.views import generic
 
-from . import views, models, forms, utils
-
+from . import forms, models, utils, views
 
 app_name = 'b4'
 urlpatterns = [

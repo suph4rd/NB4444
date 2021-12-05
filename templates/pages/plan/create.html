@@ -1,29 +1,29 @@
 {% extends 'base.html' %}
 {% load static bootstrap5 %}
 {% block content %}
-    <h1 class="text-center">Создать План</h1>
-    <form method="post">
-        {% csrf_token %}
-        <div class="detail">
-            <div class="row">
-                <div class="col">
-                     {% bootstrap_field form.name %}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    {% bootstrap_field form.user %}
-                </div>
-            </div>
+  <h1 class="text-center">Создать План</h1>
+  <form method="post">
+    {% csrf_token %}
+    <div class="detail">
+      <div class="row">
+        <div class="col">
+          {% bootstrap_field form.name %}
         </div>
-        <input style="width: 100%" type="submit">
-    </form>
-        <div class="row btn-active">
-        <a class="col btn btn-outline-info" href="{{ request.META.HTTP_REFERER }}">
-            Назад
-        </a>
-        <a class="col btn btn-outline-secondary" href="{% url 'b4:plan_create' %}">
-            Сброс
-        </a>
+      </div>
+      <div class="row">
+        <div class="col">
+          {% bootstrap_field form.user %}
+        </div>
+      </div>
     </div>
+    <input style="width: 100%" type="submit">
+  </form>
+  <div class="row btn-active">
+    <a class="col btn btn-outline-info" href="{{ request.META.HTTP_REFERER }}">
+      Назад
+    </a>
+    <a class="col btn btn-outline-secondary" href="{% url 'b4:plan_create' %}">
+      Сброс
+    </a>
+  </div>
 {% endblock %}

@@ -37,7 +37,7 @@ class DefaultDeductions(TimeModel):
 
 class Note(TimeModel):
     text = models.TextField('Текст', **NULL_BLANK)
-    image = models.ImageField('Фотоверсия', unique=True , upload_to="foto/%Y/%m/%d", **NULL_BLANK)
+    image = models.ImageField('Фотоверсия', upload_to="foto/%Y/%m/%d", **NULL_BLANK)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
 
     class Meta:
@@ -95,7 +95,7 @@ class Task(AbstractTask):
     class Meta:
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'
-        ordering = ['-created_at', '-id']
+        ordering = ['is_ready', '-updated_at', '-created_at', '-id']
 
     def get_absolute_url(self):
         return reverse('b4:plan_detail', args=(self.plan_id,))

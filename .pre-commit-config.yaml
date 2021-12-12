@@ -18,7 +18,7 @@ repos:
     rev: v1.4
     hooks:
       - id: autoflake
-        exclude: ^(migrations|settings.py)
+        exclude: ^(migrations|NB4444/settings.py)
         args: [--in-place, --remove-all-unused-imports, --remove-duplicate-keys, --expand-star-imports]
   - repo: https://github.com/PyCQA/isort
     rev: 5.9.3
@@ -32,7 +32,7 @@ repos:
     rev: 3.9.2
     hooks:
       - id: flake8
-        exclude: 'migrations'
+        exclude: (B4/migrations|NB4444/settings.py)
         additional_dependencies:
           - flake8-bugbear
           - flake8-comprehensions

@@ -189,6 +189,6 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 
 try:
-    pass
+    from .local_settings import *
 except ImportError:
     pass

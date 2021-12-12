@@ -1,7 +1,6 @@
-from rest_framework import routers, permissions
+from rest_framework import routers
 
-from B4 import models as b4_models
-from api import views, serializers
+from api import views
 
 router = routers.SimpleRouter()
 router.register('default-deduction', views.DefaultDeductionListFilterModelViewSet)

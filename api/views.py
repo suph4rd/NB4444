@@ -1,13 +1,13 @@
 import threading
 
-from rest_framework import status, permissions
-from rest_framework.decorators import api_view, action
+from rest_framework import status
+from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from B4 import models as b4_models
 from api import serializers
 from api.permissions import IsSuperUserOrOwnerPermission
+from B4 import models as b4_models
 
 
 @api_view(['GET'])

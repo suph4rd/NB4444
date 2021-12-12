@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+
 from B4 import models
 
 
@@ -25,12 +26,6 @@ class PlanAdmin(admin.ModelAdmin):
 @admin.register(models.Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = ('id', 'created_at', 'updated_at', 'plan', 'section', 'description', 'is_ready')
-    list_display_links = ('id', 'created_at')
-
-
-@admin.register(models.Section)
-class TaskAdmin(admin.ModelAdmin):
-    list_display = ('id', 'created_at', 'is_active', 'name')
     list_display_links = ('id', 'created_at')
 
 

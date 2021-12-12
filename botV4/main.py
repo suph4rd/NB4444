@@ -1,4 +1,5 @@
 import time
+
 import requests
 from django.utils import timezone
 
@@ -65,10 +66,11 @@ def get_response_telegram():
     response_json = response.json()
     if not response_json.get('ok'):
         return None
-    open(log_file_name, "a")
+    with open(log_file_name, "a") as file:
+        pass
     with open(log_file_name, "r") as file:
         update_id_list = [line.strip() for line in file]
-    response_list, log_list = dict(), set()
+    response_list, log_list = {}, set()
     for message in response_json['result']:
         try:
             if message.get('update_id') or message.get('edited_message'):

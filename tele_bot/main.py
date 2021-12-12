@@ -1,4 +1,5 @@
 import time
+
 import requests
 from django.utils import timezone
 
@@ -51,7 +52,7 @@ class NoneVariablesException(Exception):
 def get_response_telegram():
     def to_request():
         if not token :
-            raise NoneVariablesException(f"Токен отсутствует!")
+            raise NoneVariablesException("Токен отсутствует!")
         try:
             request_url = f"https://api.telegram.org/bot{token}/{method}"
             print(request_url)
@@ -70,16 +71,17 @@ def get_response_telegram():
     while not to_request() and request_counter < 5:
         print("sleep")
         time.sleep(30)
-        request_counter +=1
+        request_counter += 1
 
     response = to_request()
     response_json = response.json()
     if not response_json.get('ok'):
         return None
-    open(log_file_name, "a")
+    with open(log_file_name, "a") as file:
+        pass
     with open(log_file_name, "r") as file:
         update_id_list = [line.strip() for line in file]
-    response_list, log_list = dict(), set()
+    response_list, log_list = {}, set()
     for message in response_json['result']:
         try:
             if message.get('update_id') or message.get('edited_message'):

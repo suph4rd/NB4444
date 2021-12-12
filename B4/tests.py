@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.test import TestCase, Client
+from django.test import Client, TestCase
 from django.urls import reverse
 
 from B4 import models
@@ -7,7 +7,7 @@ from B4 import models
 
 class B4URLTests(TestCase):
     custom_client = None
-    custom_variables = dict()
+    custom_variables = {}
 
     def setUp(self) -> None:
         client = Client()

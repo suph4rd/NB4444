@@ -1,6 +1,6 @@
 from dal import autocomplete
-from django.contrib.auth.models import User
 from django import forms
+from django.contrib.auth.models import User
 
 from B4 import models
 

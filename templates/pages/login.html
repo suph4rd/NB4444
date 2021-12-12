@@ -1,72 +1,72 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>B4</title>
-        {% include 'head.html' %}
-    </head>
+  <head>
+    <meta charset="UTF-8">
+    <title>B4</title>
+    {% include 'head.html' %}
+  </head>
 
-    <style>
-        .row div:first-child {
-            padding: 30px;
-            background-color: darkcyan;
-            border-radius: 5px;
-            min-width: 280px;
-            max-height: 280px;
-        }
-        .row div:first-child {
-            padding: 30px;
-            background-color: darkcyan;
-            border-radius: 5px;
-            min-width: 280px;
-            max-height: 280px;
-        }
-        @media (max-width: 576px) {
-            .row img {
-                margin-top: 10px;
-            }
-         }
+  <style>
+    .row div:first-child {
+      padding: 30px;
+      background-color: darkcyan;
+      border-radius: 5px;
+      min-width: 280px;
+      max-height: 280px;
+    }
+    .row div:first-child {
+      padding: 30px;
+      background-color: darkcyan;
+      border-radius: 5px;
+      min-width: 280px;
+      max-height: 280px;
+    }
+    @media (max-width: 576px) {
+      .row img {
+        margin-top: 10px;
+      }
+    }
 
-        .row div:last-child {
-            border-radius: 5px;
-        }
-        .row div:last-child img {
-            width: 100%;
-            min-width: 200px;
-            border-radius: 5px;
-        }
+    .row div:last-child {
+      border-radius: 5px;
+    }
+    .row div:last-child img {
+      width: 100%;
+      min-width: 200px;
+      border-radius: 5px;
+    }
 
-        h1.table-primary {
-            text-align: center;border-radius: 5px;padding: 15px; background-color:cornflowerblue
-        }
-        h1.warning {
-            text-align: center; color: #a41515
-        }
-    </style>
+    h1.table-primary {
+      text-align: center;border-radius: 5px;padding: 15px; background-color:cornflowerblue
+    }
+    h1.warning {
+      text-align: center; color: #a41515
+    }
+  </style>
 
-    <body>
-        <div class="container-fluid">
-            <h1 class="table-primary">БЧ (Электронная версия 7.1)</h1>
-            {% if warning %}
-                <h1 class="warning">{{ warning }} </h1>
-            {% endif %}
-            <br>
-            <div class="row ml-1 mr-1">
-                <div class="col col-sm-3">
-                    <form method="POST">
-                        {% csrf_token %}
-                        <h4>Имя пользователя</h4>
-                        <p>{{ user_form.username }}</p>
-                        <h4>Пароль</h4>
-                        <p>{{ user_form.password }}</p>
-                        <button type="submit">Выполнить вход</button>
-                    </form>
-                </div>
-                <div class="col">
-                    <img src="/media/lambaZel.jpg" alt="ламба черная">
-                </div>
-            </div>
+  <body>
+    <div class="container-fluid">
+      <h1 class="table-primary">БЧ (Электронная версия 7.1)</h1>
+      {% if warning %}
+        <h1 class="warning">{{ warning }} </h1>
+      {% endif %}
+      <br>
+      <div class="row ml-1 mr-1">
+        <div class="col col-sm-3">
+          <form method="POST">
+            {% csrf_token %}
+            <h4>Имя пользователя</h4>
+            <p>{{ user_form.username }}</p>
+            <h4>Пароль</h4>
+            <p>{{ user_form.password }}</p>
+            <button type="submit">Выполнить вход</button>
+          </form>
         </div>
-    </body>
+        <div class="col">
+          <img src="/media/lambaZel.jpg" alt="ламба черная">
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

@@ -95,7 +95,7 @@ class Task(AbstractTask):
     class Meta:
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'
-        ordering = ['-created_at', '-id']
+        ordering = ['is_ready', '-updated_at', '-created_at', '-id']
 
     def get_absolute_url(self):
         return reverse('b4:plan_detail', args=(self.plan_id,))

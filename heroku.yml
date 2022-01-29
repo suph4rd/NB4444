@@ -3,4 +3,4 @@ build:
     web: Dockerfile
 
 run:
-  web: gunicorn NB4444.wsgi
+  web: python manage.py migrate && python manage.py runserver 0.0.0.0:9999

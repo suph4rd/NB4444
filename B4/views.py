@@ -70,7 +70,7 @@ class GeneralPage(LoginRequiredMixin, View):
 
     @staticmethod
     def get(request):
-        obj = models.Note.objects.order_by("?").first()
+        obj = models.Note.objects.filter(user=request.user).order_by("?").first()
         return render(request, 'pages/general.html', locals())
 
 

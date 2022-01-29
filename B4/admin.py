@@ -30,3 +30,4 @@ class TaskAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.DefaultDeductions)
+admin.site.register(models.Section)

@@ -50,7 +50,7 @@ class Note(TimeModel):
 
 
 class Plan(TimeModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='plans')
+    user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE, related_name='plans')
     name = models.CharField('Название плана', max_length=255)
 
     class Meta:

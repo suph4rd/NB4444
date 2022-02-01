@@ -25,6 +25,16 @@
   <div style="padding:10px">
     {% for obj in queryset %}
       <hr/>
+      <span>
+        {% if user.is_superuser and obj.user == user %}
+          It's you
+        {% endif %}
+      </span>
+      <span style="font-weight: 800">
+        {% if user.is_superuser %}
+          ({{ obj.user }})
+        {% endif %}
+      </span>
       <p> {{ forloop.counter }}. <b>{{obj.created_at|date:"d.m.Y"}}</b> {{ obj.text }}
         {% if obj.image %}
           <br>

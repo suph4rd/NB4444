@@ -23,7 +23,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'mri5kxr7g(*9=wb@crnhuh_xw8#%rsx$hh8!7m89mg-=(s8kox'
+SECRET_KEY = os.environ.get("SECRET_KEY", "test")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -64,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'NB4444.urls'
@@ -91,10 +92,21 @@ WSGI_APPLICATION = 'NB4444.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get("DB_NAME", "test"),
+        'USER': os.environ.get("DB_USER", "test"),
+        'PASSWORD': os.environ.get("DB_PASSWORD", "test"),
+        'HOST': os.environ.get("DB_HOST", "test"),
+        'PORT': os.environ.get("DB_PORT", "test"),
     }
 }
 
@@ -179,11 +191,12 @@ STATICFILE_DIR = os.path.join(BASE_DIR, 'common_static')
 STATICFILES_DIRS = [
     STATICFILE_DIR,
 ]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-TELEGRAM_BOT_TOKEN = ""
+TELEGRAM_BOT_TOKEN = os.environ.get("DB_PORT", "test")
 
 CORS_ALLOW_ALL_ORIGINS = True
 

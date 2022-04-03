@@ -1,10 +1,9 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-// import Home from '../views/Home.vue'
-import Main from '../components/Main.vue'
-import default_deduction from "../components/delault_deduction/default_deduction";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Main from '../components/Main.vue';
+import DefaultDeduction from "../components/delault_deduction/DefaultDeduction.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -15,7 +14,7 @@ const routes = [
   {
     path: '/default-deduction',
     name: 'default_deduction',
-    component: default_deduction
+    component: DefaultDeduction
   },
 ]
 

@@ -21,7 +21,7 @@
 
 <script>
   export default {
-    name: 'default_deduction',
+    name: 'DefaultDeduction',
     data: function () {
       return {
         deduction: null

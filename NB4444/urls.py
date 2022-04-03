@@ -25,4 +25,5 @@ urlpatterns = [
     path('api/', include('api.urls', namespace='api')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
+    path('vueapp/', include('vueapp_core.urls', namespace="vueapp_core")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

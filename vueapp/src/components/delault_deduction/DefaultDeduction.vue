@@ -14,7 +14,7 @@
     </v-row>
     <v-row v-if="deduction">
       <v-col cols="2" offset="4">Еда:</v-col>
-      <v-col>{{ deduction.food }}</v-col>>
+      <v-col>{{ deduction.food }}</v-col>
     </v-row>
   </v-container>
 </template>
@@ -32,7 +32,7 @@
     },
     methods: {
       getDefaultDeductions() {
-          this.axios.get(`${this.$apiHost}api/v1/get-default-deduction/`).then((result) =>{
+          this.axios.get(`${this.$apiHost}api/v1/default-deduction/last/`).then((result) =>{
             console.log(result.data)
             if (result.status === 200) {
               this.deduction = result.data

@@ -12,7 +12,9 @@
     </v-app-bar>
 
     <v-navigation-drawer class="green accent-1" width="300px" v-model=leftMenu app>
-      <img src="../../media/ss.jpg" width="100%" height="65px" alt="">
+      <router-link :to="{name: 'Main'}">
+        <img src="../../media/ss.jpg" width="100%" height="65px" alt="">
+      </router-link>
 
       <v-list>
         <v-list-item :href="this.$apiHost + 'admin/'">
@@ -22,7 +24,7 @@
       </v-list>
 
       <v-list>
-        <v-list-item href="#">
+        <v-list-item :to="{name: 'DefaultDeduction'}">
           <v-list-item-content>2.Стандартные вычеты
           </v-list-item-content>
         </v-list-item>

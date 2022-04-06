@@ -17,7 +17,8 @@
       </router-link>
 
       <v-list>
-        <v-list-item :href="this.$apiHost + 'admin/'">
+<!--        <v-list-item :href="this.$apiHost + 'admin/'">-->
+        <v-list-item>
           <v-list-item-content>1.Панель администратора
           </v-list-item-content>
         </v-list-item>

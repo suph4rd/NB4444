@@ -2,6 +2,8 @@ FROM python:3.10
 
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt-get install -y nodejs
 ENV NODE_VERSION=16
 RUN apt install -y curl
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
@@ -23,7 +25,4 @@ RUN apt-get update && \
 
 ENV LANG ru_RU.UTF-8
 ENV LC_ALL ru_RU.UTF-8
-
-
-RUN cd ./vueapp && npm run build
-RUN cd ../
+RUN cd ./vueapp && npm install && npm run build

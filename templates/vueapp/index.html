@@ -14,8 +14,6 @@
     {% render_bundle 'app' 'css' %}
   </head>
   <body>
-    {# Немного грязноватый хак для POST запросов с Vue аппликачки. По хорошему надо сделать Token Auth #}
-    {% csrf_token %}
     <noscript>
       <strong>We're sorry but web_app doesn't work properly without JavaScript enabled. Please enable it to
         continue.</strong>

@@ -32,7 +32,7 @@
       </v-list>
 
       <v-list>
-        <v-list-item href="#">
+        <v-list-item :to="{name: 'Note'}">
           <v-list-item-content>3.Заметки
           </v-list-item-content>
         </v-list-item>
@@ -83,7 +83,8 @@ export default {
 
   data: function () {
     return {
-      leftMenu: false
+      leftMenu: false,
+      apiHost: location.origin
     }
   },
   methods: {
@@ -91,7 +92,7 @@ export default {
       this.leftMenu = !this.leftMenu
     },
     updateBotMessages(){
-      this.axios.get(`${this.$apiHost}api/v1/bot-response/`).then((result) =>{
+      this.axios.get(`${this.$apiHost}/api/v1/bot-response/`).then((result) =>{
         if (result.status === 200) {
           alert("Запрос на подгрузку записей успешно получен!")
         } else {

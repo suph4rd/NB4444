@@ -132,3 +132,19 @@ class TaskModelListFilterModelViewSet(CurrentSerializerMixin, ListFilterModelVie
 class NoteModelListFilterModelViewSet(CurrentSerializerMixin, ListFilterModelViewSet):
     model = b4_models.Note
     queryset = model.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return Response({"error": "Пользователь не авторизован!"}, status=403)
+        self.queryset = self.queryset.filter(user=request.user)
+        return super().list(request, *args, **kwargs)
+
+    # @action(methods=['get'], detail=False)
+    # def user_last(self, request, *args, **kwargs):
+    #     if not request.user.is_authenticated:
+    #         return Response({"error": "Пользователь не авторизован!"}, status=403)
+    #     obj = self.queryset.filter(user=request.user).last()
+    #     if not obj:
+    #         return Response({}, status=404)
+    #     serializer = self.serializer_class(obj)
+    #     return Response(serializer.data)

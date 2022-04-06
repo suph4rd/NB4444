@@ -24,7 +24,8 @@
     name: 'DefaultDeduction',
     data: function () {
       return {
-        deduction: null
+        deduction: null,
+        apiHost: location.origin,
       }
     },
     mounted() {
@@ -37,10 +38,9 @@
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${user.access}`,
             } : {};
-            this.axios.get(`${this.$apiHost}api/v1/default-deduction/user_last/`, {
+            this.axios.get(`${this.apiHost}/api/v1/default-deduction/user_last/`, {
               headers: headers
             }).then((result) =>{
-            console.log(result.data)
             this.deduction = result.data;
         }).catch((res) => {
             sessionStorage.removeItem('user');

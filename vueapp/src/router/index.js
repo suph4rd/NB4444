@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Main from '../components/Main.vue';
 import DefaultDeduction from "../components/delault_deduction/DefaultDeduction.vue";
 import Login from "../components/Login";
+import Note from "../components/note/Note";
 
 Vue.use(VueRouter);
 
@@ -13,20 +14,25 @@ const routes = [
     component: Main
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
     path: '/default-deduction',
     name: 'DefaultDeduction',
     component: DefaultDeduction
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login
+    path: '/note',
+    name: 'Note',
+    component: Note
   },
 ];
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: 'vueapp',
   routes
 });
 

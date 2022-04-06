@@ -29,6 +29,7 @@
       @click="login"
     >
       Login
+
     </v-btn>
 
     <v-btn
@@ -61,7 +62,7 @@
         this.$refs.form.validate()
       },
       login() {
-          this.axios.post( `${this.$apiHost}auth/jwt/create/`, {
+          this.axios.post( `${this.$apiHost}/auth/jwt/create/`, {
             "username": this.username,
             "password": this.password
           }).then((result) =>{

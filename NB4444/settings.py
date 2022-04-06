@@ -49,10 +49,12 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'bootstrap5',
     'corsheaders',
+    'webpack_loader',
 
     # apps
     'B4.apps.B4Config',
     'api',
+    'vueapp_core',
 ]
 
 MIDDLEWARE = [
@@ -200,6 +202,14 @@ TELEGRAM_BOT_TOKEN = os.environ.get("DB_PORT", "test")
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+WEBPACK_LOADER = {
+  'DEFAULT': {
+    'CACHE': not DEBUG,
+    'STATS_FILE': os.path.join(BASE_DIR, 'vueapp', 'webpack-stats.json'),
+    'POLL_INTERVAL': 0.1,
+    'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
+  }
+}
 
 try:
     from .local_settings import *

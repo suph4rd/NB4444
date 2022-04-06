@@ -1,10 +1,11 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-// import Home from '../views/Home.vue'
-import Main from '../components/Main.vue'
-import default_deduction from "../components/delault_deduction/default_deduction";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Main from '../components/Main.vue';
+import DefaultDeduction from "../components/delault_deduction/DefaultDeduction.vue";
+import Login from "../components/Login";
+import Note from "../components/note/Note";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -13,16 +14,38 @@ const routes = [
     component: Main
   },
   {
-    path: '/default-deduction',
-    name: 'default_deduction',
-    component: default_deduction
+    path: '/login',
+    name: 'Login',
+    component: Login
   },
-]
+  {
+    path: '/default-deduction',
+    name: 'DefaultDeduction',
+    component: DefaultDeduction
+  },
+  {
+    path: '/note',
+    name: 'Note',
+    component: Note
+  },
+];
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: 'vueapp',
   routes
-})
+});
 
-export default router
+export default router;
+
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = sessionStorage.getItem('user');
+
+  if (authRequired && !loggedIn) {
+    return next('/login');
+  }
+  next();
+});

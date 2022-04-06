@@ -7,29 +7,31 @@
       class="text-center"
       cols="12"
     >
-      <h1>БЧ (Эл. V8.2)</h1>
+      <h1>БЧ (Эл. V8.3)</h1>
     </v-col>
     </v-app-bar>
 
-    <v-navigation-drawer class="green accent-1" width="300px" v-model=leftMenu app>
-      <img src="../../media/ss.jpg" width="100%" height="65px" alt="">
+    <v-navigation-drawer v-if="this.$route.name !== 'Login' " class="green accent-1" width="300px" v-model=leftMenu app>
+      <router-link :to="{name: 'Main'}">
+        <img src="../../media/ss.jpg" width="100%" height="65px" alt="">
+      </router-link>
 
       <v-list>
-        <v-list-item :href="this.$apiHost + 'admin/'">
-          <v-list-item-content>1.Панель администратора
+        <v-list-item :href="this.$apiHost">
+          <v-list-item-content>1.Старая версия
           </v-list-item-content>
         </v-list-item>
       </v-list>
 
       <v-list>
-        <v-list-item href="#">
+        <v-list-item :to="{name: 'DefaultDeduction'}">
           <v-list-item-content>2.Стандартные вычеты
           </v-list-item-content>
         </v-list-item>
       </v-list>
 
       <v-list>
-        <v-list-item href="#">
+        <v-list-item :to="{name: 'Note'}">
           <v-list-item-content>3.Заметки
           </v-list-item-content>
         </v-list-item>
@@ -80,16 +82,16 @@ export default {
 
   data: function () {
     return {
-      leftMenu: false
+      leftMenu: false,
+      apiHost: location.origin
     }
   },
   methods: {
     onLeftMenu(){
-      console.log(!this.leftMenu)
       this.leftMenu = !this.leftMenu
     },
     updateBotMessages(){
-      this.axios.get(`${this.$apiHost}api/v1/bot-response/`).then((result) =>{
+      this.axios.get(`${this.$apiHost}/api/v1/bot-response/`).then((result) =>{
         if (result.status === 200) {
           alert("Запрос на подгрузку записей успешно получен!")
         } else {

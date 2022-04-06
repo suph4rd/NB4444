@@ -3,16 +3,16 @@ from rest_framework import routers
 from api import views
 
 router = routers.SimpleRouter()
-router.register('default-deduction', views.DefaultDeductionListFilterModelViewSet)
+router.register('v1/default-deduction', views.DefaultDeductionListFilterModelViewSet)
 router.register(
-    'note',
+    'v1/note',
     views.NoteModelListFilterModelViewSet
 )
 router.register(
-    'plan',
+    'v1/plan',
     views.PlanModelListFilterModelViewSet
 )
 router.register(
-    'task',
+    'v1/task',
     views.TaskModelListFilterModelViewSet
 )

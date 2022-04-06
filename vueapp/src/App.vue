@@ -11,7 +11,7 @@
     </v-col>
     </v-app-bar>
 
-    <v-navigation-drawer class="green accent-1" width="300px" v-model=leftMenu app>
+    <v-navigation-drawer v-if="this.$route.name !== 'Login' " class="green accent-1" width="300px" v-model=leftMenu app>
       <router-link :to="{name: 'Main'}">
         <img src="../../media/ss.jpg" width="100%" height="65px" alt="">
       </router-link>
@@ -87,7 +87,6 @@ export default {
   },
   methods: {
     onLeftMenu(){
-      console.log(!this.leftMenu)
       this.leftMenu = !this.leftMenu
     },
     updateBotMessages(){

@@ -65,11 +65,12 @@
             "username": this.username,
             "password": this.password
           }).then((result) =>{
-            console.log(result.data)
             if (result.status === 200) {
-              localStorage.setItem('user', JSON.stringify(result.data));
+              let user = result.data
+              sessionStorage.setItem('user', JSON.stringify(user));
               this.$router.push('/')
             } else {
+              sessionStorage.removeItem('user');
               alert("Ошибка отправки запроса!")
             }
         })
@@ -82,6 +83,3 @@
   }
 </script>
 
-<!--headers: {-->
-<!--      Authorization: 'Bearer ' + token,-->
-<!--   }-->

@@ -32,13 +32,19 @@
     },
     methods: {
       getDefaultDeductions() {
-          this.axios.get(`${this.$apiHost}api/v1/default-deduction/last/`).then((result) =>{
+            let user = JSON.parse(sessionStorage.getItem('user'));
+            let headers = user ? {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${user.access}`,
+            } : {};
+            this.axios.get(`${this.$apiHost}api/v1/default-deduction/user_last/`, {
+              headers: headers
+            }).then((result) =>{
             console.log(result.data)
-            if (result.status === 200) {
-              this.deduction = result.data
-            } else {
-              alert("Ошибка отправки запроса!")
-            }
+            this.deduction = result.data;
+        }).catch((res) => {
+            sessionStorage.removeItem('user');
+            this.$router.push('login');
         })
       }
     }

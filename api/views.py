@@ -69,6 +69,16 @@ class DefaultDeductionListFilterModelViewSet(ListFilterModelViewSet):
         serializer = self.serializer_class(qs)
         return Response(serializer.data)
 
+    @action(methods=['get'], detail=False)
+    def user_last(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return Response({"error": "Пользователь не авторизован!"}, status=403)
+        obj = self.queryset.filter(user=request.user).last()
+        if not obj:
+            return Response({}, status=404)
+        serializer = self.serializer_class(obj)
+        return Response(serializer.data)
+
 
 class CurrentSerializerMixin:
     model = None

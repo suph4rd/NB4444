@@ -7,7 +7,7 @@
       class="text-center"
       cols="12"
     >
-      <h1>БЧ (Эл. V8.2)</h1>
+      <h1>БЧ (Эл. V8.3)</h1>
     </v-col>
     </v-app-bar>
 
@@ -17,9 +17,8 @@
       </router-link>
 
       <v-list>
-<!--        <v-list-item :href="this.$apiHost + 'admin/'">-->
-        <v-list-item>
-          <v-list-item-content>1.Панель администратора
+        <v-list-item :href="this.$apiHost">
+          <v-list-item-content>1.Старая версия
           </v-list-item-content>
         </v-list-item>
       </v-list>

@@ -1,21 +1,23 @@
 <template>
   <v-container>
-    <v-row v-if="deduction">
-      <v-col cols="2" offset="4">Дом:</v-col>
-      <v-col>{{ deduction.house }}</v-col>
-    </v-row>
-    <v-row v-if="deduction">
-      <v-col cols="2" offset="4">Путешествия:</v-col>
-      <v-col>{{ deduction.travel }}</v-col>
-    </v-row>
-    <v-row v-if="deduction">
-      <v-col cols="2" offset="4">Телефон:</v-col>
-      <v-col>{{ deduction.phone }}</v-col>
-    </v-row>
-    <v-row v-if="deduction">
-      <v-col cols="2" offset="4">Еда:</v-col>
-      <v-col>{{ deduction.food }}</v-col>
-    </v-row>
+    <div class="deductions">
+      <div v-if="deduction">
+        <div>Дом:</div>
+        <div>{{ deduction.house }}</div>
+      </div>
+      <div v-if="deduction">
+        <div>Путешествия:</div>
+        <div>{{ deduction.travel }}</div>
+      </div>
+      <div v-if="deduction">
+        <div>Телефон:</div>
+        <div>{{ deduction.phone }}</div>
+      </div>
+      <div v-if="deduction">
+        <div>Еда:</div>
+        <div>{{ deduction.food }}</div>
+      </div>
+    </div>
   </v-container>
 </template>
 
@@ -50,3 +52,18 @@
     }
   }
 </script>
+
+<style scoped>
+  .deductions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .deductions div {
+    display: flex;
+  }
+  .deductions div > div {
+    margin-right: 10px;
+  }
+</style>

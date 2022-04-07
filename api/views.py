@@ -82,7 +82,7 @@ class DefaultDeductionListFilterModelViewSet(ListFilterModelViewSet):
 
 class CurrentSerializerMixin:
     model = None
-    depth = 1
+    depth = 0
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

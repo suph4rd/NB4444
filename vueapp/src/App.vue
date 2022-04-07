@@ -2,7 +2,7 @@
   <v-app>
 
     <v-app-bar color="green accent-3" app>
-      <v-icon v-if="this.$route.name !== 'Login' "  @click="onLeftMenu">mdi-view-headline</v-icon>
+      <v-app-bar-nav-icon v-if="this.$route.name !== 'Login' " @click="onLeftMenu"></v-app-bar-nav-icon>
       <v-col
       class="text-center"
       cols="11"

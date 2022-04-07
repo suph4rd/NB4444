@@ -109,3 +109,12 @@ export default {
   }
 };
 </script>
+
+<style>
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+</style>

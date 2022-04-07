@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="deductions">
+    <div class="main-content">
     <v-form
       ref="form"
       v-model="valid"
@@ -92,11 +92,3 @@
   }
 </script>
 
-<style scoped>
-  .deductions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-</style>

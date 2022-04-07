@@ -1,5 +1,7 @@
 <template>
   <v-container>
+    <NoteCreate :style="{'margin-bottom': '70px'}" @onCreate="getNotes" />
+
     <v-text-field
       v-if="!notes"
       color="success"
@@ -18,10 +20,12 @@
 
 <script>
   import header from "../../mixins/header";
+  import NoteCreate from "./NoteCreate";
 
   export default {
     name: 'Note',
     mixins: [header],
+    components: {NoteCreate},
 
     data: function () {
       return {

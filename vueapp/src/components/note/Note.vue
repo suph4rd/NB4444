@@ -1,5 +1,12 @@
 <template>
   <v-container>
+    <v-text-field
+      v-if="!notes"
+      color="success"
+      loading
+      disabled
+    ></v-text-field>
+
     <v-card v-for="item in notes" :style="{'margin': '5px'}">
       <v-card-text>
         <div>{{ item.text }}</div>

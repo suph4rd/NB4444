@@ -1,22 +1,44 @@
 <template>
   <v-container>
     <div class="deductions">
-      <div v-if="deduction">
-        <div>Дом:</div>
-        <div>{{ deduction.house }}</div>
-      </div>
-      <div v-if="deduction">
-        <div>Путешествия:</div>
-        <div>{{ deduction.travel }}</div>
-      </div>
-      <div v-if="deduction">
-        <div>Телефон:</div>
-        <div>{{ deduction.phone }}</div>
-      </div>
-      <div v-if="deduction">
-        <div>Еда:</div>
-        <div>{{ deduction.food }}</div>
-      </div>
+    <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
+      :style="{'width': '500px'}"
+      @submit="sendDefaultDeductions"
+    >
+    <v-text-field
+      type="number"
+      v-model="deduction.house"
+      label="Дом"
+      required
+    ></v-text-field>
+      <v-text-field
+      type="number"
+      v-model="deduction.travel"
+      label="Путешествия"
+      required
+    ></v-text-field>
+      <v-text-field
+      type="number"
+      v-model="deduction.phone"
+      label="Телефон"
+      required
+    ></v-text-field>
+      <v-text-field
+      type="number"
+      v-model="deduction.food"
+      label="Еда"
+      required
+    ></v-text-field>
+
+    <v-btn
+      color="success"
+      class="mr-4"
+      type="submit"
+    >Отправить</v-btn>
+  </v-form>
     </div>
   </v-container>
 </template>
@@ -47,7 +69,25 @@
         }).catch((res) => {
           this.dropSession();
         })
-      }
+      },
+      sendDefaultDeductions(e) {
+            e.preventDefault();
+            let headers = this.getHeaders();
+            let data = {
+              "house": this.deduction.house,
+              "travel": this.deduction.travel,
+              "phone": this.deduction.phone,
+              "food": this.deduction.food,
+              "user": this.deduction.user
+            }
+            this.axios.post(`${this.$apiHost}/api/v1/default-deduction/`, data, {
+              headers: headers
+            }).then((res) =>{
+              this.getDefaultDeductions();
+        }).catch((res) => {
+          this.dropSession();
+        })
+      },
     }
   }
 </script>
@@ -58,11 +98,5 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
-  .deductions div {
-    display: flex;
-  }
-  .deductions div > div {
-    margin-right: 10px;
   }
 </style>

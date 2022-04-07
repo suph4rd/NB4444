@@ -22,8 +22,12 @@
 </template>
 
 <script>
+  import header from "../../mixins/header";
+
   export default {
     name: 'DefaultDeduction',
+    mixins: [header],
+
     data: function () {
       return {
         deduction: null,
@@ -35,18 +39,13 @@
     },
     methods: {
       getDefaultDeductions() {
-            let user = JSON.parse(sessionStorage.getItem('user'));
-            let headers = user ? {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${user.access}`,
-            } : {};
+            let headers = this.getHeaders();
             this.axios.get(`${this.$apiHost}/api/v1/default-deduction/user_last/`, {
               headers: headers
             }).then((result) =>{
             this.deduction = result.data;
         }).catch((res) => {
-            sessionStorage.removeItem('user');
-            this.$router.push('login');
+          this.dropSession();
         })
       }
     }

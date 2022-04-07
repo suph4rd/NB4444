@@ -10,8 +10,12 @@
 </template>
 
 <script>
+  import header from "../../mixins/header";
+
   export default {
     name: 'Note',
+    mixins: [header],
+
     data: function () {
       return {
         notes: null
@@ -22,19 +26,14 @@
     },
     methods: {
       getNotes() {
-            let user = JSON.parse(sessionStorage.getItem('user'));
-            let headers = user ? {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${user.access}`,
-            } : {};
+            let headers = this.getHeaders();
             this.axios.get(`${this.$apiHost}/api/v1/note/`, {
               headers: headers
             }).then((result) =>{
               console.log(result.data)
               this.notes = result.data;
         }).catch((res) => {
-            sessionStorage.removeItem('user');
-            this.$router.push('login');
+            this.dropSession();
         })
       }
     }

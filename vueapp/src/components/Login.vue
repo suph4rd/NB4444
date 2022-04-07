@@ -5,40 +5,34 @@
     v-model="valid"
     lazy-validation
     :style="{'width': '500px'}"
+    @submit="login"
   >
     <v-text-field
       v-model="username"
-      :counter="255"
       :rules="nameRules"
-      label="Username"
+      label="Логин"
       required
     ></v-text-field>
 
     <v-text-field
       v-model="password"
-      label="Password"
+      label="Пароль"
       type="password"
       required
     ></v-text-field>
-
 
     <v-btn
       :disabled="!valid"
       color="success"
       class="mr-4"
-      @click="login"
-    >
-      Login
-
-    </v-btn>
+      type="submit"
+    >Вход</v-btn>
 
     <v-btn
       color="error"
       class="mr-4"
       @click="reset"
-    >
-      Reset Form
-    </v-btn>
+    >Сброс</v-btn>
   </v-form>
   </div>
 </template>
@@ -61,7 +55,8 @@
       validate () {
         this.$refs.form.validate()
       },
-      login() {
+      login(e) {
+          e.preventDefault();
           this.axios.post( `${this.$apiHost}/auth/jwt/create/`, {
             "username": this.username,
             "password": this.password

@@ -1,5 +1,14 @@
 <template>
   <v-container>
+    <NoteCreate :style="{'margin-bottom': '70px'}" @onCreate="getNotes" />
+
+    <v-text-field
+      v-if="!notes"
+      color="success"
+      loading
+      disabled
+    ></v-text-field>
+
     <v-card v-for="item in notes" :style="{'margin': '5px'}">
       <v-card-text>
         <div>{{ item.text }}</div>
@@ -10,8 +19,14 @@
 </template>
 
 <script>
+  import header from "../../mixins/header";
+  import NoteCreate from "./NoteCreate";
+
   export default {
     name: 'Note',
+    mixins: [header],
+    components: {NoteCreate},
+
     data: function () {
       return {
         notes: null
@@ -22,19 +37,14 @@
     },
     methods: {
       getNotes() {
-            let user = JSON.parse(sessionStorage.getItem('user'));
-            let headers = user ? {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${user.access}`,
-            } : {};
+            let headers = this.getHeaders();
             this.axios.get(`${this.$apiHost}/api/v1/note/`, {
               headers: headers
             }).then((result) =>{
               console.log(result.data)
               this.notes = result.data;
         }).catch((res) => {
-            sessionStorage.removeItem('user');
-            this.$router.push('login');
+            this.dropSession();
         })
       }
     }

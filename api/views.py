@@ -1,3 +1,4 @@
+import copy
 import threading
 
 from rest_framework import status
@@ -139,12 +140,13 @@ class NoteModelListFilterModelViewSet(CurrentSerializerMixin, ListFilterModelVie
         self.queryset = self.queryset.filter(user=request.user)
         return super().list(request, *args, **kwargs)
 
-    # @action(methods=['get'], detail=False)
-    # def user_last(self, request, *args, **kwargs):
-    #     if not request.user.is_authenticated:
-    #         return Response({"error": "Пользователь не авторизован!"}, status=403)
-    #     obj = self.queryset.filter(user=request.user).last()
-    #     if not obj:
-    #         return Response({}, status=404)
-    #     serializer = self.serializer_class(obj)
-    #     return Response(serializer.data)
+    def create(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return Response({"error": "Пользователь не авторизован!"}, status=403)
+        data = copy.deepcopy(request.data)
+        data['user'] = request.user.id
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

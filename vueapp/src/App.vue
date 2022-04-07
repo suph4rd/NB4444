@@ -2,12 +2,15 @@
   <v-app>
 
     <v-app-bar color="green accent-3" app>
-      <v-app-bar-nav-icon @click="onLeftMenu"></v-app-bar-nav-icon>
+      <v-icon v-if="this.$route.name !== 'Login' "  @click="onLeftMenu">mdi-view-headline</v-icon>
       <v-col
       class="text-center"
-      cols="12"
+      cols="11"
     >
       <h1>БЧ (Эл. V8.3)</h1>
+    </v-col>
+    <v-col v-if="this.$route.name !== 'Login' " class="text-end">
+      <button @click="logout">Выход</button>
     </v-col>
     </v-app-bar>
 
@@ -98,6 +101,10 @@ export default {
           alert("Ошибка отправки запроса!")
         }
       })
+    },
+    logout() {
+      sessionStorage.removeItem('user');
+      this.$router.push('login')
     }
   }
 };

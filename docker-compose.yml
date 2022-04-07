@@ -10,10 +10,3 @@ services:
     ports:
       - "9999:9999"
     restart: always
-
-#  vuejs_app:
-#    build: ./vueapp
-#    command: sh -c "npm run serve"
-#    ports:
-#      - "9998:9998"
-#    restart: always

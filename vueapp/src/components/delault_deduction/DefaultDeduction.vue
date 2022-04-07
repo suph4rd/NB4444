@@ -40,7 +40,7 @@
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${user.access}`,
             } : {};
-            this.axios.get(`${this.apiHost}/api/v1/default-deduction/user_last/`, {
+            this.axios.get(`${this.$apiHost}/api/v1/default-deduction/user_last/`, {
               headers: headers
             }).then((result) =>{
             this.deduction = result.data;

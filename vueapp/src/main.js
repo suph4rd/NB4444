@@ -7,8 +7,8 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
-Vue.prototype.$apiHost = window.location.origin;
-// Vue.prototype.$apiHost = 'http://0.0.0.0:8000';
+// Vue.prototype.$apiHost = window.location.origin;
+Vue.prototype.$apiHost = 'http://0.0.0.0:8000';
 
 new Vue({
   router,

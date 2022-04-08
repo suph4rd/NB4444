@@ -5,11 +5,10 @@
       <v-app-bar-nav-icon v-if="this.$route.name !== 'Login' " @click="onLeftMenu"></v-app-bar-nav-icon>
       <v-col
       class="text-center"
-      cols="11"
     >
       <h1>БЧ (Эл. V8.3)</h1>
     </v-col>
-    <v-col v-if="this.$route.name !== 'Login' " class="text-end">
+    <v-col v-if="this.$route.name !== 'Login' " cols="2" class="text-end">
       <button @click="logout">Выход</button>
     </v-col>
     </v-app-bar>

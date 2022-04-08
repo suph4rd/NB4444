@@ -5,7 +5,7 @@
       ref="form"
       v-model="valid"
       lazy-validation
-      :style="{'width': '500px'}"
+      :style="{'width': '95%'}"
       @submit="sendDefaultDeductions"
     >
     <v-text-field
@@ -52,7 +52,13 @@
 
     data: function () {
       return {
-        deduction: null,
+        deduction: {
+            "house": 0,
+            "travel": 0,
+            "phone": 0,
+            "food": 0,
+            "user": 0
+          },
         apiHost: location.origin,
       }
     },

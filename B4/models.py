@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -15,7 +17,8 @@ class SafeManager(models.Manager):
 
 
 class AbstractSafeModel(models.Model):
-    is_delete = models.BooleanField(default=False)
+    is_delete = models.BooleanField("Удалено", default=False)
+    delete_datetime = models.DateTimeField("Дата удаления", **NULL_BLANK)
     objects = SafeManager()
     all_objects = models.Manager()
 
@@ -23,6 +26,7 @@ class AbstractSafeModel(models.Model):
         if force:
             return super().delete(using=None, keep_parents=False)
         self.is_delete = True
+        self.delete_datetime = datetime.datetime.now()
         self.save()
 
     class Meta:

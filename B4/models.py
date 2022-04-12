@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -8,6 +10,29 @@ NULL_BLANK = {
 }
 
 
+class SafeManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(is_delete=False)
+
+
+class AbstractSafeModel(models.Model):
+    is_delete = models.BooleanField("Удалено", default=False)
+    delete_datetime = models.DateTimeField("Дата удаления", **NULL_BLANK)
+    objects = SafeManager()
+    all_objects = models.Manager()
+
+    def delete(self, using=None, keep_parents=False, force=False):
+        if force:
+            return super().delete(using=None, keep_parents=False)
+        self.is_delete = True
+        self.delete_datetime = datetime.datetime.now()
+        self.save()
+
+    class Meta:
+        abstract = True
+
+
 class TimeModel(models.Model):
     created_at = models.DateTimeField("Дата создания", auto_now_add=True, **NULL_BLANK)
     updated_at = models.DateTimeField("Дата изменения", auto_now=True, **NULL_BLANK)
@@ -16,7 +41,7 @@ class TimeModel(models.Model):
         abstract = True
 
 
-class DefaultDeductions(TimeModel):
+class DefaultDeductions(TimeModel, AbstractSafeModel):
     house = models.DecimalField('Жильё', default=0, max_digits=10, decimal_places=2)
     travel = models.DecimalField('Проезд', default=0, max_digits=10, decimal_places=2)
     phone = models.DecimalField('Телефон', default=0, max_digits=10, decimal_places=2)
@@ -35,7 +60,7 @@ class DefaultDeductions(TimeModel):
         return f"{self.house + self.travel + self.phone + self.food}"
 
 
-class Note(TimeModel):
+class Note(TimeModel, AbstractSafeModel):
     text = models.TextField('Текст', **NULL_BLANK)
     image = models.ImageField('Фотоверсия', upload_to="foto/%Y/%m/%d", **NULL_BLANK)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
@@ -49,7 +74,7 @@ class Note(TimeModel):
         return f"{self.pk} {self.created_at}"
 
 
-class Plan(TimeModel):
+class Plan(TimeModel, AbstractSafeModel):
     user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE, related_name='plans')
     name = models.CharField('Название плана', max_length=255)
 
@@ -80,7 +105,7 @@ class Section(TimeModel):
 
 class AbstractTask(TimeModel):
     plan = models.ForeignKey('Plan', verbose_name='План', on_delete=models.CASCADE)
-    section = models.ForeignKey('Section', verbose_name='Секция', on_delete=models.CASCADE)
+    section = models.ForeignKey('Section', verbose_name='Секция', on_delete=models.SET_NULL, null=True)
     description = models.TextField('Описание')
     is_ready = models.BooleanField('Выполнено')
 
@@ -91,7 +116,7 @@ class AbstractTask(TimeModel):
         return f"{self.id} {self.plan} {self.section}"
 
 
-class Task(AbstractTask):
+class Task(AbstractTask, AbstractSafeModel):
     class Meta:
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'

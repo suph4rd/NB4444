@@ -69,7 +69,9 @@
               sessionStorage.removeItem('user');
               alert("Ошибка отправки запроса!")
             }
-        })
+        }).catch((res) => {
+            alert(`status: ${res.response.status} message: ${res.response.statusText}`)
+          })
       },
 
       reset () {

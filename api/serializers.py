@@ -1,4 +1,6 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
+
+from B4 import models as b4_models
 
 
 def get_model_serializer_class(
@@ -19,7 +21,7 @@ def get_model_serializer_class(
     :return: ModelSerializer
     """
 
-    class CustomModelSerializer(ModelSerializer):
+    class CustomModelSerializer(serializers.ModelSerializer):
         class Meta:
             model = local_models
             if local_exclude:
@@ -28,3 +30,27 @@ def get_model_serializer_class(
                 fields = local_fields
             depth = local_depth
     return CustomModelSerializer
+
+
+class UserInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = b4_models.User
+        fields = ['id', 'username', 'email', 'is_superuser']
+
+
+class ListPlanSerializer(serializers.ModelSerializer):
+    user = UserInfoSerializer()
+    created_at = serializers.DateTimeField(format="%d %B %Y")
+
+    class Meta:
+        model = b4_models.Plan
+        fields = ['id', 'name', 'user', 'created_at']
+
+
+class ListNoteSerializer(serializers.ModelSerializer):
+    user = UserInfoSerializer()
+    created_at = serializers.DateTimeField(format="%d %B %Y")
+
+    class Meta:
+        model = b4_models.Note
+        fields = ['id', 'text', 'image', 'user', 'created_at']

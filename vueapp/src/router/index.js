@@ -4,6 +4,7 @@ import Main from '../components/Main.vue';
 import DefaultDeduction from "../components/delault_deduction/DefaultDeduction.vue";
 import Login from "../components/Login";
 import Note from "../components/note/Note";
+import PlanList from "../components/plan/PlanList";
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/note',
     name: 'Note',
     component: Note
+  },
+  {
+    path: '/plan-list',
+    name: 'PlanList',
+    component: PlanList
   },
 ];
 

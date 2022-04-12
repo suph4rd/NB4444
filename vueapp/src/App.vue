@@ -40,7 +40,7 @@
       </v-list>
 
       <v-list>
-        <v-list-item href="#">
+        <v-list-item :to="{name: 'PlanList'}">
           <v-list-item-content>4.Планы
           </v-list-item-content>
         </v-list-item>

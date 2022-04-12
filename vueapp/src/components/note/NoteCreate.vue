@@ -71,7 +71,7 @@
             this.text = '';
             this.$emit("onCreate");
         }).catch((res) => {
-            this.dropSession();
+            this.dropSession(res);
         })
       },
     }

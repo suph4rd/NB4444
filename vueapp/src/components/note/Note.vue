@@ -11,7 +11,8 @@
 
     <v-card v-for="item in notes" :style="{'margin': '5px'}">
       <v-card-text>
-        <div>{{ item.text }}</div>
+        <div>{{item.user.username}}</div>
+        <div><span class="font-weight-bold">{{ item.created_at }}</span> {{ item.text }}</div>
       </v-card-text>
       <v-img v-if="item.image" :src="item.image"></v-img>
     </v-card>
@@ -44,7 +45,7 @@
               console.log(result.data)
               this.notes = result.data;
         }).catch((res) => {
-            this.dropSession();
+            this.dropSession(res);
         })
       }
     }

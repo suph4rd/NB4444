@@ -8,7 +8,10 @@ export default {
             } : {};
             return headers;
         },
-        dropSession() {
+        dropSession(res) {
+            if (res) {
+               alert(`status: ${res.response.status} message: ${res.response.statusText}`);
+            };
             sessionStorage.removeItem('user');
             this.$router.push('login');
         },

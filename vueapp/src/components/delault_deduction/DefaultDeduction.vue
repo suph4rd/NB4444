@@ -73,7 +73,7 @@
             }).then((result) =>{
             this.deduction = result.data;
         }).catch((res) => {
-          this.dropSession();
+          this.dropSession(res);
         })
       },
       sendDefaultDeductions(e) {
@@ -91,7 +91,7 @@
             }).then((res) =>{
               this.getDefaultDeductions();
         }).catch((res) => {
-          this.dropSession();
+          this.dropSession(res);
         })
       },
     }

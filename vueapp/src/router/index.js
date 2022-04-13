@@ -5,6 +5,7 @@ import DefaultDeduction from "../components/delault_deduction/DefaultDeduction.v
 import Login from "../components/Login";
 import Note from "../components/note/Note";
 import PlanList from "../components/plan/PlanList";
+import PlanDetail from "../components/plan/PlanDetail";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/plan-list',
     name: 'PlanList',
     component: PlanList
+  },
+  {
+    path: '/plan/:id',
+    name: 'PlanDetail',
+    component: PlanDetail
   },
 ];
 

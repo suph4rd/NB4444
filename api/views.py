@@ -54,7 +54,7 @@ class PlanModelListFilterModelViewSet(ListFilterMixin, CRWithUserMixin, ModelVie
     permission_classes = [IsSuperUserOrOwnerPermission]
 
     def retrieve(self, request, *args, **kwargs):
-        self.serializer_class = serializers.ListPlanSerializer
+        self.serializer_class = serializers.DetailPlanSerializer
         return super().retrieve(request, *args, **kwargs)
 
     def list(self, request, *args, **kwargs):
@@ -70,6 +70,14 @@ class TaskModelListFilterModelViewSet(ListFilterMixin, CRWithUserMixin, ModelVie
         local_exclude=['created_at', 'updated_at', 'delete_datetime', 'is_delete']
     )
     permission_classes = [IsSuperUserOrOwnerPermission]
+
+    # def retrieve(self, request, *args, **kwargs):
+    #     self.serializer_class = serializers.ListTaskSerializer
+    #     return super().retrieve(request, *args, **kwargs)
+    #
+    # def list(self, request, *args, **kwargs):
+    #     self.serializer_class = serializers.ListTaskSerializer
+    #     return super().list(request, *args, **kwargs)
 
 
 class NoteModelListFilterModelViewSet(ListFilterMixin, CRWithUserMixin, ModelViewSet):

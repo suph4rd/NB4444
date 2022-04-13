@@ -54,3 +54,29 @@ class ListNoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = b4_models.Note
         fields = ['id', 'text', 'image', 'user', 'created_at']
+
+
+class ListTaskSerializer(serializers.ModelSerializer):
+    plan = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+    )
+    section = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+    )
+    created_at = serializers.DateTimeField(format="%d %B %Y")
+
+    class Meta:
+        model = b4_models.Task
+        fields = ['id', 'plan', 'section', 'description', 'is_ready', 'created_at']
+
+
+class DetailPlanSerializer(serializers.ModelSerializer):
+    user = UserInfoSerializer()
+    created_at = serializers.DateTimeField(format="%d %B %Y")
+    task_set = ListTaskSerializer(many=True)
+
+    class Meta:
+        model = b4_models.Plan
+        fields = ['id', 'name', 'user', 'created_at', 'task_set']

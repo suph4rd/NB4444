@@ -1,17 +1,19 @@
 <template>
   <v-container>
-    <h1 class="text-center">Планы</h1>
+    <h1 class="text-center">План {{objects.name}} ({{objects.user.username}})</h1>
+
     <v-data-table
       :headers="headers"
-      :items="objects"
+      :items="objects.task_set"
       :items-per-page="10"
       class="elevation-1"
       :loading="loading"
     >
-      <template v-slot:item.actions="{ item }">
-        <v-btn icon :to="{ name: 'PlanDetail', params: {id: item.id} }">
-          Просмотр
-        </v-btn>
+      <template v-slot:item.is_ready="{ item }">
+        <v-simple-checkbox
+          v-model="item.is_ready"
+          disabled
+        ></v-simple-checkbox>
       </template>
     </v-data-table>
   </v-container>
@@ -22,15 +24,22 @@ import header from "../../mixins/header";
 import listMixin from "../../mixins/listMixin";
 
 export default {
-  name: "PlanList",
+  name: "PlanDetail",
   mixins: [header, listMixin],
 
   data: function () {
     return {
       loading: false,
-      apiPath: "/api/v1/plan/",
+      plan: null,
+      apiPath: `/api/v1/plan/${this.$route.params.id}`,
       objects: [],
       headers: [
+        {
+          text: 'Готово',
+          align: 'start',
+          sortable: false,
+          value: 'is_ready',
+        },
         {
           text: 'Дата',
           align: 'start',
@@ -38,21 +47,20 @@ export default {
           value: 'created_at',
         },
         {
-          text: 'Пользователь',
+          text: 'Раздел',
           align: 'start',
           sortable: false,
-          value: 'user.username',
+          value: 'section',
         },
         {
-          text: 'Название плана',
+          text: 'Описание',
           align: 'start',
           sortable: false,
-          value: 'name',
+          value: 'description',
         },
         {
           text: '',
           align: 'start',
-          value: 'actions',
         },
       ],
     }

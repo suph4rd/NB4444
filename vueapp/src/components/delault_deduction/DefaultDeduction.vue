@@ -1,34 +1,34 @@
 <template>
   <v-container>
     <div class="main-content">
+      <h1 class="text-center">Стандартные вычеты</h1>
     <v-form
       ref="form"
-      v-model="valid"
-      lazy-validation
       :style="{'width': '95%'}"
+      v-if="objects"
       @submit="sendDefaultDeductions"
     >
     <v-text-field
       type="number"
-      v-model="deduction.house"
+      v-model="objects.house"
       label="Дом"
       required
     ></v-text-field>
       <v-text-field
       type="number"
-      v-model="deduction.travel"
+      v-model="objects.travel"
       label="Путешествия"
       required
     ></v-text-field>
       <v-text-field
       type="number"
-      v-model="deduction.phone"
+      v-model="objects.phone"
       label="Телефон"
       required
     ></v-text-field>
       <v-text-field
       type="number"
-      v-model="deduction.food"
+      v-model="objects.food"
       label="Еда"
       required
     ></v-text-field>
@@ -45,46 +45,34 @@
 
 <script>
   import header from "../../mixins/header";
+  import listMixin from "../../mixins/listMixin";
 
   export default {
     name: 'DefaultDeduction',
-    mixins: [header],
+    mixins: [header, listMixin],
 
     data: function () {
       return {
-        deduction: {
+        objects: {
             "house": 0,
             "travel": 0,
             "phone": 0,
             "food": 0,
             "user": 0
           },
-        apiHost: location.origin,
+        apiPath: "/api/v1/default-deduction/user_last/",
       }
     },
-    mounted() {
-        this.getDefaultDeductions()
-    },
     methods: {
-      getDefaultDeductions() {
-            let headers = this.getHeaders();
-            this.axios.get(`${this.$apiHost}/api/v1/default-deduction/user_last/`, {
-              headers: headers
-            }).then((result) =>{
-            this.deduction = result.data;
-        }).catch((res) => {
-          this.dropSession(res);
-        })
-      },
       sendDefaultDeductions(e) {
             e.preventDefault();
             let headers = this.getHeaders();
             let data = {
-              "house": this.deduction.house,
-              "travel": this.deduction.travel,
-              "phone": this.deduction.phone,
-              "food": this.deduction.food,
-              "user": this.deduction.user
+              "house": this.objects.house,
+              "travel": this.objects.travel,
+              "phone": this.objects.phone,
+              "food": this.objects.food,
+              "user": this.objects.user
             }
             this.axios.post(`${this.$apiHost}/api/v1/default-deduction/`, data, {
               headers: headers

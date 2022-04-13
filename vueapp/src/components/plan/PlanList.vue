@@ -3,7 +3,7 @@
     <h1 class="text-center">Планы</h1>
     <v-data-table
       :headers="headers"
-      :items="plans"
+      :items="objects"
       :items-per-page="10"
       class="elevation-1"
       :loading="loading"
@@ -12,23 +12,18 @@
 </template>
 
 <script>
+import header from "../../mixins/header";
+import listMixin from "../../mixins/listMixin";
+
 export default {
   name: "PlanList",
+  mixins: [header, listMixin],
 
   data: function () {
     return {
       loading: false,
-      plans: [{
-        "id": 10,
-        "name": "hello world",
-        "user": {
-            "id": 1,
-            "username": "suph4rd",
-            "email": "root@gmail.com",
-            "is_superuser": true
-        },
-        "created_at": "16 октября 2021"
-    }],
+      apiPath: "/api/v1/plan/",
+      objects: [],
       headers: [
         {
           text: 'Дата',
@@ -54,7 +49,7 @@ export default {
         },
       ],
     }
-  }
+  },
 }
 </script>
 

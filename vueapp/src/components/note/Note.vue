@@ -1,15 +1,15 @@
 <template>
   <v-container>
-    <NoteCreate :style="{'margin-bottom': '70px'}" @onCreate="getNotes" />
-
+    <h1 class="text-center">Заметки</h1>
+    <NoteCreate :style="{'margin-bottom': '70px'}" @onCreate="getData" />
     <v-text-field
-      v-if="!notes"
+      v-if="!objects"
       color="success"
       loading
       disabled
     ></v-text-field>
 
-    <v-card v-for="item in notes" :style="{'margin': '5px'}">
+    <v-card v-for="item in objects" :style="{'margin': '5px'}">
       <v-card-text>
         <div>{{item.user.username}}</div>
         <div><span class="font-weight-bold">{{ item.created_at }}</span> {{ item.text }}</div>
@@ -22,32 +22,18 @@
 <script>
   import header from "../../mixins/header";
   import NoteCreate from "./NoteCreate";
+  import listMixin from "../../mixins/listMixin";
 
   export default {
     name: 'Note',
-    mixins: [header],
+    mixins: [header, listMixin],
     components: {NoteCreate},
 
     data: function () {
       return {
-        notes: null
+        objects: null,
+        apiPath: "/api/v1/note/",
       }
     },
-    mounted() {
-        this.getNotes()
-    },
-    methods: {
-      getNotes() {
-            let headers = this.getHeaders();
-            this.axios.get(`${this.$apiHost}/api/v1/note/`, {
-              headers: headers
-            }).then((result) =>{
-              console.log(result.data)
-              this.notes = result.data;
-        }).catch((res) => {
-            this.dropSession(res);
-        })
-      }
-    }
   }
 </script>

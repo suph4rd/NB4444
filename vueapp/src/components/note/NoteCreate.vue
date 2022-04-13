@@ -7,12 +7,14 @@
       :style="{'margin': '15px'}"
       @submit="createNotes"
     >
-    <v-text-field
-      type="text"
+    <v-textarea
+      outlined
       v-model="text"
+      rows="4"
       label="Сообщение"
       required
-    ></v-text-field>
+    ></v-textarea>
+
     <v-file-input
       label="Файл"
       outlined

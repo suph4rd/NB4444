@@ -1,7 +1,9 @@
 import threading
 
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.decorators import action, api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -48,7 +50,7 @@ class PlanModelListFilterModelViewSet(ListFilterMixin, CRWithUserMixin, ModelVie
     model = b4_models.Plan
     queryset = model.objects.all()
     serializer_class = serializers.get_model_serializer_class(
-        b4_models.DefaultDeductions,
+        b4_models.Plan,
         local_exclude=['created_at', 'updated_at', 'delete_datetime', 'is_delete']
     )
     permission_classes = [IsSuperUserOrOwnerPermission]
@@ -96,3 +98,24 @@ class NoteModelListFilterModelViewSet(ListFilterMixin, CRWithUserMixin, ModelVie
     def list(self, request, *args, **kwargs):
         self.serializer_class = serializers.ListNoteSerializer
         return super().list(request, *args, **kwargs)
+
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.get_model_serializer_class(
+        User,
+        local_exclude=[]
+    )
+
+    @action(methods=['get'], detail=False)
+    def get_for_plan(self, request, *args, **kwargs):
+        self.serializer_class = serializers.get_model_serializer_class(
+            User,
+            local_fields=['username', 'id']
+        )
+        qs = self.queryset
+        if not request.user.is_superuser:
+            qs = User.objects.filter(id=request.user.id)
+        ser_qs = self.serializer_class(qs, many=True)
+        return Response(ser_qs.data)

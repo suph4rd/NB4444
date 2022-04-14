@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <h1 class="text-center">Планы</h1>
+    <PlanCreate @onCreate="getData"></PlanCreate>
     <v-data-table
       :headers="headers"
       :items="objects"
@@ -20,9 +21,11 @@
 <script>
 import header from "../../mixins/header";
 import listMixin from "../../mixins/listMixin";
+import PlanCreate from "./PlanCreate";
 
 export default {
   name: "PlanList",
+  components: {PlanCreate},
   mixins: [header, listMixin],
 
   data: function () {
@@ -59,7 +62,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-</style>

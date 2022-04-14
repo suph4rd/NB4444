@@ -16,3 +16,7 @@ router.register(
     'v1/task',
     views.TaskModelListFilterModelViewSet
 )
+router.register(
+    'v1/user',
+    views.UserViewSet
+)

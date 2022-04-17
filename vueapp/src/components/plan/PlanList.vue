@@ -77,10 +77,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-  .actions-btn {
-    display: flex;
-    justify-content: end;
-  }
-</style>

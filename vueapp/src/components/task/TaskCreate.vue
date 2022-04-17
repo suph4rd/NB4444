@@ -2,7 +2,7 @@
   <div>
     <v-dialog
       v-model="dialogCreate"
-      width="500"
+      width="800"
     >
       <template v-slot:activator="{ on, attrs }">
         <div class="text-end" style="margin: 15px">
@@ -19,7 +19,7 @@
       </template>
 
       <v-card>
-        <h2 class="grey lighten-2 text-center">Создание плана</h2>
+        <h2 class="grey lighten-2 text-center">Создание задачи</h2>
           <v-form
             ref="form"
             @submit="validForm"
@@ -27,16 +27,25 @@
           >
             <v-text-field
               type="text"
-              v-model="object.name"
+              v-model="plan.name"
               label="Название плана"
+              disabled
+            ></v-text-field>
+
+            <v-textarea
+              outlined
+              v-model="object.description"
+              rows="4"
+              label="Описание"
               :rules="[v => !!v] || 'Обязательное поле!'"
               required
-            ></v-text-field>
+            ></v-textarea>
+
             <v-select
-              v-model="object.user"
-              :items="users"
-              label="Пользователь"
-              item-text="username"
+              v-model="object.section"
+              :items="sections"
+              label="Секция"
+              item-text="name"
               item-value="id"
               :rules="[v => !!v] || 'Обязательное поле!'"
               required
@@ -79,38 +88,41 @@
   import createMixin from "../../mixins/createMixin";
 
   export default {
-    name: "PlanCreate",
+    name: "TaskCreate",
     mixins: [header, createMixin],
+    props: ['plan'],
 
     data () {
       return {
-        users: [],
+        sections: [],
         object: {
-          name: '',
-          user: ''
+          plan:'',
+          section: '',
+          description: ''
         },
-        createPath: '/api/v1/plan/',
+        createPath: '/api/v1/task/',
       }
     },
     methods: {
       reset () {
         this.$refs.form.reset()
       },
-      getUsers() {
+      getSections() {
         let headers = this.getHeaders();
-        this.axios.get(`${this.$apiHost}/api/v1/user/get_for_plan/`, {
+        this.axios.get(`${this.$apiHost}/api/v1/section-list/`, {
           headers: headers
         }).then((result) =>{
           console.log(result.data)
-          this.users = result.data;
+          this.sections = result.data;
         }).catch((res) => {
             this.dropSession(res);
         })
       },
       getFormParams() {
         return {
-            "name": this.object.name,
-            "user": this.object.user
+            "plan": this.$props.plan.id,
+            "section": this.object.section,
+            "description": this.object.description,
           }
       },
       resetForm() {
@@ -124,7 +136,7 @@
       },
     },
     mounted() {
-      this.getUsers();
+      this.getSections();
     }
   }
 </script>

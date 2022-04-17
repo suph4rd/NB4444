@@ -18,19 +18,21 @@
         <h2 class="grey lighten-2 text-center">Обновление плана</h2>
           <v-form
             ref="form"
-            @submit="sendForm"
+            @submit="validForm"
             :style="{'margin': '15px'}"
           >
             <v-text-field
               type="text"
               v-model="object.name"
               label="Название плана"
+              :rules="[v => !!v] || 'Обязательное поле!'"
               required
             ></v-text-field>
             <v-select
               v-model="object.user"
               :items="users"
               label="Пользователь"
+              :rules="[v => !!v] || 'Обязательное поле!'"
               item-text="username"
               item-value="id"
               required
@@ -118,6 +120,12 @@
         this.dialogUpdate = true;
         this.getObject();
         this.getUsers();
+      },
+      validForm(e) {
+        e.preventDefault();
+        if (this.$refs.form.validate()){
+          this.sendForm(e);
+        }
       },
     },
   }

@@ -1,25 +1,21 @@
 <template>
   <div>
     <v-dialog
-      v-model="dialogCreate"
+      v-model="dialogUpdate"
       width="500"
     >
       <template v-slot:activator="{ on, attrs }">
-        <div class="text-end" style="margin: 15px">
-        <v-btn
-          color="red lighten-2"
-          dark
-          v-bind="attrs"
-          v-on="on"
-          style="{'position': 'absolute', 'right': '17%', 'top': '12%'}"
-        >
-          Создать
-        </v-btn>
-        </div>
+          <v-btn icon @click="showUpdateDialog">
+            <v-icon
+              class="mr-2"
+            >
+              mdi-pencil
+            </v-icon>
+          </v-btn>
       </template>
 
       <v-card>
-        <h2 class="grey lighten-2 text-center">Создание плана</h2>
+        <h2 class="grey lighten-2 text-center">Обновление плана</h2>
           <v-form
             ref="form"
             @submit="sendForm"
@@ -49,7 +45,7 @@
                 text
                 type="submit"
               >
-                Создать
+                Отправить
               </v-btn>
               <v-btn
                 color="danger"
@@ -61,7 +57,7 @@
               <v-btn
                 color="secondary"
                 text
-                @click="dialogCreate = false"
+                @click="dialogUpdate = false"
               >
                 Отмена
               </v-btn>
@@ -74,11 +70,12 @@
 
 <script>
   import header from "../../mixins/header";
-  import createMixin from "../../mixins/createMixin";
+  import updateMixin from "../../mixins/updateMixin";
 
   export default {
-    name: "PlanCreate",
-    mixins: [header, createMixin],
+    name: "PlanUpdate",
+    mixins: [header, updateMixin],
+    props: ['objId'],
 
     data () {
       return {
@@ -87,7 +84,7 @@
           name: '',
           user: ''
         },
-        createPath: '/api/v1/plan/',
+        updatePath: '/api/v1/plan/',
       }
     },
     methods: {
@@ -114,9 +111,14 @@
       resetForm() {
         this.reset();
       },
+      getUpdatePath() {
+        return `${this.$apiHost}${this.updatePath}${this.$props.objId}/`
+      },
+      showUpdateDialog() {
+        this.dialogUpdate = true;
+        this.getObject();
+        this.getUsers();
+      },
     },
-    mounted() {
-      this.getUsers();
-    }
   }
 </script>

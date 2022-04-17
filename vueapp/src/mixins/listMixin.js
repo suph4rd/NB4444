@@ -3,7 +3,7 @@ export default {
       return {
           data: null,
           // обязательные параметры! this.$apiHost this.apiPath
-      }
+      };
   },
   mounted() {
     this.getData();
@@ -14,11 +14,11 @@ export default {
         this.axios.get(`${this.$apiHost}${this.apiPath}`, {
           headers: headers
         }).then((result) =>{
-          console.log(result.data)
+          console.log(result.data);
           this.objects = result.data;
         }).catch((res) => {
             this.dropSession(res);
-        })
+        });
     },
   }
 }

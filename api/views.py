@@ -64,11 +64,11 @@ class PlanModelListFilterModelViewSet(ListFilterMixin, CRWithUserMixin, ModelVie
         return super().list(request, *args, **kwargs)
 
 
-class TaskModelListFilterModelViewSet(ListFilterMixin, CRWithUserMixin, ModelViewSet):
+class TaskModelListFilterModelViewSet(ListFilterMixin, ModelViewSet):
     model = b4_models.Task
     queryset = model.objects.all()
     serializer_class = serializers.get_model_serializer_class(
-        b4_models.DefaultDeductions,
+        b4_models.Task,
         local_exclude=['created_at', 'updated_at', 'delete_datetime', 'is_delete']
     )
     permission_classes = [IsSuperUserOrOwnerPermission]
@@ -119,3 +119,14 @@ class UserViewSet(ModelViewSet):
             qs = User.objects.filter(id=request.user.id)
         ser_qs = self.serializer_class(qs, many=True)
         return Response(ser_qs.data)
+
+
+@api_view(['GET'])
+def get_section_list_view(request):
+    qs = b4_models.Section.objects.filter(is_active=True)
+    ser_class = serializers.get_model_serializer_class(
+        b4_models.Section,
+        local_fields=['id', 'name']
+    )
+    ser = ser_class(qs, many=True)
+    return Response(ser.data, status=status.HTTP_200_OK)

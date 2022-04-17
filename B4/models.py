@@ -107,7 +107,7 @@ class AbstractTask(TimeModel):
     plan = models.ForeignKey('Plan', verbose_name='План', on_delete=models.CASCADE)
     section = models.ForeignKey('Section', verbose_name='Секция', on_delete=models.SET_NULL, null=True)
     description = models.TextField('Описание')
-    is_ready = models.BooleanField('Выполнено')
+    is_ready = models.BooleanField('Выполнено', default=False)
 
     class Meta:
         abstract = True

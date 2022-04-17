@@ -17,7 +17,7 @@ export default {
     resetForm() {
         throw "Not implemented";
     },
-    showUpdateDate() {
+    showUpdateDialog() {
         this.dialogUpdate = true;
         this.getObject();
     },

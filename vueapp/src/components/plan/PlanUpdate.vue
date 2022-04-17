@@ -5,7 +5,7 @@
       width="500"
     >
       <template v-slot:activator="{ on, attrs }">
-          <v-btn icon @click="showUpdateDate">
+          <v-btn icon @click="showUpdateDialog">
             <v-icon
               class="mr-2"
             >
@@ -114,7 +114,7 @@
       getUpdatePath() {
         return `${this.$apiHost}${this.updatePath}${this.$props.objId}/`
       },
-      showUpdateDate() {
+      showUpdateDialog() {
         this.dialogUpdate = true;
         this.getObject();
         this.getUsers();

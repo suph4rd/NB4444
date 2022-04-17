@@ -10,9 +10,16 @@
       :loading="loading"
     >
       <template v-slot:item.actions="{ item }">
-        <v-btn icon :to="{ name: 'PlanDetail', params: {id: item.id} }">
-          Просмотр
-        </v-btn>
+        <div class="actions-btn">
+          <v-btn icon :to="{ name: 'PlanDetail', params: {id: item.id} }">
+            <v-icon
+            class="mr-2"
+            >
+              mdi-information
+            </v-icon>
+          </v-btn>
+          <PlanUpdate @onUpdate="getData" :objId="item.id"></PlanUpdate>
+        </div>
       </template>
     </v-data-table>
   </v-container>
@@ -22,10 +29,11 @@
 import header from "../../mixins/header";
 import listMixin from "../../mixins/listMixin";
 import PlanCreate from "./PlanCreate";
+import PlanUpdate from "./PlanUpdate";
 
 export default {
   name: "PlanList",
-  components: {PlanCreate},
+  components: {PlanUpdate, PlanCreate},
   mixins: [header, listMixin],
 
   data: function () {
@@ -62,3 +70,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+  .actions-btn {
+    display: flex;
+    justify-content: end;
+  }
+</style>

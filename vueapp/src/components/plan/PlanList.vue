@@ -19,6 +19,12 @@
             </v-icon>
           </v-btn>
           <PlanUpdate @onUpdate="getData" :objId="item.id"></PlanUpdate>
+          <Delete
+              @onDelete="getData"
+              :objId="item.id"
+              :deletePath="'/api/v1/plan/'"
+              :titleDelete="'плана'"
+              :messageDelete="'план'" ></Delete>
         </div>
       </template>
     </v-data-table>
@@ -30,10 +36,11 @@ import header from "../../mixins/header";
 import listMixin from "../../mixins/listMixin";
 import PlanCreate from "./PlanCreate";
 import PlanUpdate from "./PlanUpdate";
+import Delete from "../common_components/Delete";
 
 export default {
   name: "PlanList",
-  components: {PlanUpdate, PlanCreate},
+  components: {PlanUpdate, PlanCreate, Delete},
   mixins: [header, listMixin],
 
   data: function () {

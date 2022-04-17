@@ -74,19 +74,20 @@
 
 <script>
   import header from "../../mixins/header";
+  import createMixin from "../../mixins/createMixin";
 
   export default {
     name: "PlanCreate",
-    mixins: [header],
+    mixins: [header, createMixin],
 
     data () {
       return {
-        dialogCreate: false,
         users: [],
         object: {
           name: '',
           user: ''
-        }
+        },
+        createPath: '/api/v1/plan/',
       }
     },
     methods: {
@@ -104,25 +105,14 @@
             this.dropSession(res);
         })
       },
-      sendForm(e) {
-        e.preventDefault();
-        let headers = this.getHeaders();
-        let data = {
+      getFormParams() {
+        return {
             "name": this.object.name,
             "user": this.object.user
           }
-          this.axios.post( `${this.$apiHost}/api/v1/plan/`, data, {
-              headers: headers
-            }).then((res) =>{
-                this.object = {
-                  name: '',
-                  user: ''
-                };
-                this.dialogCreate = false;
-                this.$emit('onCreate')
-            }).catch((res) => {
-            this.dropSession(res);
-          })
+      },
+      resetForm() {
+        this.reset();
       },
     },
     mounted() {

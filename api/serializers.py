@@ -57,14 +57,14 @@ class ListNoteSerializer(serializers.ModelSerializer):
 
 
 class ListTaskSerializer(serializers.ModelSerializer):
-    plan = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='name'
-    )
-    section = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='name'
-    )
+    plan = get_model_serializer_class(
+        b4_models.Plan,
+        local_fields=['id', 'name']
+    )()
+    section = get_model_serializer_class(
+        b4_models.Section,
+        local_fields=['id', 'name']
+    )()
     created_at = serializers.DateTimeField(format="%d %B %Y")
 
     class Meta:

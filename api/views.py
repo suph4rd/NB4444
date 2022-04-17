@@ -73,13 +73,13 @@ class TaskModelListFilterModelViewSet(ListFilterMixin, ModelViewSet):
     )
     permission_classes = [IsSuperUserOrOwnerPermission]
 
-    # def retrieve(self, request, *args, **kwargs):
-    #     self.serializer_class = serializers.ListTaskSerializer
-    #     return super().retrieve(request, *args, **kwargs)
-    #
-    # def list(self, request, *args, **kwargs):
-    #     self.serializer_class = serializers.ListTaskSerializer
-    #     return super().list(request, *args, **kwargs)
+    def retrieve(self, request, *args, **kwargs):
+        self.serializer_class = serializers.ListTaskSerializer
+        return super().retrieve(request, *args, **kwargs)
+
+    def list(self, request, *args, **kwargs):
+        self.serializer_class = serializers.ListTaskSerializer
+        return super().list(request, *args, **kwargs)
 
 
 class NoteModelListFilterModelViewSet(ListFilterMixin, CRWithUserMixin, ModelViewSet):

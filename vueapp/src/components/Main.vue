@@ -19,3 +19,10 @@
     }
   }
 </script>
+
+<style>
+  .actions-btn {
+    display: flex;
+    justify-content: end;
+  }
+</style>

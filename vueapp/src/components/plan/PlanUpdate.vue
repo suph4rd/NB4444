@@ -107,7 +107,7 @@
       getFormParams() {
         return {
             "name": this.object.name,
-            "user": this.object.user
+            "user": this.object.user.hasOwnProperty('id') ? this.object.user.id : this.object.user
           }
       },
       resetForm() {

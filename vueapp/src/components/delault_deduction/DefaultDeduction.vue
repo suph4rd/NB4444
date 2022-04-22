@@ -32,6 +32,12 @@
       label="Еда"
       required
     ></v-text-field>
+    <v-text-field
+      type="number"
+      v-model="totalCount"
+      label="Итого"
+      disabled
+    ></v-text-field>
 
     <v-btn
       color="success"
@@ -58,9 +64,18 @@
             "travel": 0,
             "phone": 0,
             "food": 0,
-            "user": 0
+            "user": null
           },
         apiPath: "/api/v1/default-deduction/user_last/",
+      }
+    },
+    computed: {
+      totalCount: function () {
+        var answer = (parseFloat(this.objects.house) || 0)
+            + (parseFloat(this.objects.travel) || 0)
+            + (parseFloat(this.objects.phone) || 0)
+            + (parseFloat(this.objects.food) || 0)
+        return answer
       }
     },
     methods: {
@@ -77,7 +92,7 @@
             this.axios.post(`${this.$apiHost}/api/v1/default-deduction/`, data, {
               headers: headers
             }).then((res) =>{
-              this.getDefaultDeductions();
+              this.getData();
         }).catch((res) => {
           this.dropSession(res);
         })

@@ -33,7 +33,7 @@ class TaskModelForm(forms.ModelForm):
 
     class Meta:
         model = models.Task
-        exclude = ("created_at", "updated_at")
+        fields = ("plan", "section", "description", "is_ready")
 
 
 class DefaultDeductionModelForm(forms.ModelForm):
@@ -44,4 +44,4 @@ class DefaultDeductionModelForm(forms.ModelForm):
 
     class Meta:
         model = models.DefaultDeductions
-        exclude = ("created_at", "updated_at")
+        fields = ("house", "travel", "phone", "food", "user")

@@ -46,7 +46,7 @@ urlpatterns = [
         'plan/create/',
         utils.made_login_required_generic_class(generic.CreateView).as_view(
             model=models.Plan,
-            form_class=forms.get_custom_model_form(models.Plan, exclude_fields=['is_delete', 'delete_datetime']),
+            form_class=forms.get_custom_model_form(models.Plan, fields_list=['name', 'user']),
             template_name="pages/plan/create.html"
         ),
         name='plan_create'
@@ -55,7 +55,7 @@ urlpatterns = [
         'plan/update/<int:pk>/',
         views.CustomUpdateView.as_view(
             model=models.Plan,
-            form_class=forms.get_custom_model_form(models.Plan, exclude_fields=['is_delete', 'delete_datetime']),
+            form_class=forms.get_custom_model_form(models.Plan, fields_list=['name', 'user']),
             template_name="pages/plan/update.html"
         ),
         name='plan_update'

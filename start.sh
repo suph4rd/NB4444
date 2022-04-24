@@ -1,3 +1,3 @@
 #!/bin/bash
 docker-compose down --rmi all
-docker-compose up -d
+docker-compose -f docker-compose-prod.yml up -d --build

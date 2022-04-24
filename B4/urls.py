@@ -70,9 +70,9 @@ urlpatterns = [
         name='plan_delete'
     ),
     path('plan/create-today-plan/', views.create_today_plan_task_view, name='plan_today_create'),
-    path(
-        r'^plan-autocomplete/$', views.PlanAutocomplete.as_view(), name='plan_autocomplete',
-    ),
+    # path(
+    #     r'^plan-autocomplete/$', views.PlanAutocomplete.as_view(), name='plan_autocomplete',
+    # ),
     path(
         'plan/task/create/',
         views.TaskCreateView.as_view(

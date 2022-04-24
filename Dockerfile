@@ -13,9 +13,9 @@ RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 
-WORKDIR /NB4444
+COPY . /NB4444
 
-COPY . /NB4444/
+WORKDIR /NB4444
 
 RUN  pip3 install --no-cache-dir -r requirements.txt
 RUN apt-get update && \

@@ -1,6 +1,6 @@
 import threading
 
-from dal import autocomplete
+# from dal import autocomplete
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.decorators import login_required
@@ -156,20 +156,30 @@ def create_today_plan_task_view(request):
     return redirect('b4:plan_list')
 
 
-class PlanAutocomplete(autocomplete.Select2QuerySetView):
-    model = models.Plan
+# class PlanAutocomplete(autocomplete.Select2QuerySetView):
+#     model = models.Plan
+#
+#     def get_queryset(self):
+#         self.queryset = self.model.objects.order_by('-id')
+#         qs = super().get_queryset()
+#         if self.model and not qs:
+#             qs = self.model.objects.all()
+#         if self.check_qs(qs):
+#             qs = qs.filter(user=self.request.user)
+#         return qs
+#
+#     def check_qs(self, qs):
+#         return bool(
+#             qs and (hasattr(self.model, 'user') or hasattr(self.model, 'plan') and hasattr(self.model, 'user'))
+#             and self.request.user.is_authenticated and not self.request.user.is_superuser
+#         )
 
-    def get_queryset(self):
-        self.queryset = self.model.objects.order_by('-id')
-        qs = super().get_queryset()
-        if self.model and not qs:
-            qs = self.model.objects.all()
-        if self.check_qs(qs):
-            qs = qs.filter(user=self.request.user)
-        return qs
 
-    def check_qs(self, qs):
-        return bool(
-            qs and (hasattr(self.model, 'user') or hasattr(self.model, 'plan') and hasattr(self.model, 'user'))
-            and self.request.user.is_authenticated and not self.request.user.is_superuser
-        )
+# def handle404(request):
+#     response = render_to_response(
+#         '404.html',
+#         context_instance=RequestContext(request)
+#     )
+#     response.status_code = 400
+#     return response
+#     # return render(request, '404.html')

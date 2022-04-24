@@ -1,4 +1,4 @@
-from dal import autocomplete
+# from dal import autocomplete
 from django import forms
 from django.contrib.auth.models import User
 
@@ -25,11 +25,11 @@ def get_custom_model_form(model_name, fields_list="__all__", exclude_fields=None
 
 
 class TaskModelForm(forms.ModelForm):
-    plan = forms.ModelChoiceField(
-        label="План",
-        queryset=models.Plan.objects.all(),
-        widget=autocomplete.ModelSelect2(url="b4:plan_autocomplete")
-    )
+    # plan = forms.ModelChoiceField(
+    #     label="План",
+    #     queryset=models.Plan.objects.all(),
+    #     widget=autocomplete.ModelSelect2(url="b4:plan_autocomplete")
+    # )
 
     class Meta:
         model = models.Task

@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_ckeditor_5',
+    # 'django_ckeditor_5',
     'djoser',
     'rest_framework',
     'rest_framework_simplejwt',

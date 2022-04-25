@@ -173,13 +173,3 @@ def create_today_plan_task_view(request):
 #             qs and (hasattr(self.model, 'user') or hasattr(self.model, 'plan') and hasattr(self.model, 'user'))
 #             and self.request.user.is_authenticated and not self.request.user.is_superuser
 #         )
-
-
-# def handle404(request):
-#     response = render_to_response(
-#         '404.html',
-#         context_instance=RequestContext(request)
-#     )
-#     response.status_code = 400
-#     return response
-#     # return render(request, '404.html')

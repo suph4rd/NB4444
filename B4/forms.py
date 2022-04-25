@@ -45,3 +45,18 @@ class DefaultDeductionModelForm(forms.ModelForm):
     class Meta:
         model = models.DefaultDeductions
         fields = ("house", "travel", "phone", "food", "user")
+
+
+class UserModelForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'first_name', 'last_name', 'email']
+        widgets = {
+            'password': forms.PasswordInput()
+        }
+
+    def save(self, commit=True):
+        obj = super().save(commit)
+        obj.set_password(obj.password)
+        obj.save()
+        return obj

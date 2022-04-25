@@ -1,4 +1,4 @@
-{% load static %}
+{% load static bootstrap5 %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,19 +8,10 @@
   </head>
 
   <style>
-    .row div:first-child {
+    .row div:first-child form {
       padding: 30px;
-      background-color: darkcyan;
+      background-color: mediumaquamarine;
       border-radius: 5px;
-      min-width: 280px;
-      max-height: 280px;
-    }
-    .row div:first-child {
-      padding: 30px;
-      background-color: darkcyan;
-      border-radius: 5px;
-      min-width: 280px;
-      max-height: 280px;
     }
     @media (max-width: 576px) {
       .row img {
@@ -48,7 +39,6 @@
   <body>
     <div class="container-fluid">
       <h1 class="table-primary">БЧ (Электронная версия 7.1)</h1>
-      <a href="{% url 'vueapp_core:index' %}">Новая версия</a>
       {% if warning %}
         <h1 class="warning">{{ warning }} </h1>
       {% endif %}
@@ -56,12 +46,14 @@
       <div class="row ml-1 mr-1">
         <div class="col col-sm-3">
           <form method="POST">
+            <div class="mb-3" style="display: flex; justify-content: space-between;">
+              <a class="btn btn-outline-secondary" href="{% url 'b4:user_create' %}">Регистрация</a>
+              <a class="btn btn-outline-secondary" href="{% url 'vueapp_core:index' %}">Новая версия</a>
+            </div>
             {% csrf_token %}
-            <h4>Имя пользователя</h4>
-            <p>{{ user_form.username }}</p>
-            <h4>Пароль</h4>
-            <p>{{ user_form.password }}</p>
-            <button type="submit">Выполнить вход</button>
+            {% bootstrap_field user_form.username %}
+            {% bootstrap_field user_form.password %}
+            <button type="submit" class="btn btn-primary">Выполнить вход</button>
           </form>
         </div>
         <div class="col">

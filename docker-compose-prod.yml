@@ -20,7 +20,7 @@ services:
       - static_volume:/NB4444/static
       - media_volume:/NB4444/media
     ports:
-      - "9999:9999"
+      - "80:80"
     depends_on:
       - app
     restart: always

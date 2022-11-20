@@ -8,14 +8,11 @@ services:
       - ./db:/NB4444/db
       - static_volume:/NB4444/static
       - ./media:/NB4444/media
-    ports:
-      - "8888:8888"
     restart: always
 
   nginx:
     build: ./nginx
     volumes:
-      - ./nginx/conf:/etc/nginx/conf.d/
       - static_volume:/NB4444/static
       - ./media:/NB4444/media
     ports:

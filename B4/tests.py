@@ -96,10 +96,10 @@ class B4URLTests(TestCase):
         response = self.custom_client.get(reverse(url))
         self.assertEqual(response.status_code, 302)
 
-    def test_url_b4_plan_autocomplete(self):
-        url = "b4:plan_autocomplete"
-        response = self.custom_client.get(reverse(url))
-        self.assertEqual(response.status_code, 200)
+    # def test_url_b4_plan_autocomplete(self):
+    #     url = "b4:plan_autocomplete"
+    #     response = self.custom_client.get(reverse(url))
+    #     self.assertEqual(response.status_code, 200)
 
     def test_url_b4_task_create(self):
         url = "b4:task_create"
@@ -123,7 +123,7 @@ class B4URLTests(TestCase):
         response = self.custom_client.get(reverse(url, kwargs={"pk": pk}))
         self.assertEqual(response.status_code, 200)
 
-    def test_url_b4_bot_response(self):
-        url = "b4:bot_response"
-        response = self.custom_client.get(reverse(url))
-        self.assertEqual(response.status_code, 302)
+    # def test_url_b4_bot_response(self):
+    #     url = "b4:bot_response"
+    #     response = self.custom_client.get(reverse(url))
+    #     self.assertEqual(response.status_code, 302)

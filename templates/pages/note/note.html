@@ -16,15 +16,15 @@
   <h1 class="text-center">Заметки</h1>
   <form class="nb4Form" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <textarea class="item" name="text" rows="3"></textarea><br>
-    <input class="item" name="image" type="file">
-    <input class="item" value="Отправить" type="submit">
+    {% bootstrap_field form.text %}
+    {% bootstrap_field form.image %}
+    {{ form.user }}
+    <button type="submit" class="btn btn-primary">Отправить</button>
   </form>
   <hr/>
   {% include 'navigate.html' %}
   <div style="padding:10px">
     {% for obj in queryset %}
-      <hr/>
       <span>
         {% if user.is_superuser and obj.user == user %}
           It's you
@@ -41,6 +41,7 @@
           <img style="width:100%" src="{{obj.image.url }}">
         {% endif %}
       </p>
+      <hr/>
     {% endfor %}
   </div>
   {% include 'navigate.html' %}

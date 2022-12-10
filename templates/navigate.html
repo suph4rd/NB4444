@@ -1,23 +1,10 @@
-<div class="navigate-head container-fluid">
-  <div class="row container-fluid">
-    <a class="btn btn-outline-danger col" href="?page=1">Начало</a>
+<div class="d-flex justify-content-center">
+    <a class="btn btn-outline-danger m-2" href="?page=1">Начало</a>
     {% if queryset.has_previous %}
-      <a class="btn btn-outline-success col" href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a>
+      <a class="btn btn-outline-success m-2" href="?page={{ queryset.previous_page_number }}">&laquo; Назад</a>
     {% endif %}
     {% if queryset.has_next %}
-      <a class="btn btn-outline-success col" href="?page={{ queryset.next_page_number }}">Следующая &raquo;</a>
+      <a class="btn btn-outline-success m-2" href="?page={{ queryset.next_page_number }}">Следующая &raquo;</a>
     {% endif %}
-    <a class="btn btn-outline-danger col" href="?page={{ queryset.paginator.num_pages }}">Последняя </a>
-  </div>
+    <a class="btn btn-outline-danger m-2" href="?page={{ queryset.paginator.num_pages }}">Последняя </a>
 </div>
-
-<style>
-  .navigate-head {
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  .navigate-head .row {
-    width: 100%;
-  }
-</style>

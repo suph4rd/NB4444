@@ -92,33 +92,25 @@ class DefaultDeductionsView(LoginRequiredMixin, CustomView):
         return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
 
-class NoteView(LoginRequiredMixin, CustomView):
+class NoteCreateView(LoginRequiredMixin, generic.CreateView):
+    form_class = forms.NoteModelForm
     model = models.Note
+    queryset = models.Note.objects.all()
+    success_url = reverse_lazy("b4:note")
+    template_name = "pages/note/note.html"
 
-    def get(self, request):
+    def get_initial(self):
+        self.initial = {"user": self.request.user}
+        return super().get_initial()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         paginator = Paginator(self.queryset, 10)
-        page_number = request.GET.get('page')
+        page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        return render(request, 'pages/note/note.html', {'queryset': page_obj})
+        context["queryset"] = page_obj
+        return context
 
-    def post(self, request):
-        text = request.POST.get('text')
-        image = request.FILES.get('image')
-        if not text and not image:
-            return redirect('b4:note')
-        obj = models.Note(text=text, image=image, user=request.user)
-        # search_template = r'\d{2}.\d{2}.\d{4}'
-        # if text and re.match(search_template, request.POST.get('text')):
-        #     obj.date = datetime.strptime(
-        #         re.match(search_template, request.POST.get('text')).group(0),
-        #         '%d.%m.%Y'
-        #     )
-        #     obj.text = text[11:].strip()
-        try:
-            obj.save()
-        except Exception as e:
-            print(e)
-        return redirect('b4:note')
 
 
 @login_required

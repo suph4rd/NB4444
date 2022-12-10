@@ -21,10 +21,10 @@
         </div>
       </div>
     </div>
-    <input style="width: 100%" type="submit">
+    <button type="submit" class="btn btn-primary" style="width: 100%;">Создать</button>
   </form>
   <div class="row btn-active">
-    <a class="col btn btn-outline-info" href="{{ request.META.HTTP_REFERER }}">
+    <a class="col btn btn-outline-info mr-2" href="{{ request.META.HTTP_REFERER }}">
       Назад
     </a>
     <a class="col btn btn-outline-secondary" href="{% url 'b4:task_create' %}">

@@ -7,18 +7,14 @@
     {% csrf_token %}
     <div class="detail">
       {% bootstrap_form form %}
-      {#            {% bootstrap_field form.is_ready %}#}
-      {#            {% bootstrap_field form.plan %}#}
-      {#            {% bootstrap_field form.section %}#}
-      {#            {% bootstrap_field form.description %}#}
     </div>
-    <input style="width: 100%" type="submit" value="Отправить">
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Отправить</button>
   </form>
   <div class="row btn-active">
-    <a class="col btn btn-outline-info" href="{% url 'b4:plan_list' %}">
+    <a class="col btn btn-outline-info mr-2" href="{% url 'b4:plan_list' %}">
       Назад
     </a>
-    <a class="col btn btn-outline-secondary" href="{% url 'b4:plan_update' object.id %}">
+    <a class="col btn btn-outline-secondary mr-2" href="{% url 'b4:plan_update' object.id %}">
       Отмена
     </a>
     <a class="col btn btn-outline-danger" href="{% url 'b4:plan_delete' object.id %}">

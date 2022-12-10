@@ -56,3 +56,7 @@ body {
 .btn-active{
     margin: 10px;
 }
+
+.d-flex {
+    flex-wrap: wrap;
+}

@@ -27,6 +27,16 @@ urlpatterns = [
 
     path('default-deductions/', views.DefaultDeductionsView.as_view(), name='default_deductions'),
     path('note/', views.NoteCreateView.as_view(), name='note'),
+    path('note/update/<int:pk>/', views.NoteUpdateView.as_view(), name='note_update'),
+    path(
+        'note/delete/<int:pk>/',
+        utils.made_login_required_generic_class(generic.DeleteView).as_view(
+            model=models.Note,
+            template_name='pages/note/delete.html',
+            success_url=reverse_lazy('b4:note')
+        ),
+        name='note_delete'
+    ),
     path(
         'plan/',
         views.CustomListView.as_view(
@@ -71,9 +81,6 @@ urlpatterns = [
         name='plan_delete'
     ),
     path('plan/create-today-plan/', views.create_today_plan_task_view, name='plan_today_create'),
-    # path(
-    #     r'^plan-autocomplete/$', views.PlanAutocomplete.as_view(), name='plan_autocomplete',
-    # ),
     path(
         'plan/task/create/',
         views.TaskCreateView.as_view(

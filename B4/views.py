@@ -1,6 +1,5 @@
 import threading
 
-# from dal import autocomplete
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.decorators import login_required
@@ -12,7 +11,7 @@ from django.views import generic
 from django.views.generic import CreateView, DeleteView
 from django.views.generic.base import View
 
-from B4 import forms, models, utils
+from B4 import forms, models, utils, mixins
 
 
 class CustomView(View):
@@ -92,18 +91,17 @@ class DefaultDeductionsView(LoginRequiredMixin, CustomView):
         return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
 
-class NoteCreateView(LoginRequiredMixin, generic.CreateView):
-    form_class = forms.NoteModelForm
-    model = models.Note
-    queryset = models.Note.objects.all()
-    success_url = reverse_lazy("b4:note")
+class NoteCreateView(LoginRequiredMixin, mixins.NoteViewMixin, generic.CreateView):
     template_name = "pages/note/note.html"
 
-    def get_initial(self):
-        self.initial = {"user": self.request.user}
-        return super().get_initial()
+    def get_queryset(self):
+        qs = self.model.objects.all()
+        if not self.request.user.is_superuser:
+            qs = qs.filter(user=self.request.user)
+        return qs
 
     def get_context_data(self, **kwargs):
+        self.queryset = self.get_queryset()
         context = super().get_context_data(**kwargs)
         paginator = Paginator(self.queryset, 10)
         page_number = self.request.GET.get('page')
@@ -111,6 +109,9 @@ class NoteCreateView(LoginRequiredMixin, generic.CreateView):
         context["queryset"] = page_obj
         return context
 
+
+class NoteUpdateView(LoginRequiredMixin, mixins.NoteViewMixin, generic.UpdateView):
+    template_name = "pages/note/update_note.html"
 
 
 @login_required
@@ -147,21 +148,3 @@ def create_today_plan_task_view(request):
     utils.PlanTask.create_today_plan(request.user.id)
     return redirect('b4:plan_list')
 
-
-# class PlanAutocomplete(autocomplete.Select2QuerySetView):
-#     model = models.Plan
-#
-#     def get_queryset(self):
-#         self.queryset = self.model.objects.order_by('-id')
-#         qs = super().get_queryset()
-#         if self.model and not qs:
-#             qs = self.model.objects.all()
-#         if self.check_qs(qs):
-#             qs = qs.filter(user=self.request.user)
-#         return qs
-#
-#     def check_qs(self, qs):
-#         return bool(
-#             qs and (hasattr(self.model, 'user') or hasattr(self.model, 'plan') and hasattr(self.model, 'user'))
-#             and self.request.user.is_authenticated and not self.request.user.is_superuser
-#         )

@@ -21,28 +21,37 @@
     {{ form.user }}
     <button type="submit" class="btn btn-primary">Отправить</button>
   </form>
-  <hr/>
-  {% include 'navigate.html' %}
-  <div style="padding:10px">
-    {% for obj in queryset %}
-      <span>
-        {% if user.is_superuser and obj.user == user %}
-          It's you
-        {% endif %}
-      </span>
-      <span style="font-weight: 800">
-        {% if user.is_superuser %}
-          ({{ obj.user }})
-        {% endif %}
-      </span>
-      <p> {{ forloop.counter }}. <b>{{obj.created_at|date:"d.m.Y"}}</b> {{ obj.text }}
-        {% if obj.image %}
-          <br>
-          <img style="width:100%" src="{{obj.image.url }}">
-        {% endif %}
-      </p>
+    {% if queryset %}
       <hr/>
-    {% endfor %}
-  </div>
-  {% include 'navigate.html' %}
+      {% include 'navigate.html' %}
+      <div style="padding:10px">
+        {% for obj in queryset %}
+          <span>
+            {% if user.is_superuser and obj.user == user %}
+              It's you
+            {% endif %}
+          </span>
+          <span style="font-weight: 800">
+            {% if user.is_superuser %}
+              ({{ obj.user }})
+            {% endif %}
+          </span>
+          <p> {{ forloop.counter }}. <b>{{obj.created_at|date:"d.m.Y"}}</b> {{ obj.text }}
+            {% if obj.image %}
+              <br>
+              <img style="width:100%" src="{{obj.image.url }}">
+            {% endif %}
+          </p>
+            {% if obj.user == request.user %}
+              <div class="d-flex justify-content-end">
+                  <a class="col btn btn-outline-secondary" href="{% url 'b4:note_update' obj.id %}">
+                    Редактировать
+                  </a>
+              </div>
+            {% endif %}
+          <hr/>
+        {% endfor %}
+      </div>
+      {% include 'navigate.html' %}
+    {% endif %}
 {% endblock %}

@@ -25,12 +25,6 @@ def get_custom_model_form(model_name, fields_list="__all__", exclude_fields=None
 
 
 class TaskModelForm(forms.ModelForm):
-    # plan = forms.ModelChoiceField(
-    #     label="План",
-    #     queryset=models.Plan.objects.all(),
-    #     widget=autocomplete.ModelSelect2(url="b4:plan_autocomplete")
-    # )
-
     class Meta:
         model = models.Task
         fields = ("plan", "section", "description", "is_ready")
@@ -60,3 +54,13 @@ class UserModelForm(forms.ModelForm):
         obj.set_password(obj.password)
         obj.save()
         return obj
+
+
+class NoteModelForm(forms.ModelForm):
+    class Meta:
+        model = models.Note
+        fields = ["text", "image", "user"]
+        widgets = {
+            "user": forms.HiddenInput()
+        }
+

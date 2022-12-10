@@ -64,3 +64,11 @@ class NoteModelForm(forms.ModelForm):
             "user": forms.HiddenInput()
         }
 
+    def clean(self):
+        cd = self.cleaned_data
+        image = cd.get("image")
+        text = cd.get("text")
+        if not image and not text:
+            self.add_error("text", "Поле текст не может быть пустым! Заполните его либо выберите файл для загрузки.")
+        return cd
+

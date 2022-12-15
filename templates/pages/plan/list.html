@@ -13,9 +13,12 @@
     <a class="btn btn-primary" href="{% url 'b4:plan_today_create' %}">Создать план на сегодня</a>
   </div>
 
-  {% paginate object_list %}
+
 
   {% if object_list %}
+      {% paginate object_list %}
+      <div>{% show_pages %}</div>
+
     <div class="overflow-auto">
       <table class="table table-hover">
         <thead>
@@ -46,7 +49,5 @@
   {% else %}
     Записи отсутствуют!
   {% endif %}
-
-    <div>{% show_pages %}</div>
 
 {% endblock %}

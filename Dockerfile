@@ -6,8 +6,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 RUN apt-get update
 RUN apt-get install curl
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y nodejs
+# RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+# RUN #apt-get install -y nodejs
 
 COPY . /NB4444
 
@@ -25,7 +25,7 @@ RUN apt-get update && \
 ENV LANG ru_RU.UTF-8
 ENV LC_ALL ru_RU.UTF-8
 
-RUN cd ./vueapp && npm install && npm run build
+# RUN cd ./vueapp && npm install && npm run build
 
 EXPOSE 8000
 CMD python manage.py makemigrations ; \

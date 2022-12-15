@@ -48,7 +48,7 @@
           <form method="POST">
             <div class="mb-3" style="display: flex; justify-content: space-between;">
               <a class="btn btn-outline-secondary" href="{% url 'b4:user_create' %}">Регистрация</a>
-              <a class="btn btn-outline-secondary" href="{% url 'vueapp_core:index' %}">Новая версия</a>
+{#              <a class="btn btn-outline-secondary" href="{% url 'vueapp_core:index' %}">Новая версия</a>#}
             </div>
             {% csrf_token %}
             {% bootstrap_field user_form.username %}

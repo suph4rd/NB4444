@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.validators import UnicodeUsernameValidator
 
 from B4 import models
 
@@ -41,6 +42,11 @@ class DefaultDeductionModelForm(forms.ModelForm):
 
 
 class UserModelForm(forms.ModelForm):
+    username = forms.CharField(label="", required=True, min_length=3, validators=[UnicodeUsernameValidator()])
+    first_name = forms.CharField(label="Имя", required=True, min_length=3)
+    last_name = forms.CharField(label="Фамилия", required=True, min_length=3)
+    email = forms.EmailField(label="Адрес электронной почты", required=True)
+
     class Meta:
         model = User
         fields = ['username', 'password', 'first_name', 'last_name', 'email']

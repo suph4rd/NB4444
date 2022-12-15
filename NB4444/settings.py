@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'bootstrap5',
     'corsheaders',
     'webpack_loader',
+    'el_pagination',
 
     # apps
     'B4.apps.B4Config',
@@ -86,6 +87,11 @@ TEMPLATES = [
         },
     },
 ]
+
+
+EL_PAGINATION_DEFAULT_CALLABLE_AROUNDS = 0
+EL_PAGINATION_DEFAULT_CALLABLE_EXTREMES = 1
+
 
 WSGI_APPLICATION = 'NB4444.wsgi.application'
 

@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import CreateView, DeleteView
 from django.views.generic.base import View
+from django.views.generic.edit import FormMixin
 
 from B4 import forms, models, utils, mixins
 
@@ -91,23 +92,12 @@ class DefaultDeductionsView(LoginRequiredMixin, CustomView):
         return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
 
-class NoteCreateView(LoginRequiredMixin, mixins.NoteViewMixin, generic.CreateView):
+class NoteListView(LoginRequiredMixin, mixins.NoteViewMixin, FormMixin, generic.ListView):
     template_name = "pages/note/note.html"
 
-    def get_queryset(self):
-        qs = self.model.objects.all()
-        if not self.request.user.is_superuser:
-            qs = qs.filter(user=self.request.user)
-        return qs
 
-    def get_context_data(self, **kwargs):
-        self.queryset = self.get_queryset()
-        context = super().get_context_data(**kwargs)
-        paginator = Paginator(self.queryset, 10)
-        page_number = self.request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-        context["queryset"] = page_obj
-        return context
+class NoteCreateView(LoginRequiredMixin, mixins.NoteViewMixin, generic.CreateView):
+    template_name = "pages/note/note.html"
 
 
 class NoteUpdateView(LoginRequiredMixin, mixins.NoteViewMixin, generic.UpdateView):

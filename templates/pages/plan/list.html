@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load el_pagination_tags %}
 {% block content %}
   <style>
     .btn.btn-primary {
@@ -11,6 +12,9 @@
     <a class="btn btn-primary" href="{% url 'b4:plan_create' %}">Создать план</a>
     <a class="btn btn-primary" href="{% url 'b4:plan_today_create' %}">Создать план на сегодня</a>
   </div>
+
+  {% paginate object_list %}
+
   {% if object_list %}
     <div class="overflow-auto">
       <table class="table table-hover">
@@ -42,4 +46,7 @@
   {% else %}
     Записи отсутствуют!
   {% endif %}
+
+    <div>{% show_pages %}</div>
+
 {% endblock %}

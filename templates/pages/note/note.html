@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load bootstrap5 %}
+{% load bootstrap5 el_pagination_tags %}
 {% block content %}
   <style>
     .nb4Form {
@@ -14,18 +14,22 @@
   </style>
 
   <h1 class="text-center">Заметки</h1>
-  <form class="nb4Form" method="post" enctype="multipart/form-data">
+  <form class="nb4Form" method="post" enctype="multipart/form-data" action="{% url 'b4:note_create' %}">
     {% csrf_token %}
     {% bootstrap_field form.text %}
     {% bootstrap_field form.image %}
     {{ form.user }}
     <button type="submit" class="btn btn-primary">Отправить</button>
   </form>
-    {% if queryset %}
+    {% paginate object_list %}
+
+    {% if object_list %}
       <hr/>
-      {% include 'navigate.html' %}
+
+      <div>{% show_pages %}</div>
+
       <div style="padding:10px">
-        {% for obj in queryset %}
+        {% for obj in object_list %}
           <span>
             {% if user.is_superuser and obj.user == user %}
               It's you
@@ -52,6 +56,8 @@
           <hr/>
         {% endfor %}
       </div>
-      {% include 'navigate.html' %}
+
+      <div>{% show_pages %}</div>
+
     {% endif %}
 {% endblock %}

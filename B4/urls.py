@@ -26,7 +26,8 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
 
     path('default-deductions/', views.DefaultDeductionsView.as_view(), name='default_deductions'),
-    path('note/', views.NoteCreateView.as_view(), name='note'),
+    path('note/', views.NoteListView.as_view(), name='note'),
+    path('note/create', views.NoteCreateView.as_view(), name='note_create'),
     path('note/update/<int:pk>/', views.NoteUpdateView.as_view(), name='note_update'),
     path(
         'note/delete/<int:pk>/',

@@ -1,6 +1,5 @@
 import threading
 
-from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.decorators import action, api_view
 from rest_framework.permissions import IsAuthenticated
@@ -101,22 +100,22 @@ class NoteModelListFilterModelViewSet(ListFilterMixin, CRWithUserMixin, ModelVie
 
 
 class UserViewSet(ModelViewSet):
-    queryset = User.objects.all()
+    queryset = b4_models.User.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.get_model_serializer_class(
-        User,
+        b4_models.User,
         local_exclude=[]
     )
 
     @action(methods=['get'], detail=False)
     def get_for_plan(self, request, *args, **kwargs):
         self.serializer_class = serializers.get_model_serializer_class(
-            User,
+            b4_models.User,
             local_fields=['username', 'id']
         )
         qs = self.queryset
         if not request.user.is_superuser:
-            qs = User.objects.filter(id=request.user.id)
+            qs = b4_models.User.objects.filter(id=request.user.id)
         ser_qs = self.serializer_class(qs, many=True)
         return Response(ser_qs.data)
 

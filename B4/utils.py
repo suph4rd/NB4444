@@ -1,7 +1,6 @@
 import locale
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.utils import timezone
 
 from B4 import models
@@ -24,7 +23,9 @@ class PlanTask:
     @classmethod
     def _get_data_for_create(cls, user_id):
         user_list = []
-        qs_list = User.objects.filter(pk=user_id) if user_id else User.objects.all()
+        qs_list = models.User.objects.all()
+        if user_id:
+            qs_list = qs_list.filter(pk=user_id)
         for user in qs_list:
             filters = {
                 "name": cls.plan_name,

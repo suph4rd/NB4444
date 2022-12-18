@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.test import Client, TestCase
 from django.urls import reverse
 
@@ -11,7 +10,7 @@ class B4URLTests(TestCase):
 
     def setUp(self) -> None:
         client = Client()
-        self.custom_variables['user'] = User.objects.create_superuser(
+        self.custom_variables['user'] = models.User.objects.create_superuser(
             email='root@root.root',
             username='root',
             password='12345TestCase'

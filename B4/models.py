@@ -1,6 +1,6 @@
 import datetime
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 
@@ -39,6 +39,11 @@ class TimeModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class User(AbstractUser):
+    class Meta:
+        db_table = "auth_user"
 
 
 class DefaultDeductions(TimeModel, AbstractSafeModel):

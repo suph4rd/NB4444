@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
 from B4 import models
@@ -9,7 +8,7 @@ class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, label="Пароль ")
 
     class Meta:
-        model = User
+        model = models.User
         fields = ('username', 'password')
 
 
@@ -32,7 +31,7 @@ class TaskModelForm(forms.ModelForm):
 
 class DefaultDeductionModelForm(forms.ModelForm):
     user = forms.ModelChoiceField(
-        queryset=User.objects.all(),
+        queryset=models.User.objects.all(),
         widget=forms.HiddenInput
     )
 
@@ -48,7 +47,7 @@ class UserModelForm(forms.ModelForm):
     email = forms.EmailField(label="Адрес электронной почты", required=True)
 
     class Meta:
-        model = User
+        model = models.User
         fields = ['username', 'password', 'first_name', 'last_name', 'email']
         widgets = {
             'password': forms.PasswordInput()

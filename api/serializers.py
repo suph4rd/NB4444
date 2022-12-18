@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from B4 import models as b4_models
@@ -34,7 +35,7 @@ def get_model_serializer_class(
 
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = b4_models.User
+        model = get_user_model()
         fields = ['id', 'username', 'email', 'is_superuser']
 
 

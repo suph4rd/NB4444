@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency("auth.User"),
     ]
 
     operations = [
@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True, null=True, verbose_name='Дата создания')),
                 ('updated_at', models.DateTimeField(auto_now=True, null=True, verbose_name='Дата изменения')),
                 ('name', models.CharField(max_length=255, verbose_name='Название плана')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='plans', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='plans', to="auth.User")),
             ],
             options={
                 'verbose_name': 'План',

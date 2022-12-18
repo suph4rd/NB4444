@@ -1,12 +1,8 @@
-import locale
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 
 from B4 import models
 
-locale.setlocale(locale.LC_ALL, '')
-locale.setlocale(locale.LC_TIME, 'ru_RU.UTF-8')
 
 now = timezone.now()
 

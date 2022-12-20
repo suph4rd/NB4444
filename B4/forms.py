@@ -26,7 +26,10 @@ def get_custom_model_form(model_name, fields_list="__all__", exclude_fields=None
 class TaskModelForm(forms.ModelForm):
     class Meta:
         model = models.Task
-        fields = ("plan", "section", "description", "is_ready")
+        fields = ("plan", "section", "description", "is_ready", "priority")
+        widgets = {
+            "plan": forms.HiddenInput
+        }
 
 
 class DefaultDeductionModelForm(forms.ModelForm):

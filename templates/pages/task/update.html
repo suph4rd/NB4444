@@ -7,7 +7,11 @@
     {% csrf_token %}
     <div class="detail">
       {% bootstrap_field form.is_ready %}
-      {% bootstrap_field form.plan %}
+      <div class="mb-3">
+          План: {{ object.plan }}
+          {{ form.plan }}
+      </div>
+      {% bootstrap_field form.priority %}
       {% bootstrap_field form.section %}
       {% bootstrap_field form.description %}
     </div>

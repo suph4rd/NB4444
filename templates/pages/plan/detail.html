@@ -12,6 +12,7 @@
           <tr>
             <th>Готово</th>
             <th>№</th>
+            <th>Приоритет</th>
             <th>Дата</th>
             <th>Раздел</th>
             <th>Описание</th>
@@ -25,6 +26,7 @@
                 {% if obj.is_ready %}+{% else %}-{% endif %}
               </td>
               <td>{{ forloop.counter }}</td>
+              <td>{{ obj.get_priority_display }}</td>
               <td>{{ obj.created_at }}</td>
               <td>{{ obj.section }}</td>
               <td>{{ obj.description }}</td>

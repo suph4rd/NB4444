@@ -108,33 +108,27 @@ class Section(TimeModel):
         return self.name
 
 
-class AbstractTask(TimeModel):
+class Task(AbstractSafeModel, TimeModel):
+    PRIORITY_CHOICE = (
+        (0, "Low"),
+        (1, "Medium"),
+        (2, "High"),
+        (3, "Hot"),
+    )
+
     plan = models.ForeignKey('Plan', verbose_name='План', on_delete=models.CASCADE)
     section = models.ForeignKey('Section', verbose_name='Секция', on_delete=models.SET_NULL, null=True)
     description = models.TextField('Описание')
     is_ready = models.BooleanField('Выполнено', default=False)
+    priority = models.IntegerField('Приоритет', choices=PRIORITY_CHOICE, default=PRIORITY_CHOICE[1][0])
 
     class Meta:
-        abstract = True
+        verbose_name = 'Задача'
+        verbose_name_plural = 'Задачи'
+        ordering = ['is_ready', '-priority', '-updated_at', '-created_at', '-id']
 
     def __str__(self):
         return f"{self.id} {self.plan} {self.section}"
 
-
-class Task(AbstractTask, AbstractSafeModel):
-    class Meta:
-        verbose_name = 'Задача'
-        verbose_name_plural = 'Задачи'
-        ordering = ['is_ready', '-updated_at', '-created_at', '-id']
-
     def get_absolute_url(self):
         return reverse('b4:plan_detail', args=(self.plan_id,))
-
-
-class DefaultTasks(AbstractTask):
-    is_default = models.BooleanField('Задача по умолчанию')
-
-    class Meta:
-        verbose_name = 'Задача по умолчанию'
-        verbose_name_plural = 'Задачи по умолчанию'
-        ordering = ['is_default', '-created_at', '-id']

@@ -118,6 +118,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         plan_id = self.request.GET.get('plan_id')
         if plan_id:
             plan = models.Plan.objects.get(pk=plan_id)
+            context['plan'] = plan
             context['form'] = self.form_class(initial={"plan": plan})
         return super(TaskCreateView, self).render_to_response(context, **response_kwargs)
 

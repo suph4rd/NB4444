@@ -25,7 +25,7 @@ class PlanAdmin(admin.ModelAdmin):
 
 @admin.register(models.Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('id', 'created_at', 'updated_at', 'plan', 'section', 'description', 'is_ready')
+    list_display = ('id', 'created_at', 'updated_at', 'plan', 'section', 'description', 'is_ready', 'priority')
     list_display_links = ('id', 'created_at')
 
 

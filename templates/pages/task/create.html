@@ -6,13 +6,19 @@
     {% csrf_token %}
     <div class="detail">
       <div class="row">
-        <div class="col">
-          {% bootstrap_field form.plan %}
+        <div class="col mb-3">
+            План:  {{ plan }}
+            {{ form.plan }}
         </div>
       </div>
       <div class="row">
         <div class="col">
           {% bootstrap_field form.section %}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          {% bootstrap_field form.priority %}
         </div>
       </div>
       <div class="row">

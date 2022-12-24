@@ -22,6 +22,10 @@ class AbstractSafeModel(models.Model):
     objects = SafeManager()
     all_objects = models.Manager()
 
+    @classmethod
+    def get_admin_manager(cls):
+        return cls.all_objects
+
     def delete(self, using=None, keep_parents=False, force=False):
         if force:
             return super().delete(using=None, keep_parents=False)

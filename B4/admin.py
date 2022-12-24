@@ -5,7 +5,7 @@ from B4 import models, mixins, admin_filters
 
 
 @admin.register(models.Note)
-class NoteAdmin(mixins.AdminQsManagerMixin, admin.ModelAdmin):
+class NoteAdmin(mixins.AdminQsManagerMixin, mixins.AdminDeleteActionMixin, admin.ModelAdmin):
     list_display = ('id', 'created_at', 'updated_at', 'is_delete', 'user', 'text', 'get_image')
     list_display_links = ('id', 'created_at')
     search_fields = ('created_at', 'text')
@@ -17,21 +17,21 @@ class NoteAdmin(mixins.AdminQsManagerMixin, admin.ModelAdmin):
 
 
 @admin.register(models.Plan)
-class PlanAdmin(mixins.AdminQsManagerMixin, admin.ModelAdmin):
+class PlanAdmin(mixins.AdminQsManagerMixin, mixins.AdminDeleteActionMixin, admin.ModelAdmin):
     list_display = ('id', 'created_at', 'updated_at', 'name', 'user', 'is_delete')
     list_display_links = ('id', 'created_at')
     list_filter = ('is_delete', )
 
 
 @admin.register(models.Task)
-class TaskAdmin(mixins.AdminQsManagerMixin, admin.ModelAdmin):
+class TaskAdmin(mixins.AdminQsManagerMixin, mixins.AdminDeleteActionMixin, admin.ModelAdmin):
     list_display = ('id', 'created_at', 'updated_at', 'is_delete', 'plan', 'section', 'description', 'is_ready', 'priority')
     list_display_links = ('id', 'created_at')
     list_filter = ('is_delete',)
 
 
 @admin.register(models.DefaultDeductions)
-class DefaultDeductionsAdmin(mixins.AdminQsManagerMixin, admin.ModelAdmin):
+class DefaultDeductionsAdmin(mixins.AdminQsManagerMixin, mixins.AdminDeleteActionMixin, admin.ModelAdmin):
     list_display = ('id', 'user', 'is_delete')
     list_display_links = ('id',)
     list_filter = ('is_delete', )

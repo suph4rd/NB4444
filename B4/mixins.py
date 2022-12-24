@@ -27,6 +27,15 @@ class AdminQsManagerMixin:
         return qs
 
 
+class AdminDeleteActionMixin:
+    actions = ("set_delete_status",)
+
+    def set_delete_status(self, request, queryset):
+        queryset.update(is_delete=True)
+
+    set_delete_status.short_description = "Пометить как удалённые"
+
+
 class UserRecordMixin:
     model = None
     queryset = None

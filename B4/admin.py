@@ -6,7 +6,7 @@ from B4 import models, mixins, admin_filters
 
 @admin.register(models.Note)
 class NoteAdmin(mixins.AdminQsManagerMixin, admin.ModelAdmin):
-    list_display = ('id', 'created_at', 'updated_at', 'is_delete', 'text', 'get_image')
+    list_display = ('id', 'created_at', 'updated_at', 'is_delete', 'user', 'text', 'get_image')
     list_display_links = ('id', 'created_at')
     search_fields = ('created_at', 'text')
     list_filter = ('is_delete', admin_filters.NoteImageExistFilter, admin_filters.NoteTextExistFilter)

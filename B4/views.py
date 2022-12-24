@@ -14,28 +14,15 @@ from django.views.generic.edit import FormMixin
 from B4 import forms, models, utils, mixins
 
 
-class UserRecordMixin(View):
-    model = None
-    queryset = None
-
-    def dispatch(self, request, *args, **kwargs):
-        if self.model and not self.queryset:
-            self.queryset = self.model.objects.all()
-        if self.queryset and hasattr(self.model, 'user') \
-                and request.user.is_authenticated and not request.user.is_superuser:
-            self.queryset = self.queryset.filter(user=request.user)
-        return super().dispatch(request, *args, **kwargs)
-
-
-class CustomListView(LoginRequiredMixin, generic.ListView, UserRecordMixin, View):
+class CustomListView(LoginRequiredMixin, generic.ListView, mixins.UserRecordMixin, View):
     pass
 
 
-class CustomDetailView(UserRecordMixin, LoginRequiredMixin, generic.DetailView, View):
+class CustomDetailView(mixins.UserRecordMixin, LoginRequiredMixin, generic.DetailView, View):
     pass
 
 
-class CustomUpdateView(UserRecordMixin, LoginRequiredMixin, generic.UpdateView, View):
+class CustomUpdateView(LoginRequiredMixin, mixins.IsCurrentUserMixin, generic.UpdateView, View):
     pass
 
 
@@ -91,7 +78,7 @@ class DefaultDeductionsView(LoginRequiredMixin, View):
         return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
 
-class NoteListView(LoginRequiredMixin, mixins.NoteViewMixin, FormMixin, UserRecordMixin, generic.ListView):
+class NoteListView(LoginRequiredMixin, mixins.NoteViewMixin, FormMixin, mixins.UserRecordMixin, generic.ListView):
     template_name = "pages/note/note.html"
 
 
@@ -99,8 +86,9 @@ class NoteCreateView(LoginRequiredMixin, mixins.NoteViewMixin, generic.CreateVie
     template_name = "pages/note/note.html"
 
 
-class NoteUpdateView(LoginRequiredMixin, mixins.NoteViewMixin, generic.UpdateView):
+class NoteUpdateView(LoginRequiredMixin, mixins.IsCurrentUserMixin, mixins.NoteViewMixin, generic.UpdateView):
     template_name = "pages/note/update_note.html"
+    redirect_url = reverse_lazy('b4:note')
 
 
 @login_required
@@ -128,6 +116,17 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
+    def dispatch(self, request, *args, **kwargs):
+        answer = self._check_user(request)
+        if answer:
+            return answer
+        return super().dispatch(request, *args, **kwargs)
+
+    def _check_user(self, request):
+        obj = self.get_object()
+        if obj.plan.user_id != request.user.id:
+            return redirect(reverse_lazy('b4:plan_detail', kwargs={'pk': obj.plan_id}))
+
     def get_success_url(self):
         plan_id = self.object.plan_id
         return reverse_lazy('b4:plan_detail', kwargs={'pk': plan_id}) if plan_id else super().get_success_url()

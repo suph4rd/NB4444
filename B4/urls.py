@@ -66,6 +66,7 @@ urlpatterns = [
         'plan/update/<int:pk>/',
         views.CustomUpdateView.as_view(
             model=models.Plan,
+            redirect_url=reverse_lazy('b4:plan_list'),
             form_class=forms.get_custom_model_form(models.Plan, fields_list=['name', 'user']),
             template_name="pages/plan/update.html"
         ),

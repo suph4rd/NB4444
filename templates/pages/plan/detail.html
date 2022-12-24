@@ -3,7 +3,7 @@
 {% block content %}
   <h1 style="text-align:center;">План {{ object }}</h1>
   <div class="mb-4">
-    {% if obj.user == user %}
+    {% if object.user == user %}
         <a class="btn btn-primary" href="{% url 'b4:task_create' %}?plan_id={{ object.id }}">Создать задачу</a>
     {% endif %}
   </div>

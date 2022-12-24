@@ -14,7 +14,7 @@ from django.views.generic.edit import FormMixin
 from B4 import forms, models, utils, mixins
 
 
-class CustomView(View):
+class UserRecordMixin(View):
     model = None
     queryset = None
 
@@ -27,15 +27,15 @@ class CustomView(View):
         return super().dispatch(request, *args, **kwargs)
 
 
-class CustomListView(LoginRequiredMixin, generic.ListView, CustomView):
+class CustomListView(LoginRequiredMixin, generic.ListView, UserRecordMixin, View):
     pass
 
 
-class CustomDetailView(CustomView, LoginRequiredMixin, generic.DetailView):
+class CustomDetailView(UserRecordMixin, LoginRequiredMixin, generic.DetailView, View):
     pass
 
 
-class CustomUpdateView(CustomView, LoginRequiredMixin, generic.UpdateView):
+class CustomUpdateView(UserRecordMixin, LoginRequiredMixin, generic.UpdateView, View):
     pass
 
 
@@ -73,7 +73,7 @@ class GeneralPage(LoginRequiredMixin, View):
         return render(request, 'pages/general.html', locals())
 
 
-class DefaultDeductionsView(LoginRequiredMixin, CustomView):
+class DefaultDeductionsView(LoginRequiredMixin, View):
     model = models.DefaultDeductions
     form = forms.DefaultDeductionModelForm
 
@@ -91,7 +91,7 @@ class DefaultDeductionsView(LoginRequiredMixin, CustomView):
         return render(request, 'pages/default_deductions/default_deduction.html', locals())
 
 
-class NoteListView(LoginRequiredMixin, mixins.NoteViewMixin, FormMixin, generic.ListView):
+class NoteListView(LoginRequiredMixin, mixins.NoteViewMixin, FormMixin, UserRecordMixin, generic.ListView):
     template_name = "pages/note/note.html"
 
 

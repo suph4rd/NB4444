@@ -48,6 +48,11 @@ class TimeModel(models.Model):
 class User(AbstractUser):
     class Meta:
         db_table = "auth_user"
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
+
+
+User.get_full_name.short_description = "Фамилия Имя"
 
 
 class DefaultDeductions(TimeModel, AbstractSafeModel):

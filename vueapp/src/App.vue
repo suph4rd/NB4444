@@ -6,7 +6,7 @@
       <v-col
       class="text-center"
     >
-      <h1>БЧ (Эл. V8.4)</h1>
+      <h1>БЧ</h1>
     </v-col>
     <v-col v-if="this.$route.name !== 'Login' " cols="2" class="text-end">
       <button @click="logout">Выход</button>

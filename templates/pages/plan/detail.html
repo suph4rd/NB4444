@@ -3,7 +3,9 @@
 {% block content %}
   <h1 style="text-align:center;">План {{ object }}</h1>
   <div class="mb-4">
-    <a class="btn btn-primary" href="{% url 'b4:task_create' %}?plan_id={{ object.id }}">Создать задачу</a>
+    {% if obj.user == user %}
+        <a class="btn btn-primary" href="{% url 'b4:task_create' %}?plan_id={{ object.id }}">Создать задачу</a>
+    {% endif %}
   </div>
   {% if object.task_set.all %}
     <div class="overflow-auto">
@@ -30,9 +32,11 @@
               <td>{{ obj.created_at }}</td>
               <td>{{ obj.section }}</td>
               <td>{{ obj.description }}</td>
-              <td>
-                <a class="btn btn-outline-info" href="{% url 'b4:task_update' obj.pk %}">Изменить</a>
-              </td>
+              {% if object.user == user %}
+                <td>
+                    <a class="btn btn-outline-info" href="{% url 'b4:task_update' obj.pk %}">Изменить</a>
+                </td>
+              {% endif %}
             </tr>
           {% endfor %}
         </tbody>

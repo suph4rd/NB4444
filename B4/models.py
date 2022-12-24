@@ -22,6 +22,10 @@ class AbstractSafeModel(models.Model):
     objects = SafeManager()
     all_objects = models.Manager()
 
+    @classmethod
+    def get_admin_manager(cls):
+        return cls.all_objects
+
     def delete(self, using=None, keep_parents=False, force=False):
         if force:
             return super().delete(using=None, keep_parents=False)
@@ -44,6 +48,11 @@ class TimeModel(models.Model):
 class User(AbstractUser):
     class Meta:
         db_table = "auth_user"
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
+
+
+User.get_full_name.short_description = "Фамилия Имя"
 
 
 class DefaultDeductions(TimeModel, AbstractSafeModel):

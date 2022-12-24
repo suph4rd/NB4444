@@ -1,33 +1,47 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from B4 import models
+from B4 import models, mixins, admin_filters
 
 
 @admin.register(models.Note)
-class NljAdmin(admin.ModelAdmin):
-    list_display = ('id', 'created_at', 'updated_at', 'text', 'get_image')
+class NoteAdmin(mixins.AdminQsManagerMixin, admin.ModelAdmin):
+    list_display = ('id', 'created_at', 'updated_at', 'is_delete', 'user', 'text', 'get_image')
     list_display_links = ('id', 'created_at')
     search_fields = ('created_at', 'text')
+    list_filter = ('is_delete', admin_filters.NoteImageExistFilter, admin_filters.NoteTextExistFilter)
 
     def get_image(self, obj):
-        if obj.image:
-            return mark_safe(f'<img src="{obj.image.url}" width="100" >')
-        else:
-            return 'Фото отсутствует'
+        return mark_safe(f'<img src="{obj.image.url}" width="100" >') if obj.image else 'Фото отсутствует'
+    get_image.short_description = "Фото"
 
 
 @admin.register(models.Plan)
-class PlanAdmin(admin.ModelAdmin):
-    list_display = ('id', 'created_at', 'updated_at', 'name', 'user')
+class PlanAdmin(mixins.AdminQsManagerMixin, admin.ModelAdmin):
+    list_display = ('id', 'created_at', 'updated_at', 'name', 'user', 'is_delete')
     list_display_links = ('id', 'created_at')
+    list_filter = ('is_delete', )
 
 
 @admin.register(models.Task)
-class TaskAdmin(admin.ModelAdmin):
-    list_display = ('id', 'created_at', 'updated_at', 'plan', 'section', 'description', 'is_ready', 'priority')
+class TaskAdmin(mixins.AdminQsManagerMixin, admin.ModelAdmin):
+    list_display = ('id', 'created_at', 'updated_at', 'is_delete', 'plan', 'section', 'description', 'is_ready', 'priority')
     list_display_links = ('id', 'created_at')
+    list_filter = ('is_delete',)
 
 
-admin.site.register(models.DefaultDeductions)
+@admin.register(models.DefaultDeductions)
+class DefaultDeductionsAdmin(mixins.AdminQsManagerMixin, admin.ModelAdmin):
+    list_display = ('id', 'user', 'is_delete')
+    list_display_links = ('id',)
+    list_filter = ('is_delete', )
+
+
+@admin.register(models.User)
+class UserAdmin(mixins.AdminQsManagerMixin, admin.ModelAdmin):
+    list_display = ('id', 'username', 'get_full_name', 'email', 'is_active', 'is_staff', 'is_superuser')
+    list_display_links = ('id', 'username')
+    list_filter = ('is_active', 'is_staff', 'is_superuser')
+
+
 admin.site.register(models.Section)

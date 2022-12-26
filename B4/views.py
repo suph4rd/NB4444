@@ -132,6 +132,14 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
         return reverse_lazy('b4:plan_detail', kwargs={'pk': plan_id}) if plan_id else super().get_success_url()
 
 
+class PlanCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name = "pages/plan/create.html"
+    form_class = forms.get_custom_model_form(models.Plan, fields_list=['name', 'user'])
+
+    def get_initial(self):
+        return {"user": self.request.user}
+
+
 @login_required
 def create_today_plan_task_view(request):
     utils.PlanTask.create_today_plan(request.user.id)

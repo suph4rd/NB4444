@@ -55,11 +55,7 @@ urlpatterns = [
     ),
     path(
         'plan/create/',
-        utils.made_login_required_generic_class(generic.CreateView).as_view(
-            model=models.Plan,
-            form_class=forms.get_custom_model_form(models.Plan, fields_list=['name', 'user']),
-            template_name="pages/plan/create.html"
-        ),
+        views.PlanCreateView.as_view(),
         name='plan_create'
     ),
     path(

@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-  {% if obj %} <p>{{ obj.text }}</p> {% endif %}
-  <img {% if obj.image %} src="{{ obj.image.url }}" {% else %} src="/media/lambaZel.jpg" {% endif %} alt="денюжка">
+    {% if obj %} <p>{{ obj.text }}</p> {% endif %}
+    <img {% if obj.image %} src="{{ obj.image.url }}" {% else %} src="/media/lambaZel.jpg" {% endif %} alt="денюжка">
 
-  <style>
-    h1.phrase {
-      text-align: center;
-      margin-top: 33px
-    }
-    img {
-      width: 100%;
-      border-radius: 5px;
-    }
-  </style>
+    <style>
+        h1.phrase {
+            text-align: center;
+            margin-top: 33px
+        }
+
+        img {
+            width: 100%;
+            border-radius: 5px;
+        }
+    </style>
 {% endblock %}

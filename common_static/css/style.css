@@ -33,7 +33,7 @@ body {
 #LeftMenu {
     width: fit-content;
     left: 5px;
-    z-index: 1;
+    z-index: 5;
     position: fixed;
     background-color: cadetblue;
     padding: 10px;

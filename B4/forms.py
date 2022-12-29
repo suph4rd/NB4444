@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextFormField
 from django import forms
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
@@ -24,6 +25,8 @@ def get_custom_model_form(model_name, fields_list="__all__", exclude_fields=None
 
 
 class TaskModelForm(forms.ModelForm):
+    description = RichTextFormField(label="")
+
     class Meta:
         model = models.Task
         fields = ("plan", "section", "description", "is_ready", "priority")
@@ -64,6 +67,8 @@ class UserModelForm(forms.ModelForm):
 
 
 class NoteModelForm(forms.ModelForm):
+    text = RichTextFormField(label="")
+
     class Meta:
         model = models.Note
         fields = ["text", "image", "user"]

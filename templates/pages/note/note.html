@@ -40,7 +40,7 @@
               ({{ obj.user }})
             {% endif %}
           </span>
-          <p> {{ forloop.counter }}. <b>{{obj.created_at|date:"d.m.Y"}}</b> {{ obj.text }}
+          <p> {{ forloop.counter }}. <b>{{obj.created_at|date:"d.m.Y"}}</b> {{ obj.text | safe }}
             {% if obj.image %}
               <br>
               <img style="width:100%" src="{{obj.image.url }}">

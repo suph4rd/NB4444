@@ -16,7 +16,9 @@
   <h1 class="text-center">Заметки</h1>
   <form class="nb4Form" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {% bootstrap_field form.text %}
+    <div style="overflow: auto">
+        {% bootstrap_field form.text %}
+    </div>
     {% bootstrap_field form.image %}
     {{ form.user }}
     <div class="row">

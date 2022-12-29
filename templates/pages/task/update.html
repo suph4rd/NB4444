@@ -14,7 +14,9 @@
       </div>
       {% bootstrap_field form.priority %}
       {% bootstrap_field form.section %}
-      {% bootstrap_field form.description %}
+      <div style="overflow: auto">
+        {% bootstrap_field form.description %}
+      </div>
     </div>
     <button type="submit" class="btn btn-primary" style="width: 100%;">Отправить</button>
   </form>

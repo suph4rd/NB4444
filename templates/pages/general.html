@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% if obj %} <p>{{ obj.text }}</p> {% endif %}
-    <img {% if obj.image %} src="{{ obj.image.url }}" {% else %} src="/media/lambaZel.jpg" {% endif %} alt="денюжка">
+    <div style="overflow: auto">
+        {% if obj %} <p>{{ obj.text | safe }}</p> {% endif %}
+        <img {% if obj.image %} src="{{ obj.image.url }}" {% else %} src="/media/lambaZel.jpg" {% endif %}
+                                alt="денюжка">
+    </div>
 
     <style>
         h1.phrase {

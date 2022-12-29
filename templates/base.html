@@ -26,7 +26,7 @@
       </a>
       <div class="container">
         <div class="row">
-          <div class="col col-lg-3" id="LeftMenu" style="display: none;">
+          <div class="col col-lg-3 d-none" id="LeftMenu">
             {% if request.user.is_superuser %}
                 <p><a href="{% url 'admin:index' %}">Панель администратора</a></p>
             {% endif %}
@@ -50,4 +50,10 @@
 
     </body>
   </html>
+{% endblock %}
+
+{% block media_block %}
+    {% if form %}
+        {{ form.media }}
+    {% endif %}
 {% endblock %}

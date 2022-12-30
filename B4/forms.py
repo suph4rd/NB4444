@@ -67,7 +67,7 @@ class UserModelForm(forms.ModelForm):
 
 
 class NoteModelForm(forms.ModelForm):
-    text = RichTextFormField(label="")
+    text = RichTextFormField(label="", required=False)
 
     class Meta:
         model = models.Note

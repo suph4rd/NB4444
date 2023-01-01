@@ -43,5 +43,11 @@ class UserAdmin(mixins.AdminQsManagerMixin, admin.ModelAdmin):
     list_display_links = ('id', 'username')
     list_filter = ('is_active', 'is_staff', 'is_superuser')
 
+    def save_model(self, request, obj, form, change):
+        check_field = "password"
+        if check_field in form.changed_data:
+            obj.set_password(form.cleaned_data.get(check_field))
+        super().save_model(request, obj, form, change)
+
 
 admin.site.register(models.Section)

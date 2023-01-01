@@ -82,11 +82,13 @@ class NoteListView(LoginRequiredMixin, mixins.NoteViewMixin, FormMixin, mixins.U
     template_name = "pages/note/note.html"
 
 
-class NoteCreateView(LoginRequiredMixin, mixins.NoteViewMixin, generic.CreateView):
+class NoteCreateView(LoginRequiredMixin, mixins.CKEditorErrorShowMixin, mixins.NoteViewMixin, generic.CreateView):
     template_name = "pages/note/note.html"
+    check_ck_field = "text"
 
 
-class NoteUpdateView(LoginRequiredMixin, mixins.IsCurrentUserMixin, mixins.NoteViewMixin, generic.UpdateView):
+class NoteUpdateView(LoginRequiredMixin, mixins.IsCurrentUserMixin, mixins.CKEditorErrorShowMixin,
+                     mixins.NoteViewMixin, generic.UpdateView):
     template_name = "pages/note/update_note.html"
     redirect_url = reverse_lazy('b4:note')
 
@@ -99,8 +101,9 @@ def get_bot_info_view(request):
     return redirect('b4:note')
 
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(LoginRequiredMixin, mixins.CKEditorErrorShowMixin, CreateView):
     model = models.Task
+    check_ck_field = "description"
 
     def render_to_response(self, context, **response_kwargs):
         plan_id = self.request.GET.get('plan_id')

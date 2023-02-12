@@ -206,7 +206,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-TELEGRAM_BOT_TOKEN = os.environ.get("DB_PORT", "test")
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "test")
 
 CORS_ALLOW_ALL_ORIGINS = True
 

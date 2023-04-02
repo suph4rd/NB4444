@@ -47,7 +47,7 @@ class DefaultDeductionModelForm(forms.ModelForm):
 
 
 class UserModelForm(forms.ModelForm):
-    username = forms.CharField(label="", required=True, min_length=3, validators=[UnicodeUsernameValidator()])
+    username = forms.CharField(label="Логин", required=True, min_length=3, validators=[UnicodeUsernameValidator()])
     first_name = forms.CharField(label="Имя", required=True, min_length=3)
     last_name = forms.CharField(label="Фамилия", required=True, min_length=3)
     email = forms.EmailField(label="Адрес электронной почты", required=True)
